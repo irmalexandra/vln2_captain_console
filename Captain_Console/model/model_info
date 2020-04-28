@@ -1,0 +1,1 @@
+Model is the "datalayer" of the system. It sends compiled lists of data from the database per the request from Controller.
