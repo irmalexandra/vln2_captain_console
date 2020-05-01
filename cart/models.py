@@ -17,7 +17,7 @@ class ShippingInformation(models.Model):
     address_1 = models.CharField(max_length=255)
     address_2 = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
-    postcode = models.IntegerField(max_length=100)
+    postcode = models.IntegerField()
     country = models.CharField(max_length=255)
 
 

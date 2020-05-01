@@ -14,7 +14,7 @@ class Manufacturers(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=999, blank=True)
-    quantity = models.IntegerField(max_length=100)
+    quantity = models.IntegerField()
     category = models.ForeignKey(Categories, on_delete=models.CASCADE)
     price = models.FloatField()
     #onSale = models.BooleanField()

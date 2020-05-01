@@ -15,7 +15,7 @@ class Profiles(models.Model):
     address_1 = models.CharField(max_length=255)
     address_2 = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
-    postcode = models.IntegerField(max_length=100)
+    postcode = models.IntegerField()
     country = models.CharField(max_length=255)
     profile_image = models.CharField(max_length=999)
 
@@ -23,7 +23,7 @@ class Profiles(models.Model):
 
 class Reviews(models.Model):
     profileID = models.ForeignKey(Profiles, on_delete=models.CASCADE)
-    rating = models.IntegerField(max_length=2)
+    rating = models.IntegerField()
     feedback = models.CharField(max_length=999)
     datetime = models.DateTimeField()
 

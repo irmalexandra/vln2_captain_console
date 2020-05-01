@@ -5,10 +5,10 @@ from django.db import models
 
 class Specifications(models.Model):
     dimensions = models.CharField(max_length=100)
-    weight = models.FloatField(max_length=500)
+    weight = models.FloatField()
     connectivity = models.CharField(max_length=999)
     includes = models.CharField(max_length=999)
-    storage_capacity = models.IntegerField(max_length=50)
+    storage_capacity = models.IntegerField()
 
 
 class Consoles(models.Model):
