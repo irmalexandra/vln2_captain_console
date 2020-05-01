@@ -1,3 +1,0 @@
-Controller is the "Logic layer" of the program.
-It handles requests from the user and pulls data from Model "datalayer" 
-and the ui elements from View "Ui layer" and returns all that back to the user

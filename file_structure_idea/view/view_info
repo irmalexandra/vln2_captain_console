@@ -1,1 +1,0 @@
-View is the "UI_layer" of the system. It creates html pages with the data Controller got from Model and returns the ready page back to Controller.
