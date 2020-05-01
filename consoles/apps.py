@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class ConsolesConfig(AppConfig):
+class CaptainConsoleConsolesConfig(AppConfig):
     name = 'consoles'
