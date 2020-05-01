@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'captain_console_main.apps.CaptainConsoleMainConfig',
-    'captain_console_games.apps.CaptainConsoleGamesConfig'
+    'main.apps.CaptainConsoleMainConfig',
+    'games.apps.CaptainConsoleGamesConfig',
+    'consoles.apps.CaptainConsoleConsolesConfig',
+    'profiles.apps.CaptainConsoleProfilesConfig'
 ]
 
 MIDDLEWARE = [
