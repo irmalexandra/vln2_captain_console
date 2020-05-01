@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'games.apps.CaptainConsoleGamesConfig',
     'profiles.apps.CaptainConsoleProfilesConfig',
     'offers.apps.OffersConfig',
-    'cart.apps.CartConfig',
+    'carts.apps.CartConfig',
     'consoles.apps.CaptainConsoleConsolesConfig',
 
 ]
