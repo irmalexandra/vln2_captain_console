@@ -2,66 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98ea7fda-b08e-4d09-a3aa-29814f44cc26" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/consoles/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/games/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/profiles/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/consoles/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/games/games.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/main/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/profiles/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/test.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Captain_Console_43.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Captain_Console_43.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/offers/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Captain_Console_43/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Captain_Console_43/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Captain_Console_43/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Captain_Console_43/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consoles/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/consoles/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consoles/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/consoles/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/games/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/games/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/games/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/games/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profiles/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profiles/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/consoles/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/consoles/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/consoles/apps.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/consoles/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/consoles/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/consoles/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/consoles/views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/games/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/games/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/games/apps.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/games/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/games/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/games/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/games/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/games/views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/main/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/main/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/main/apps.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/main/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/main/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/main/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/main/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/main/views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/profiles/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/profiles/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/profiles/apps.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/profiles/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/profiles/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/profiles/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/profiles/views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/templates/consoles/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/templates/games/games.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/templates/main/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/templates/profiles/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../VLN2_43_old_Stuff/captain_console/templates/test.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/offers/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/offers/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -148,8 +92,16 @@
       <workItem from="1588340626644" duration="3515000" />
       <workItem from="1588346975625" duration="196000" />
       <workItem from="1588347608682" duration="487000" />
-      <workItem from="1588348098099" duration="254000" />
+      <workItem from="1588348098099" duration="559000" />
     </task>
+    <task id="LOCAL-00001" summary="&quot;Working build&quot;&#10;-Rikki 2020">
+      <created>1588348379313</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1588348379313</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,6 +122,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="&quot;Working build&quot;&#10;-Rikki 2020" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;Working build&quot;&#10;-Rikki 2020" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588347135797">

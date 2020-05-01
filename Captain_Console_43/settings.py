@@ -35,6 +35,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main.apps.CaptainConsoleMainConfig',
+    'games.apps.CaptainConsoleGamesConfig',
+    'profiles.apps.CaptainConsoleProfilesConfig',
+    'offers.apps.OffersConfig',
+    'cart.apps.CartConfig',
+    'consoles.apps.CaptainConsoleConsolesConfig',
+
 ]
 
 MIDDLEWARE = [
