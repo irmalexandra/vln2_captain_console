@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="F:\lokialex\git_repositories\VLN2_43\Captain_Console\venv"
+VIRTUAL_ENV="C:\Users\rikha\Documents\RU\Verklegt_2\VLN2_43\captain_console\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

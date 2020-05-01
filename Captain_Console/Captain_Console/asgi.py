@@ -1,5 +1,5 @@
 """
-ASGI config for Captain_Console project.
+ASGI config for captain_console project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Captain_Console.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'captain_console.settings')
 
 application = get_asgi_application()

@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=F:\lokialex\git_repositories\VLN2_43\Captain_Console\venv
+set VIRTUAL_ENV=C:\Users\rikha\Documents\RU\Verklegt_2\VLN2_43\captain_console\venv
 
 if not defined PROMPT set PROMPT=$P$G
 
