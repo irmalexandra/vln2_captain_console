@@ -80,8 +80,12 @@ WSGI_APPLICATION = 'Captain_Console_43.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'pdnvgefl',
+        'USER': 'pdnvgefl',
+        'PASSWORD': 'gYckBdc9np2wDCGtf_yA80Z81G0zXpOe',
+        'HOST': 'balarama.db.elephantsql.com',
+        'PORT': '5432'
     }
 }
 
