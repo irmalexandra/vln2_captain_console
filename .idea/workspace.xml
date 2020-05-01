@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98ea7fda-b08e-4d09-a3aa-29814f44cc26" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Captain_Console_43.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Captain_Console_43.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cart/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/cart/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consoles/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/consoles/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/games/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/games/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/profiles/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles/models.py" afterDir="false" />
@@ -52,6 +49,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -112,7 +110,7 @@
       <workItem from="1588346975625" duration="196000" />
       <workItem from="1588347608682" duration="487000" />
       <workItem from="1588348098099" duration="1430000" />
-      <workItem from="1588353721289" duration="3087000" />
+      <workItem from="1588353721289" duration="4802000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;Working build&quot;&#10;-Rikki 2020">
       <created>1588348379313</created>
@@ -135,7 +133,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588348867668</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Öll Models?">
+      <created>1588356927765</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1588356927765</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -159,7 +164,8 @@
     <MESSAGE value="&quot;Working build&quot;&#10;-Rikki 2020" />
     <MESSAGE value="öll basic tengsl" />
     <MESSAGE value="öll basic templates" />
-    <option name="LAST_COMMIT_MESSAGE" value="öll basic templates" />
+    <MESSAGE value="Öll Models?" />
+    <option name="LAST_COMMIT_MESSAGE" value="Öll Models?" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588347135797">

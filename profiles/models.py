@@ -2,8 +2,7 @@ from django.db import models
 
 # Create your models here.
 from cart.models import Orders
-from main.models import Reviews
-
+from games.models import Games
 
 
 
@@ -19,12 +18,27 @@ class Profiles(models.Model):
     postcode = models.IntegerField(max_length=100)
     country = models.CharField(max_length=255)
     profile_image = models.CharField(max_length=999)
-    reviews = models.ForeignKey(Reviews)
+
+
+
+class Reviews(models.Model):
+    profileID = models.ForeignKey(Profiles, on_delete=models.CASCADE)
+    rating = models.IntegerField(max_length=2)
+    feedback = models.CharField(max_length=999)
+    datetime = models.DateTimeField()
+
+
+
+
+class GameReviews(models.Model):
+    gameID = models.ForeignKey(Games, on_delete=models.CASCADE)
+    reviewID = models.ForeignKey(Reviews, on_delete=models.CASCADE)
+
 
 
 class OrderHistory(models.Model):
     profileID = models.ForeignKey(Profiles, on_delete=models.CASCADE)
-    orderId = models.ForeignKey(Orders)
+    orderId = models.ForeignKey(Orders, on_delete=models.CASCADE)
 
 
 class Searches(models.Model):
@@ -32,5 +46,7 @@ class Searches(models.Model):
 
 
 class SearchHistory(models.Model):
-    searchID = models.ForeignKey(Searches)
+    searchID = models.ForeignKey(Searches, on_delete=models.CASCADE)
     profileID = models.ForeignKey(Profiles, on_delete=models.CASCADE)
+
+

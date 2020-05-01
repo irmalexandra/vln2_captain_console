@@ -23,5 +23,5 @@ class ShippingInformation(models.Model):
 
 class Orders(models.Model):
     datetime = models.DateTimeField()
-    shippingID = models.ForeignKey(ShippingInformation)
-    Payment_infoID = models.ForeignKey(PaymentInformation)
+    shippingID = models.ForeignKey(ShippingInformation, on_delete=models.CASCADE)
+    Payment_infoID = models.ForeignKey(PaymentInformation, on_delete=models.CASCADE)

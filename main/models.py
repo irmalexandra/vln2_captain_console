@@ -1,5 +1,5 @@
 from django.db import models
-
+from profiles.models import Profiles
 # Create your models here.
 
 
@@ -11,10 +11,6 @@ class Manufacturers(models.Model):
     name = models.CharField(max_length=255)
 
 
-class Plugs(models.Model):
-    name = models.CharField(max_length=255)
-
-
 class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=999, blank=True)
@@ -22,13 +18,9 @@ class Product(models.Model):
     category = models.ForeignKey(Categories, on_delete=models.CASCADE)
     price = models.FloatField()
     #onSale = models.BooleanField()
-    compatibility = models.ForeignKey(Plugs)
+    compatibility = models.CharField(max_length=999)
     manufacturer = models.ForeignKey(Manufacturers, on_delete=models.CASCADE)
     release_date = models.DateTimeField()
 
 
-class Reviews(models.Model):
-    profile = models.ForeignKey()
-    rating = models.IntegerField(max_length=2)
-    feedback = models.CharField(max_length=999)
-    datetime = models.DateTimeField()
+
