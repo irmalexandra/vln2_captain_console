@@ -4,4 +4,4 @@ from django.shortcuts import render, redirect
 
 
 def index(request):
-    return render(request, 'captain_console_main/index.html')
+    return render(request, 'main/index.html')
