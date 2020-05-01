@@ -4,4 +4,4 @@ from django.shortcuts import render, redirect
 
 
 def index(request):
-    return render(request, 'games/games.html')
+    return render(request, 'games/index.html')
