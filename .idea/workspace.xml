@@ -1,37 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="98ea7fda-b08e-4d09-a3aa-29814f44cc26" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/carts/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/games/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Captain_Console_43/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Captain_Console_43/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Captain_Console_43/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Captain_Console_43/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/carts/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/carts/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/carts/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/carts/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/carts/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/carts/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/carts/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consoles/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/consoles/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consoles/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/consoles/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/games/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/games/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/games/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/games/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/offers/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/offers/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/offers/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/offers/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profiles/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profiles/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/cart/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/carts/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/consoles/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/consoles/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/games/games.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/main/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/offers/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/offers/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/profiles/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/profiles/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/test.html" beforeDir="false" />
-    </list>
+    <list default="true" id="98ea7fda-b08e-4d09-a3aa-29814f44cc26" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,6 +19,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1bJ7jM1fmbtHxZ0M314XcFdJeRY" />
@@ -179,6 +154,10 @@
     </state>
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588347149115" />
     <state x="461" y="167" key="SettingsEditor/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1588339536082" />
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1588354660250">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/1920.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588354660250" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
