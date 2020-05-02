@@ -4,4 +4,4 @@ from django.shortcuts import render, redirect
 
 
 def index(request):
-    return
+    return render(request, "profiles/index.html")
