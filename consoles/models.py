@@ -8,3 +8,5 @@ class Console(Product):
     warranty = models.DateTimeField()
     specifications = models.TextField()
 
+
+
