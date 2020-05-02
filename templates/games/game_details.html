@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h1>{{ game.name }}</h1>
+    <p>{{ game.description }}</p>
+    <p>{{ game.price }} kr.</p>
+    <p>{{ game.manufacturer.name }}</p>
+    {% comment %}{% for candy_img in candy.candyimage_set.all %}
+        <img src="{{ candy_img.image }}" class="candy-image"/>
+
+    {% endfor %}
+    {% endcomment %}
+{% endblock %}
