@@ -4,4 +4,5 @@ from django.shortcuts import render, redirect
 
 
 def index(request):
-    return render(request, 'games/index.html')
+    context = {"games": "active"}
+    return render(request, 'games/index.html', context)

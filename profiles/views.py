@@ -4,4 +4,5 @@ from django.shortcuts import render, redirect
 
 
 def index(request):
-    return render(request, "profiles/index.html")
+    context = {"profiles": "active"}
+    return render(request, "profiles/index.html", context)
