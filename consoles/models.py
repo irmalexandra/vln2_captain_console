@@ -8,3 +8,6 @@ class Console(Product):
     warranty = models.DateTimeField()
     specifications = models.TextField()
 
+    def __str__(self):
+        return self.name
+

@@ -1,5 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>This is the games index</h2>
-    <h3>FOKKING PUSHASTU DRASLIÐ ÞITT</h3>
+    <div class="game">
+        <h2> Welcome to the game app!</h2>
+
+    </div>
+    <div class="input-group">
+        <input type="search" class="form-control" id="search-box" placeholder="Enter your search here"/>
+        <div class="input-group-btn">
+            <button type="button" id="search-btn" class="btn btn-default">Search</button>
+        </div>
+    </div>
+    {% for game in games %}
+        {% comment %}
+        {% if candy.price > 5 %}
+            <p>Muchos expensivos</p>
+        {% else%}
+            <p>Kinda cheap tbh</p>
+        {% endif %}
+
+
+        <h4>{{ candy.name }}</h4>
+        <p>{{ candy.price }}$</p>
+        {% endcomment %}
+
+        {% include  'games/single_game.html' with game=game %}
+    {% endfor %}
 {% endblock %}
