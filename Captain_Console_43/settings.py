@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main.apps.CaptainConsoleMainConfig',
     'games.apps.CaptainConsoleGamesConfig',
-    'profiles.apps.CaptainConsoleProfilesConfig',
+    'users.apps.CaptainConsoleUsersConfig',
     'offers.apps.OffersConfig',
     'carts.apps.CartConfig',
     'consoles.apps.CaptainConsoleConsolesConfig',
@@ -125,5 +125,5 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-LOGIN_URL = 'profiles/login'
+LOGIN_URL = 'users/login'
 LOGIN_REDIRECT_URL = '/'
