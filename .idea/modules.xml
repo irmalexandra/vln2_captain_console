@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Captain_Console_43.iml" filepath="$PROJECT_DIR$/.idea/Captain_Console_43.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../VLN2_43_old_Stuff/.idea/VLN2_43.iml" filepath="$PROJECT_DIR$/../VLN2_43_old_Stuff/.idea/VLN2_43.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../WebDesign/bsDesigns/django/attempt2/.idea/attempt2.iml" filepath="$PROJECT_DIR$/../../../WebDesign/bsDesigns/django/attempt2/.idea/attempt2.iml" />
     </modules>
   </component>
 </project>
