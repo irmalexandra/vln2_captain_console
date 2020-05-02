@@ -1,5 +1,5 @@
 {% load static %}
-<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+<nav class="navbar navbar-expand-md sticky-top">
 <div class="container-fluid">
 	<a class="navbar-brand nav-link" href="/"><img src="{% static 'images/captain_console_logo.png' %}"></a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -7,23 +7,46 @@
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<div class="collapse navbar-collapse" id="navbarResponsive">
-		<ul class="navbar-nav ml-auto">
-			<li class="nav-item active">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item {{ games }} mr-3">
 				<a class="nav-link" href="/games">Games</a>
 			</li>
-			<li class="nav-item">
+			<li class="nav-item {{ consoles }} mr-3">
 				<a class="nav-link" href="/consoles">Consoles</a>
 			</li>
-			<li class="nav-item">
+			<li class="nav-item {{ offers }} mr-3">
 				<a class="nav-link" href="/offers">Offers</a>
 			</li>
-            <li class="nav-item">
-				<a class="nav-link" href="/profiles">Profiles</a>
-			</li>
-            <li class="nav-item">
-				<a class="nav-link" href="/carts">Carts</a>
+    </ul>
+		<form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2 search-bar" type="search" placeholder="Search" aria-label="Search">
+      <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+    </form>
+		<ul class="navbar-nav">
+			{% if user.is_authenticated %}
+					<li class="nav-item">
+						<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										{{ request.user }}
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+									<a class="dropdown-item" href="#">Settings</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="#">Logout</a>
+								</div>
+						</li>
+					{% else %}
+					<li class="nav-item">
+							<a class="nav-link" href="profiles/login">Login</a>
+					</li>
+					<li class="nav-item">
+							<a class="nav-link" href="profiles/register">Register</a>
+					</li>
+			{% endif %}
+			<li class="nav-item">
+					<a class="nav-link" href="/"><i class="fas fa-shopping-cart"></i></a>
 			</li>
 		</ul>
-	</div>
+      </div>
 </div>
 </nav>

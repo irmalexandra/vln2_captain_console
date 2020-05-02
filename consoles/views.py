@@ -4,4 +4,5 @@ from django.shortcuts import render
 
 
 def index(request):
-    return render(request, "consoles/index.html")
+    context = {"consoles": "active"}
+    return render(request, "consoles/index.html", context)
