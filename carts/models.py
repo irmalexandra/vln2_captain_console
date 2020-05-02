@@ -1,3 +1,4 @@
+import datetime as datetime
 from django.db import models
 
 # Create your models here.
@@ -21,7 +22,7 @@ class ShippingInformation(models.Model):
     country = models.CharField(max_length=255)
 
 
-class Orders(models.Model):
-    datetime = models.DateTimeField()
-    shippingID = models.ForeignKey(ShippingInformation, on_delete=models.CASCADE)
-    Payment_infoID = models.ForeignKey(PaymentInformation, on_delete=models.CASCADE)
+class Order(models.Model):
+    datetime = models.DateTimeField(default=datetime.date.today())
+    shipping_information_id = models.ForeignKey(ShippingInformation, on_delete=models.CASCADE)
+    Payment_information_id = models.ForeignKey(PaymentInformation, on_delete=models.CASCADE)
