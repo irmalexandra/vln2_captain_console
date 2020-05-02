@@ -2,6 +2,9 @@ import datetime as datetime
 from django.db import models
 
 # Create your models here.
+from django.utils.timezone import now
+
+from main.models import Product
 
 
 class PaymentInformation(models.Model):
@@ -29,9 +32,10 @@ class ShippingInformation(models.Model):
 
 
 class Order(models.Model):
-    datetime = models.DateTimeField(default=datetime.date.today())
-    shipping_information_id = models.ForeignKey(ShippingInformation, on_delete=models.CASCADE)
-    Payment_information_id = models.ForeignKey(PaymentInformation, on_delete=models.CASCADE)
+    productID = models.ForeignKey(Product, on_delete=models.PROTECT)
+    datetime = models.DateTimeField(default=now)
+    shipping_information_id = models.ForeignKey(ShippingInformation, on_delete=models.PROTECT)
+    Payment_information_id = models.ForeignKey(PaymentInformation, on_delete=models.PROTECT)
 
     def __str__(self):
         return "order made by " + self.Payment_information_id.__str__()
