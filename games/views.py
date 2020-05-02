@@ -6,14 +6,10 @@ from games.models import Game
 
 def index(request):
     context = {'games': Game.objects.all().order_by('name'),
-                "games_tab": "active"}
+               "games_tab": "active"}
     return render(request, 'games/index.html', context)
 
 
-def test(request):
-    return render(request, 'games/test.html')
-
 def get_game_by_id(request, id):
-    context = { 'games' : get_object_or_404(Game, pk=id)}
+    context = {'game': get_object_or_404(Game, pk=id)}
     return render(request, 'games/game_details.html', context)
-

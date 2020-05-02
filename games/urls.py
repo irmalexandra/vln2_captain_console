@@ -4,6 +4,4 @@ urlpatterns = [
     # localhost:8000/games/  <--- Path so far
     path('', views.index, name="games-index"),
     path('<int:id>', views.get_game_by_id, name="game_details"),
-    path('test', views.test, name="game_details"),
-
 ]
