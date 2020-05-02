@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-from cart.models import Orders
+from carts.models import Orders
 from games.models import Games
 
 
