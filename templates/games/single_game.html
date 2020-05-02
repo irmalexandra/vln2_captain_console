@@ -1,8 +1,11 @@
-<div class = "well">
-    <a href="/games/{{ game.id }}">
-        <img class = "game-img" src=" {{ game.product_display_image }}"/>
-        <h4>{{ game.name }}</h4>
-        <p>{{ game.description }}</p>
-    </a>
-
+<div class="card col-2 padding">
+  <a href="/games/{{ game.id }}">
+  <img class="card-img-top" src="{{ game.product_display_image }}">
+  </a>
+  <div class="card-body">
+    <h4 class="card-title">{{ game.name }}</h4>
+    <p class="game-description text-left">{{ game.description }}</p>
+    <p>{{ game.price }} kr.</p>
+    <a href="#" class="btn btn-outline-secondary">Add to Cart</a>
+  </div>
 </div>

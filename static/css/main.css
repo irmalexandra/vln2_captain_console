@@ -1,7 +1,39 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+.main {
+  min-height: 1000px;
+}
+
+.card-img-top {
+  height: 180px;
+  width: 286px;
+}
 
 .navbar-brand img {
   width: 125px;
+}
+
+.card-body h4 {
+  min-height: 50px;
+}
+
+.btn {
+  background-color: #29648A;
+  color: #aaabb8;
+}
+
+.btn:hover {
+  background-color: #29648A;
+  color: #2e9CCA;
+}
+
+
+
+.game-description {
+  min-height: 75px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .navbar {
