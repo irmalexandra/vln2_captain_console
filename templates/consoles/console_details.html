@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="details-page" style="background-color: aqua" >
+    <h1>{{ console.name }}</h1>
+    <img src="{{ console.product_display_image }}"/>
+    <p>{{ console.description }}</p>
+    <p>{{ console.price }} kr.</p>
+    <p>{{ console.manufacturer.name }}</p>
+    {% for console_img in console.productimages_set.all %}
+        <img src="{{ console_img.url }}" class="console-image"/>
+
+    {% endfor %}
+    <button type="button" class="btn btn-primary">Add to cart</button>
+    </div>
+{% endblock %
