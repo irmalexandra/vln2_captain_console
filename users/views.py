@@ -1,8 +1,9 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, logout
+from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
-
-# Create your views here.
+from users.models import Profile
+from users.forms.update_profile_form import UpdateProfileForm
+from users.forms.register_form import RegisterForm
 
 
 def index(request):
@@ -11,26 +12,31 @@ def index(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(data=request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')
+            return redirect('/users/login')
     return render(request, 'users/register.html', {
-        'form': UserCreationForm()
+        'form': RegisterForm()
     })
 
-def login(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        return redirect('profile')
-    else:
-        return redirect('/')
 
-def logout_user(request):
-    logout(request)
-    return redirect('/')
+def profile(request):
+    profile = Profile.objects.filter(user=request.user).first()
+    return render(request, 'users/profile.html', {
+        'form': profile
+    })
 
-def profile_display(request):
-    pass
+
+def update_profile(request):
+    profile = Profile.objects.filter(user=request.user).first()
+    if request.method == 'POST':
+        form = UpdateProfileForm(instance=profile, data=request.POST)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
+            return redirect('profile')
+    return render(request, 'users/update_profile.html', {
+        'form': UpdateProfileForm(instance=profile)
+    })

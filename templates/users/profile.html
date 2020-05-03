@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="content-section">
+      <div class="media">\
+          <form class="form form-vertical" method="post">
+            {% csrf_token %}
+            {{ form }}
+          <h2 class="account-heading">{{ user.username }}</h2>
+          <p class="text-secondary">{{ user.email }}</p>
+          </form>
+      </div>
+    <a class="btn btn-primary" href="profile/edit">Edit profile</a>
+      <!-- FORM HERE -->
+    </div>
+{% endblock %}
