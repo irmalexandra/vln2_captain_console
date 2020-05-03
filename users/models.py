@@ -8,9 +8,9 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    address_1 = models.CharField(max_length=255)
-    address_2 = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
+    address_1 = models.CharField(max_length=255, null=True)
+    address_2 = models.CharField(max_length=255, null=True)
+    city = models.CharField(max_length=255, null=True)
     postcode = models.IntegerField()
     country = models.CharField(max_length=255)
     profile_image = models.CharField(max_length=999)
