@@ -6,8 +6,8 @@ from main.models import Product
 
 
 def index(request):
-    top_sellers = views.get_game_by_copies_sold(request)
-    releases = views.get_game_latest_releases(request)
+    top_sellers = views.get_game_by_copies_sold()
+    releases = views.get_game_latest_releases()
     context = {'top_sellers': top_sellers, 'release_date': releases}
     return render(request, 'main/index.html', context)
 

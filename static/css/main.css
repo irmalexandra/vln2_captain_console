@@ -3,6 +3,11 @@
   min-height: 1000px;
 }
 
+.search_button {
+  background-color: #29648A;
+  color: #aaabb8;
+}
+
 .card-img-top {
   height: 200px;
   width: 275px;
@@ -43,6 +48,10 @@
 .btn:hover {
   background-color: #29648A;
   color: #2e9CCA;
+}
+
+.card-title {
+  height: 75px;
 }
 
 .product-description {
