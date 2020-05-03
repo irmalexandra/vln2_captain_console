@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
 
 # Create your views here.
+from games import views
 
 
 def index(request):
-    return render(request, 'main/index.html')
+    top_sellers = views.get_game_by_copies_sold(request)
+    releases = views.get_game_latest_releases(request)
+    context = {'top_sellers': top_sellers, 'release_date': releases}
+    return render(request, 'main/index.html', context)

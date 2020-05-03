@@ -1,4 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>This is the consoles index</h2>
+  <div class="container-fluid padding">
+    <div class="d-flex flex-row flex-wrap">
+
+
+        {% for console in consoles %}
+        {% include  'consoles/single_console.html' with console=console %}
+    {% endfor %}
+      </div>
+  </div>
 {% endblock %}

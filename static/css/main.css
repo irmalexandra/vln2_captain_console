@@ -1,7 +1,64 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+.main {
+  min-height: 1000px;
+}
+
+.card-img-top {
+  height: 200px;
+  width: 275px;
+}
 
 .navbar-brand img {
   width: 125px;
+}
+
+.carousel-inner img {
+  width: 100%;
+  height: 100%;
+}
+
+.card-body h4 {
+  min-height: 50px;
+}
+
+.product-details {
+  width: 90%;
+  height: 90%;
+}
+
+.product-details-display {
+  width: 60%;
+  height: 60%;
+}
+
+.product-info {
+  margin-top: 50px;
+}
+
+.btn {
+  background-color: #29648A;
+  color: #aaabb8;
+}
+
+.btn:hover {
+  background-color: #29648A;
+  color: #2e9CCA;
+}
+
+.game-description {
+  min-height: 75px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.console-description {
+  min-height: 75px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .navbar {

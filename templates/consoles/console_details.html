@@ -4,11 +4,11 @@
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="{{ game.product_display_image }}" class="img-fluid">
+            <img src="{{ console.product_display_image }}" class="img-fluid">
           </div>
-          {% for game_img in game.extra_images.all %}
+          {% for console_img in console.extra_images.all %}
             <div class="carousel-item">
-              <img src="{{ game_img.url }}" class="img-fluid">
+              <img src="{{ console_img.url }}" class="img-fluid">
             </div>
           {% endfor %}
         </div>
@@ -26,16 +26,16 @@
   <div class="row padding">
     <div class="col-12 container-fluid product-info">
         <h1>
-          {{ game.name }}
+          {{ console.name }}
         </h1>
         <p>
-          {{ game.manufacturer.name }}
+          {{ console.manufacturer.name }}
         </p>
         <p>
-          {{ game.description }}
+          {{ console.description }}
         </p>
         <p>
-          {{ game.price }}
+          {{ console.price }}
         </p>
         <a href="#" class="btn btn-outline-secondary">Add to Cart</a>
 
