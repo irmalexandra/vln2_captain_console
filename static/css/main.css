@@ -50,6 +50,10 @@
   color: #2e9CCA;
 }
 
+.card-title {
+  height: 70px;
+}
+
 .product-description {
   min-height: 75px;
   overflow: hidden;

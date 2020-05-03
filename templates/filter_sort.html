@@ -1,0 +1,22 @@
+<div class="d-flex flex-row flex-wrap justify-content-end my-2 btn-group">
+  <div class="dropdown dropdown-btn mx-2">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdown-filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Filter
+    </button>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a  class="dropdown-item" href="{% url "price" %}">FPS</a>
+        <div class="dropdown-divider"></div>
+        <a  class="dropdown-item" href="{% url "index" %}">Action</a>
+    </div>
+  </div>
+  <div class="dropdown dropdown-btn mx-2">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdown-sort" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Sort
+    </button>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a  class="dropdown-item" href="{% url "price" %}">Price</a>
+        <div class="dropdown-divider"></div>
+        <a  class="dropdown-item" href="{% url "index" %}">A-Z</a>
+    </div>
+  </div>
+</div>
