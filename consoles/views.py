@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from consoles.models import Console
@@ -15,6 +16,7 @@ def get_console_by_id(request, id):
     return render(request, 'consoles/console_details.html', context)
 
 
+
 def get_console_offers(request):
     all = Console.objects.all()
     offers = []
@@ -22,3 +24,13 @@ def get_console_offers(request):
         if console.onSale == True:
             offers.append(console)
     return offers
+
+def get_console_by_copies_sold(request):
+    consoles = Console.objects.all().order_by('-copies_sold')
+    return consoles
+
+
+def get_console_latest_releases(request):
+    consoles = Console.objects.all().order_by('-release_date')
+    return consoles
+

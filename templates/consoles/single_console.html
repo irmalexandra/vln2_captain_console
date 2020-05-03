@@ -1,7 +1,10 @@
-<div class="card col-2 padding">
-  <a href="/consoles/{{ console.id }}">
-  <img class="card-img-top" src="{{ console.product_display_image }}">
-  </a>
+<div class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 col-xs-12 padding p-2 text-center justify-content-center">
+  <div class="console-card-img-frame">
+    <a href="/consoles/{{ console.id }}">
+      <img class="card-img-top img-fluid rounded mx-auto d-block" src="{{ console.product_display_image }}">
+    </a>
+  </div>
+
   <div class="card-body">
     <h4 class="card-title">{{ console.name }}</h4>
     <p class="console-description text-left">{{ console.description }}</p>

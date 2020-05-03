@@ -21,6 +21,11 @@
   min-height: 50px;
 }
 
+.product-details {
+  width: 90%;
+  height: 90%;
+}
+
 .product-details-display {
   width: 60%;
   height: 60%;
