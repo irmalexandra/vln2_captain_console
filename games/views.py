@@ -19,3 +19,8 @@ def get_game_by_id(request, id):
 def get_game_by_copies_sold(request):
     games = {'top_sellers': Game.objects.all().order_by('-copies_sold')}
     return games
+
+
+def get_gta(request):
+    gta = {'gta': Game.objects.filter(pk=8)}
+    return gta

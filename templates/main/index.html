@@ -2,14 +2,19 @@
 {% block content %}
     <h2>This is the main index</h2>
 
+    <h1>HERE IS GTA</h1>
+
+
+    <h1>^^^^^^^</h1>
+
     <div class="select2-container--classic">
         <h3>Top sellers!</h3>
         <div class="select2-container">
             {% for game in top_sellers|slice:":5" %}
-                <a href='/games/{{ game.id }}'>click me</a>
-                <p>{{ game.name }} with id of {{ game.id }}</p>
-                <img src="{{ game.product_display_image }}"/>
-
+                <a href='/games/{{ game.id }}'>
+                    <p>{{ game.name }}</p>
+                    <img src="{{ game.product_display_image }}"/>
+                </a>
 
             {% endfor %}
             Stuff
