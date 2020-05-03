@@ -6,6 +6,7 @@
     <p>{{ game.description }}</p>
     <p>{{ game.price }} kr.</p>
     <p>{{ game.manufacturer.name }}</p>
+
     {% for game_img in game.productimages_set.all %}
         <img src="{{ game_img.url }}" class="game-image"/>
 
