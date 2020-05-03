@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
   <div class="container-fluid padding">
-    <div class="d-flex flex-row flex-wrap">
-
-
+    <div class="d-flex flex-row flex-wrap justify-content-center">
         {% for console in consoles %}
         {% include  'consoles/single_console.html' with console=console %}
     {% endfor %}
