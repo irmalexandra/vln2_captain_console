@@ -1,36 +1,50 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>This is the main index</h2>
+    <div class="container-fluid padding text-center">
+      <div class="row padding text-center">
+        <div class="col-12 text-center">
+        <h1>Top Sellers</h1>
+        <hr class="light">
+        <br>
+        <div class="d-flex flex-row flex-wrap justify-content-center">
+        {% for game in top_sellers|slice:":5" %}
+        <div class="card col-2">
+          <div class="game-card-img-frame">
+            <a href="/games/{{ game.id }}">
+              <img class="card-img-top img-fluid rounded mx-auto d-block" src="{{ game.product_display_image }}">
+            </a>
+          </div>
 
-
-    <div class="container-fluid padding mx-auto">
-        <h3>Top sellers!</h3>
-        <div class="row">
-            {% for game in top_sellers|slice:":5" %}
-                 <div class="card-body">
-                    <a href='/games/{{ game.id }}' >
-                        <img src="{{ game.product_display_image }}" class="card-img-top"/>
-                        <h3 class="card-title">{{ game.name }}</h3>
-                    </a>
-                    <button type="button" class="btn btn-primary">Add to cart</button>
-                    </div>
-            {% endfor %}
+          <div class="card-body">
+            <h4 class="card-title">{{ game.name }}</h4>
+          </div>
         </div>
+        {% endfor %}
+        </div>
+        </div>
+      </div>
+      <div class="row padding text-center">
+        <div class="col-12 text-center">
+        <h1>Latest Releases</h1>
+        <hr class="light">
+        <br>
+        <div class="d-flex flex-row flex-wrap justify-content-center">
+        {% for game in release_date|slice:":5" %}
+        <div class="card col-2">
+          <div class="game-card-img-frame">
+            <a href="/games/{{ game.id }}">
+              <img class="card-img-top img-fluid rounded mx-auto d-block" src="{{ game.product_display_image }}">
+            </a>
+          </div>
 
-    </div>
-    <div class="container-fluid padding">
-        <h1>Latest releases</h1>
-            <div class="row">
-                {% for game in release_date|slice:":5" %}
-                    <div class="card-body">
-                    <a href='/games/{{ game.id }}' >
-                        <img src="{{ game.product_display_image }}" class="card-img-top"/>
-                        <h3 class="card-title">{{ game.name }}</h3>
-                    </a>
-                    <button type="button" class="btn btn-primary">Add to cart</button>
-                    </div>
-                {% endfor %}
-            </div>
+          <div class="card-body">
+            <h4 class="card-title">{{ game.name }}</h4>
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+      </div>
+      </div>
     </div>
 
 {% endblock %}
