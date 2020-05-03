@@ -9,5 +9,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://balarama.db.elephantsql.com:5432/pdnvgefl</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="pdnvgefl@balarama.db.elephantsql.com" uuid="502a4c3e-1f3d-49de-8119-c6de8554451b">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://balarama.db.elephantsql.com:5432/pdnvgefl</jdbc-url>
+    </data-source>
   </component>
 </project>

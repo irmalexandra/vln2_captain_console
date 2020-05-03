@@ -1,4 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
     <h2>This is the main index</h2>
+
+    <div class="select2-container--classic">
+        <h3>Top sellers!</h3>
+        <div class="select2-container">
+            {% for game in top_sellers|slice:":5" %}
+                <a href='/games/{{ game.id }}'>click me</a>
+                <p>{{ game.name }} with id of {{ game.id }}</p>
+                <img src="{{ game.product_display_image }}"/>
+
+
+            {% endfor %}
+            Stuff
+        </div>
+
+    </div>
 {% endblock %}
