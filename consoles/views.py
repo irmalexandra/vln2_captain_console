@@ -16,6 +16,15 @@ def get_console_by_id(request, id):
     return render(request, 'consoles/console_details.html', context)
 
 
+
+def get_console_offers(request):
+    all = Console.objects.all()
+    offers = []
+    for console in all:
+        if console.onSale == True:
+            offers.append(console)
+    return offers
+
 def get_console_by_copies_sold(request):
     consoles = Console.objects.all().order_by('-copies_sold')
     return consoles
@@ -25,7 +34,3 @@ def get_console_latest_releases(request):
     consoles = Console.objects.all().order_by('-release_date')
     return consoles
 
-
-def get_gta(request):
-    gta = Console.objects.filter(pk=8)
-    return gta

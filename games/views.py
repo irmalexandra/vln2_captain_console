@@ -25,7 +25,10 @@ def get_game_latest_releases(request):
     games = Game.objects.all().order_by('-release_date')
     return games
 
-
-def get_gta(request):
-    gta = Game.objects.filter(pk=8)
-    return gta
+def get_game_offers(request):
+    all = Game.objects.all()
+    offers = []
+    for game in all:
+        if game.onSale == True:
+            offers.append(game)
+    return offers
