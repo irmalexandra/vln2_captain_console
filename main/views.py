@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from games import views
+from main.models import Product
 
 
 def index(request):
