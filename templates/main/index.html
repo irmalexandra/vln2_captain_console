@@ -3,15 +3,17 @@
     <h2>This is the main index</h2>
 
 
-    <div class="container-fluid padding">
+    <div class="container-fluid padding mx-auto">
         <h3>Top sellers!</h3>
         <div class="row">
             {% for game in top_sellers|slice:":5" %}
-                <a href='/games/{{ game.id }}' class="card-body">
-                    <img src="{{ game.product_display_image }}" class="card-img-top"/>
-                    <h3 class="card-title">{{ game.name }}</h3>
+                 <div class="card-body">
+                    <a href='/games/{{ game.id }}' >
+                        <img src="{{ game.product_display_image }}" class="card-img-top"/>
+                        <h3 class="card-title">{{ game.name }}</h3>
+                    </a>
                     <button type="button" class="btn btn-primary">Add to cart</button>
-                </a>
+                    </div>
             {% endfor %}
         </div>
 
@@ -20,11 +22,15 @@
         <h1>Latest releases</h1>
             <div class="row">
                 {% for game in release_date|slice:":5" %}
-                    <a href='/games/{{ game.id }}' class="card-body">
+                    <div class="card-body">
+                    <a href='/games/{{ game.id }}' >
                         <img src="{{ game.product_display_image }}" class="card-img-top"/>
                         <h3 class="card-title">{{ game.name }}</h3>
                     </a>
+                    <button type="button" class="btn btn-primary">Add to cart</button>
+                    </div>
                 {% endfor %}
             </div>
     </div>
+
 {% endblock %}
