@@ -13,3 +13,12 @@ def index(request):
 def get_console_by_id(request, id):
     context = {'console': get_object_or_404(Console, pk=id)}
     return render(request, 'consoles/console_details.html', context)
+
+
+def get_console_offers(request):
+    all = Console.objects.all()
+    offers = []
+    for console in all:
+        if console.onSale == True:
+            offers.append(console)
+    return offers
