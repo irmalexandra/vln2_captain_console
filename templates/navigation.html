@@ -18,10 +18,13 @@
 				<a class="nav-link" href="/offers">Offers</a>
 			</li>
     </ul>
-		<form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2 search-bar" type="search" placeholder="Search" aria-label="Search">
-      <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
-    </form>
+		<form class="form-inline my-2 my-lg-0" action = "{% url "search-results" %}" method="GET">
+          <input name="search_field" class="form-control mr-sm-2 search-bar" type="search" placeholder="Search" aria-label="Search">
+          <a  methods="GET" class="search_icon"  href="">
+              <i class="fas fa-search"></i></a>
+          <button type="submit" class="search_icon">
+              <i class="fas fa-search"></i></button>
+        </form>
 		<ul class="navbar-nav">
 			{% if user.is_authenticated %}
 					<li class="nav-item">
