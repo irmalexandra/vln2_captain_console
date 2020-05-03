@@ -13,8 +13,10 @@ class Manufacturer(models.Model):
 
 class ExtraImages(models.Model):
     name = models.CharField(max_length=50, null=True)
-    url = models.CharField(max_length=999)
+    url = models.CharField(max_length=999, null=True)
 
+    def __str__(self):
+        return self.name
 
 
 class Product(models.Model):

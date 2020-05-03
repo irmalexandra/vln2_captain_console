@@ -2,23 +2,29 @@
 {% block content %}
     <h2>This is the main index</h2>
 
-    <h1>HERE IS GTA</h1>
 
-
-    <h1>^^^^^^^</h1>
-
-    <div class="select2-container--classic">
+    <div class="container-fluid padding">
         <h3>Top sellers!</h3>
-        <div class="select2-container">
+        <div class="row">
             {% for game in top_sellers|slice:":5" %}
-                <a href='/games/{{ game.id }}'>
-                    <p>{{ game.name }}</p>
-                    <img src="{{ game.product_display_image }}"/>
+                <a href='/games/{{ game.id }}' class="card-body">
+                    <img src="{{ game.product_display_image }}" class="card-img-top"/>
+                    <h3 class="card-title">{{ game.name }}</h3>
+                    <button type="button" class="btn btn-primary">Add to cart</button>
                 </a>
-
             {% endfor %}
-            Stuff
         </div>
 
+    </div>
+    <div class="container-fluid padding">
+        <h1>Latest releases</h1>
+            <div class="row">
+                {% for game in release_date|slice:":5" %}
+                    <a href='/games/{{ game.id }}' class="card-body">
+                        <img src="{{ game.product_display_image }}" class="card-img-top"/>
+                        <h3 class="card-title">{{ game.name }}</h3>
+                    </a>
+                {% endfor %}
+            </div>
     </div>
 {% endblock %}
