@@ -4,16 +4,30 @@
 }
 
 .card-img-top {
-  height: 180px;
-  width: 286px;
+  height: 200px;
+  width: 275px;
 }
 
 .navbar-brand img {
   width: 125px;
 }
 
+.carousel-inner img {
+  width: 100%;
+  height: 100%;
+}
+
 .card-body h4 {
   min-height: 50px;
+}
+
+.product-details-display {
+  width: 60%;
+  height: 60%;
+}
+
+.product-info {
+  margin-top: 50px;
 }
 
 .btn {
@@ -25,8 +39,6 @@
   background-color: #29648A;
   color: #2e9CCA;
 }
-
-
 
 .game-description {
   min-height: 75px;
