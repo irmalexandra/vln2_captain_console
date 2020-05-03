@@ -1,15 +1,36 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="details-page" style="background-color: aqua" >
-    <h1>{{ game.name }}</h1>
-    <img src="{{ game.product_display_image }}"/>
-    <p>{{ game.description }}</p>
-    <p>{{ game.price }} kr.</p>
-    <p>{{ game.manufacturer.name }}</p>
-    {% for game_img in game.productimages_set.all %}
-        <img src="{{ game_img.url }}" class="game-image"/>
+<div class="container-fluid padding">
+  <div class="row padding">
+      <div class="col-lg-6">
+        <div class="slides" class="carousel slide" data-ride="carousel">
+          {% for game_img in game.productimages_set.all %}
+            {% if forloop.counter0 == 0 %}
+              <li data-target="#slides" data-slide-to="{{ forloop.counter0 }}" class="active"></li>
+            {% else %}
+              <li data-target="#slides" data-slide-to="{{ forloop.counter0 }}"></li>
+            {% endif %}
 
-    {% endfor %}
-    <button type="button" class="btn btn-primary">Add to cart</button>
-    </div>
+          {% endfor %}
+        </div>
+        <img src="{{ game.product_display_image }}" class="img-fluid">
+      </div>
+      <div class="col-lg-6">
+        <h1>
+          {{ game.name }}
+        </h1>
+        <p>
+          {{ game.manufacturer.name }}
+        </p>
+        <p>
+          {{ game.description }}
+        </p>
+        <p>
+          {{ game.price }}
+        </p>
+        <a href="#" class="btn btn-outline-secondary">Add to Cart</a>
+
+      </div>
+  </div>
+</div>
 {% endblock %}
