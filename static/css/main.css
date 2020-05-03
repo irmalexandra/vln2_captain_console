@@ -50,15 +50,7 @@
   color: #2e9CCA;
 }
 
-.game-description {
-  min-height: 75px;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-
-.console-description {
+.product-description {
   min-height: 75px;
   overflow: hidden;
   display: -webkit-box;
