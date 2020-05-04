@@ -1,0 +1,12 @@
+<div class="d-flex flex-row flex-wrap justify-content-end my-2 btn-group">
+  <div class="dropdown dropdown-btn mx-2">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdown-sort" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Sort
+    </button>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a  class="dropdown-item" href="{% url "console_price" %}">Price</a>
+        <div class="dropdown-divider"></div>
+        <a  class="dropdown-item" href="{% url "console_index" %}">A-Z</a>
+    </div>
+  </div>
+</div>

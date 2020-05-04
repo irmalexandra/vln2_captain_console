@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container-fluid padding">
-    {% include 'filter_sort.html' %}
+    {% include 'filter_sort_games.html' %}
     <div class="d-flex flex-row flex-wrap justify-content-center">
         {% for game in games %}
         {% include  'games/single_game.html' with game=game %}
