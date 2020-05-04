@@ -13,6 +13,7 @@
             <a href="/games/{{ game.id }}">
               <img class="card-img-top img-fluid rounded mx-auto d-block" src="{{ game.product_display_image }}">
             </a>
+              <a href="/carts/add/{{ game.id }}?next={{ request.path }}">Add To Cart</a>
           </div>
 
           <div class="card-body">
@@ -35,6 +36,7 @@
             <a href="/games/{{ game.id }}">
               <img class="card-img-top img-fluid rounded mx-auto d-block" src="{{ game.product_display_image }}">
             </a>
+              <a href="/carts/add/{{ game.id }}?next={{ request.path }}">Add To Cart</a>
           </div>
 
           <div class="card-body">
