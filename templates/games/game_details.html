@@ -37,7 +37,7 @@
                 <p>
                     {{ game.price }} kr.
                 </p>
-                <a href="#" class="btn btn-outline-secondary">Add to Cart</a>
+                <a href="/carts/add/{{ game.id }}?next={{ request.path }}" class="btn btn-outline-secondary">Add to Cart</a>
             </div>
         </div>
     </div>

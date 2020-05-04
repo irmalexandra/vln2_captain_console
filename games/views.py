@@ -5,14 +5,38 @@ from django.shortcuts import render, get_object_or_404
 from games.models import Game
 
 
-def index(request):
+def index_ascending(request):
     context = {'games': Game.objects.all().order_by('name'),
                "games_tab": "active"}
     return render(request, 'games/index.html', context)
 
 
-def sort_by_price(request):
+def index_descending(request):
+    context = {'games': Game.objects.all().order_by('-name'),
+               "games_tab": "active"}
+    return render(request, 'games/index.html', context)
+
+
+def sort_by_price_ascending(request):
     context = {'games': Game.objects.all().order_by('price'),
+               "games_tab": "active"}
+    return render(request, 'games/index.html', context)
+
+
+def sort_by_price_descending(request):
+    context = {'games': Game.objects.all().order_by('-price'),
+               "games_tab": "active"}
+    return render(request, 'games/index.html', context)
+
+
+def sort_by_most_popular(request):
+    context = {'games': Game.objects.all().order_by('-price'),
+               "games_tab": "active"}
+    return render(request, 'games/index.html', context)
+
+
+def sort_by_most_popular(request):
+    context = {'games': Game.objects.all().order_by('-copies_sold'),
                "games_tab": "active"}
     return render(request, 'games/index.html', context)
 

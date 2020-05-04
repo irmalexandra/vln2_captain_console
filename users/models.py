@@ -17,6 +17,7 @@ class Profile(models.Model):
     payment_information_id = models.ForeignKey(ShippingInformation, on_delete=models.SET_NULL, null=True)
     shipping_information_id = models.ForeignKey(PaymentInformation, on_delete=models.SET_NULL, null=True)
 
+
     def __str__(self):
 
         return "username: " + self.user.username

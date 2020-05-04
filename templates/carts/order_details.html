@@ -7,7 +7,6 @@
             <hr class="light">
         <br>
         <div class="d-flex flex-row flex-wrap justify-content-center">
-        <form action="{% url 'order_details'  %}" method="get">
         <table class="table">
             <thead>
                 <tr>
@@ -17,9 +16,8 @@
                     <th scope="col">price</th>
                 </tr>
             </thead>
-
                 <tbody>
-
+                    <form >
                     {% for product in models %}
                         <tr>
                             <th scope="row">
@@ -36,7 +34,7 @@
                             </th>
                         </tr>
                     {% endfor %}
-
+                    </form>
                         <tr>
                             <th scope="row">
                             </th>
@@ -50,12 +48,9 @@
                         </tr>
             </tbody>
         </table>
-        <input type="submit">
-        </form>
         </div>
         </div>
       </div>
-    </div>
 
 
 {% endblock %}

@@ -68,6 +68,10 @@
   width: 70% !important;
 }
 
+.error {
+  color: #ff0000;
+}
+
 footer {
   background-color: #29648A;
   color: #aaabb8;

@@ -36,8 +36,8 @@ INSTALLED_APPS = [
     'games.apps.CaptainConsoleGamesConfig',
     'users.apps.CaptainConsoleUsersConfig',
     'offers.apps.OffersConfig',
-    'carts.apps.CartConfig',
     'consoles.apps.CaptainConsoleConsolesConfig',
+    'carts'
 
 ]
 
@@ -65,12 +65,13 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'users.context_processors.login_form'
+                'users.context_processors.login_form',
+                'cart.context_processor.cart_total_amount'
             ],
         },
     },
 ]
-
+CART_SESSION_ID = 'cart'
 WSGI_APPLICATION = 'Captain_Console_43.wsgi.application'
 
 # Database
@@ -126,4 +127,5 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
+LOGIN_URL = '/users/login'
 LOGIN_REDIRECT_URL = '/users/profile'

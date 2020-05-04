@@ -31,8 +31,22 @@ class ShippingInformation(models.Model):
         return "Shipping information: " + self.first_name + " " + self.last_name
 
 
+class Cart(models.Model):
+
+    userID = models.IntegerField()
+    check_out = models.BooleanField()
+    date_created = models.DateTimeField(default=now)
+
+
+class CartItems(models.Model):
+    productID = models.IntegerField()
+    quantity = models.IntegerField()
+    price = models.IntegerField()
+    cartID = models.ForeignKey(Cart, on_delete=models.CASCADE)
+
+
 class Order(models.Model):
-    productID = models.ForeignKey(Product, on_delete=models.PROTECT)
+    cartID = models.ForeignKey(CartItems, on_delete=models.PROTECT)
     datetime = models.DateTimeField(default=now)
     shipping_information_id = models.ForeignKey(ShippingInformation, on_delete=models.PROTECT)
     Payment_information_id = models.ForeignKey(PaymentInformation, on_delete=models.PROTECT)
