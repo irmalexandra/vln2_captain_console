@@ -8,6 +8,6 @@
     <h4 class="card-title">{{ game.name }}</h4>
     <p class="product-description text-left">{{ game.description }}</p>
     <p>{{ game.price }} kr.</p>
-    <a href="#" class="btn btn-outline-secondary">Add to Cart</a>
+    <a href="/carts/add/{{ game.id }}?next={{ request.path }}" class="btn btn-outline-secondary">Add to Cart</a>
   </div>
 </div>
