@@ -7,8 +7,8 @@
         <hr class="light">
         <br>
         <div class="d-flex flex-row flex-wrap justify-content-center">
-        {% for game in top_sellers|slice:":5" %}
-        <div class="card col-2">
+        {% for game in top_sellers|slice:":4" %}
+        <div class="card col-xl-3 col-lg-6 col-md-6 col-sm-12 col-xs-12 padding p-2 text-center justify-content-center">
           <div class="game-card-img-frame">
             <a href="/games/{{ game.id }}">
               <img class="card-img-top img-fluid rounded mx-auto d-block" src="{{ game.product_display_image }}">
@@ -29,8 +29,8 @@
         <hr class="light">
         <br>
         <div class="d-flex flex-row flex-wrap justify-content-center">
-        {% for game in release_date|slice:":5" %}
-        <div class="card col-2">
+        {% for game in release_date|slice:":4" %}
+        <div class="card col-xl-3 col-lg-6 col-md-6 col-sm-12 col-xs-12 padding p-2 text-center justify-content-center">
           <div class="game-card-img-frame">
             <a href="/games/{{ game.id }}">
               <img class="card-img-top img-fluid rounded mx-auto d-block" src="{{ game.product_display_image }}">
