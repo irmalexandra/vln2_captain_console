@@ -37,8 +37,7 @@ INSTALLED_APPS = [
     'users.apps.CaptainConsoleUsersConfig',
     'offers.apps.OffersConfig',
     'consoles.apps.CaptainConsoleConsolesConfig',
-    'carts'
-
+    'carts.apps.CartConfig'
 ]
 
 MIDDLEWARE = [
