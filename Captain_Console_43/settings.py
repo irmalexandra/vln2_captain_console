@@ -65,12 +65,11 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'cart.context_processor.cart_total_amount',
             ],
         },
     },
 ]
-CART_SESSION_ID = 'cart'
+
 WSGI_APPLICATION = 'Captain_Console_43.wsgi.application'
 
 # Database
