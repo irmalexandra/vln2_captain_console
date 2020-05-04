@@ -5,14 +5,26 @@ from django.shortcuts import render, get_object_or_404
 from consoles.models import Console
 
 
-def index(request):
+def index_ascending(request):
     context = {'consoles': Console.objects.all().order_by('name'),
                "consoles_tab": "active"}
     return render(request, 'consoles/index.html', context)
 
 
-def sort_by_price(request):
+def index_descending(request):
+    context = {'consoles': Console.objects.all().order_by('-name'),
+               "consoles_tab": "active"}
+    return render(request, 'consoles/index.html', context)
+
+
+def sort_by_price_ascending(request):
     context = {'consoles': Console.objects.all().order_by('price'),
+               "consoles_tab": "active"}
+    return render(request, 'consoles/index.html', context)
+
+
+def sort_by_price_descending(request):
+    context = {'consoles': Console.objects.all().order_by('-price'),
                "consoles_tab": "active"}
     return render(request, 'consoles/index.html', context)
 
