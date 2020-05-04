@@ -10,6 +10,7 @@ def index(request):
     context = {"users": "active"}
     return render(request, "users/index.html", context)
 
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
