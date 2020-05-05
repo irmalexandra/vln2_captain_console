@@ -1,12 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>Update my information</h2>
-    <form class="form form-vertical" method="post">
-        {% csrf_token %}
-        <fieldset class="form-group">
-        {{ user_form.as_p }}
-        {{ profile_form.as_p }}
-        </fieldset>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-    </form>
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <h2>Update my profile</h2>
+        <br>
+        <form class="form form-vertical" method="post">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                {% for field in user_form %}
+                    <label for="disabledTextInput">{{ field.label_tag }}</label>
+                    <input type="text" id="disabledTextInput" class="form-control" placeholder={{ field }}
+                            <br>
+                {% endfor %}
+                {% for field in profile_form %}
+                    <label for="disabledTextInput">{{ field.label_tag }}</label>
+                    <input type="text" id="disabledTextInput" class="form-control" placeholder={{ field }}
+                            <br>
+                {% endfor %}</fieldset>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </form>
+        <br>
+    </div>
+    <br>
 {% endblock %}
+
