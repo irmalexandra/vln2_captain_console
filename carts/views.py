@@ -14,12 +14,6 @@ def index(request):
         img = ""
         price = 0
 
-    model = {
-        "name":"",
-        "quantity":0,
-        "img":"",
-        "price":0
-    }
     if request.user.is_authenticated:
         user_id = Profile.objects.filter(user=request.user).first().id
         user_cart = Cart.objects.filter(userID=user_id).first()
@@ -43,6 +37,10 @@ def index(request):
             }
         return render(request, 'carts/index.html', context)
 
+    else:
+        print(request.user)
+        print("help")
+
 
 
 
@@ -62,7 +60,9 @@ def cart_add(request, id):
 
         CartItems.objects.create(productID=product.id, quantity=1, cartID=userCart, price=product.price)
 
-    cart = Cart(request)
+    else:
+        print(request.session.session_key, "<--- Segja Emil frá þessu")
+        print("help")
 
     return redirect(request.GET['next'])
 
