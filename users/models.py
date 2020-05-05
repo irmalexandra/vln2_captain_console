@@ -11,9 +11,9 @@ class Profile(models.Model):
     address_1 = models.CharField(max_length=255, null=True)
     address_2 = models.CharField(max_length=255, null=True)
     city = models.CharField(max_length=255, null=True)
-    postcode = models.IntegerField()
-    country = models.CharField(max_length=255)
-    profile_image = models.CharField(max_length=999)
+    postcode = models.IntegerField(null=True)
+    country = models.CharField(max_length=255, null=True)
+    profile_image = models.CharField(max_length=999, null=True)
     payment_information_id = models.ForeignKey(ShippingInformation, on_delete=models.SET_NULL, null=True)
     shipping_information_id = models.ForeignKey(PaymentInformation, on_delete=models.SET_NULL, null=True)
 

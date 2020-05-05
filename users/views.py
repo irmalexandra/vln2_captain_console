@@ -5,6 +5,7 @@ from users.models import Profile
 from users.forms.update_profile_form import EditProfileForm, EditUserForm
 from users.forms.register_form import RegisterForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 
 def index(request):
@@ -16,8 +17,8 @@ def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
+            #new_profile = Profile(user_id='')
             form.save()
-            #username = form.cleaned_data.get('username') # for a registration successful message
             return redirect('/users/login')
         else:
             return render(request, 'users/register.html', {
@@ -36,10 +37,12 @@ def profile(request):
                   'address_1': 'Address 1',
                   'address_2': 'Address 2', 'city': 'City', 'postcode': 'Postcode', 'country': 'Country',
                   'profile_image': 'Profile image'}
-
+    print()
+    user = User.objects.filter(username=request.user.username).first()
     current_profile = Profile.objects.filter(user=request.user).first()
-    user = current_profile.user
-
+    if current_profile == None:
+        current_profile = Profile(user_id=user.id)
+        current_profile.save()
     profile_dict = current_profile.__dict__
     user_dict = user.__dict__
 
