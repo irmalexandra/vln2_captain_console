@@ -37,8 +37,7 @@ INSTALLED_APPS = [
     'users.apps.CaptainConsoleUsersConfig',
     'offers.apps.OffersConfig',
     'consoles.apps.CaptainConsoleConsolesConfig',
-    'carts'
-
+    'carts.apps.CartConfig'
 ]
 
 MIDDLEWARE = [
@@ -71,7 +70,7 @@ TEMPLATES = [
         },
     },
 ]
-CART_SESSION_ID = 'cart'
+
 WSGI_APPLICATION = 'Captain_Console_43.wsgi.application'
 
 # Database
