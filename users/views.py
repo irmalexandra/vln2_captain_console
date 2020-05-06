@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from users.models import Profile
 from users.forms.update_profile_form import EditProfileForm, EditUserForm
