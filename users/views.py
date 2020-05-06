@@ -1,14 +1,18 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, login
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, redirect, reverse
-
-from users.forms.login_form import LoginForm
+from django.contrib.auth import authenticate
+from django.shortcuts import render, redirect
 from users.models import Profile
 from users.forms.update_profile_form import EditProfileForm, EditUserForm
 from users.forms.register_form import RegisterForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
+INFO_KEY_DICT = {'username': '', 'email': '', 'first_name': '', 'last_name': '', 'address_1': '',
+                 'address_2': '', 'city': '', 'postcode': '', 'country': '', 'profile_image': ''}
+LABEL_DICT = {'username': 'Username', 'email': 'Email', 'first_name': 'First name', 'last_name': 'Last name',
+              'address_1': 'Address 1',
+              'address_2': 'Address 2', 'city': 'City', 'postcode': 'Postcode', 'country': 'Country',
+              'profile_image': 'Profile image'}
 
 def index(request):
     context = {"users": "active"}
@@ -32,7 +36,7 @@ def register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            # username = form.cleaned_data.get('username') # for a registration successful message
+            #username = form.cleaned_data.get('username') # for a registration successful message
             return redirect('/users/login')
         else:
             return render(request, 'users/register.html', {
@@ -45,26 +49,22 @@ def register(request):
 
 @login_required
 def profile(request):
-    info_key_dict = {'username': '', 'email': '', 'first_name': '', 'last_name': '', 'address_1': '',
-                     'address_2': '', 'city': '', 'postcode': '', 'country': '', 'profile_image': ''}
-    label_dict = {'username': 'Username', 'email': 'Email', 'first_name': 'First name', 'last_name': 'Last name',
-                  'address_1': 'Address 1',
-                  'address_2': 'Address 2', 'city': 'City', 'postcode': 'Postcode', 'country': 'Country',
-                  'profile_image': 'Profile image'}
 
+    user = User.objects.filter(username=request.user.username).first()
     current_profile = Profile.objects.filter(user=request.user).first()
-    user = current_profile.user
-
+    if current_profile == None:
+        current_profile = Profile(user_id=user.id)
+        current_profile.save()
     profile_dict = current_profile.__dict__
     user_dict = user.__dict__
 
-    for key in info_key_dict:
+    for key in INFO_KEY_DICT:
         if key in profile_dict:
-            info_key_dict[key] = profile_dict[key]
+            INFO_KEY_DICT[key] = profile_dict[key]
         elif key in user_dict:
-            info_key_dict[key] = user_dict[key]
+            INFO_KEY_DICT[key] = user_dict[key]
 
-    complete_info_dict = dict((label_dict[key], value) for (key, value) in info_key_dict.items())
+    complete_info_dict = dict((LABEL_DICT[key], value) for (key, value) in INFO_KEY_DICT.items())
 
     return render(request, 'users/profile.html', {
         'info_dict': complete_info_dict
@@ -75,17 +75,13 @@ def profile(request):
 def update_profile(request):
     current_profile = Profile.objects.filter(user=request.user).first()
 
-    # user portion does not update!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
     if request.method == 'POST':
         profile_form = EditProfileForm(instance=current_profile, data=request.POST)
         user_form = EditUserForm(instance=current_profile.user, data=request.POST)
 
         if profile_form.is_valid() and user_form.is_valid():
-            user_save_form = user_form.save(commit=False)
-            custom_form = profile_form.save(commit=False)
-            custom_form.user = user_save_form
-            custom_form.save()
+            profile_form.save()
+            user_form.save()
             return redirect('profile')
 
     return render(request, 'users/update_profile.html', {
