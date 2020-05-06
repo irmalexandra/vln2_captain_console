@@ -65,7 +65,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'users.context_processors.login_form',
-                'cart.context_processor.cart_total_amount'
             ],
         },
     },

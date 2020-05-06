@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
+#login-error  {
+  display: none;
+  color: #FF0000
+}
 
 .search_button {
   background-color: #29648A;

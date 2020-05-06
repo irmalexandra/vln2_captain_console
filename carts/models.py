@@ -32,7 +32,6 @@ class ShippingInformation(models.Model):
 
 
 class Cart(models.Model):
-
     userID = models.IntegerField()
     check_out = models.BooleanField()
     date_created = models.DateTimeField(default=now)

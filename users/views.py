@@ -1,6 +1,9 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate
-from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, redirect, reverse
+
+from users.forms.login_form import LoginForm
 from users.models import Profile
 from users.forms.update_profile_form import EditProfileForm, EditUserForm
 from users.forms.register_form import RegisterForm
@@ -12,12 +15,24 @@ def index(request):
     return render(request, "users/index.html", context)
 
 
+def user_login(request):
+    username = request.GET.get('username')
+    password = request.GET.get('pwd')
+
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        login(request, user)
+        return HttpResponse('loggedin')
+    else:
+        return HttpResponse('badcredentials')
+
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            #username = form.cleaned_data.get('username') # for a registration successful message
+            # username = form.cleaned_data.get('username') # for a registration successful message
             return redirect('/users/login')
         else:
             return render(request, 'users/register.html', {
