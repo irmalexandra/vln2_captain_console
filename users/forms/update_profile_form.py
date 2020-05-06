@@ -15,12 +15,12 @@ class EditUserForm(ModelForm):
         )
 
 class EditProfileForm(ModelForm):
-    address_1 = forms.CharField(max_length=30, required=False, help_text='Optional')
-    address_2 = forms.CharField(max_length=30, required=False, help_text='Optional')
-    city = forms.CharField(max_length=30, required=False, help_text='Optional')
+    address_1 = forms.CharField(max_length=255, required=False, help_text='Optional')
+    address_2 = forms.CharField(max_length=255, required=False, help_text='Optional')
+    city = forms.CharField(max_length=255, required=False, help_text='Optional')
     postcode = forms.IntegerField(required=False, help_text='Optional')
-    country = forms.CharField(max_length=30, required=False, help_text='Optional')
-    profile_image = forms.CharField(max_length=30, required=False, help_text='Optional')
+    country = forms.CharField(max_length=255, required=False, help_text='Optional')
+    profile_image = forms.CharField(max_length=255, required=False, help_text='Optional')
     class Meta:
         model = Profile
         fields = ('address_1', 'address_2', 'city', 'postcode', 'country', 'profile_image')

@@ -3,23 +3,47 @@
     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <h2>Update my profile</h2>
         <br>
-        <form class="form form-vertical" method="post">
+        {% for field in profile_form %}
+            {% if field.label == 'Profile image' %}
+                {% if field.value != None %}
+                    <img class="rounded-circle" src={{ field.value }}>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        <br>
+        <br>
+        <form class="form-group" method="post">
             {% csrf_token %}
-            <fieldset class="form-group">
+            <fieldset>
+
                 {% for field in user_form %}
-                    <label for="disabledTextInput">{{ field.label_tag }}</label>
-                    <input type="text" id="disabledTextInput" class="form-control" placeholder={{ field }}
-                            <br>
+                    <label> {{ field.label_tag }}</label>
+                    {% if field.label == 'Email address' %}
+                        <input type="email" class="form-control is-valid" {{ field }}
+                        <br>
+                    {% else %}
+                        <input type="text" class="form-control" {{ field }}
+                        <br>
+                    {% endif %}
                 {% endfor %}
+
                 {% for field in profile_form %}
-                    <label for="disabledTextInput">{{ field.label_tag }}</label>
-                    <input type="text" id="disabledTextInput" class="form-control" placeholder={{ field }}
-                            <br>
-                {% endfor %}</fieldset>
+                    <label> {{ field.label }}</label>
+                    {% if field.label == 'Postcode' %}
+                        <input type="number" class="form-control is-valid" {{ field }}
+                    {% elif field.label == 'Profile image' %}
+                        <input type="url" class="form-control is-valid" {{ field }}
+                        <small class="form-text text-muted">Insert image as a URL</small>
+                    {% else %}
+                        <input type="text" class="form-control" {{ field }}
+                    {% endif %}
+                    <br>
+                {% endfor %}
+
+            </fieldset>
             <button type="submit" class="btn btn-primary">Save changes</button>
         </form>
         <br>
     </div>
     <br>
 {% endblock %}
-
