@@ -19,7 +19,6 @@ $(document).ready(function () {
             console.log("im bad cred")
             document.getElementById('login-error').style.display = "block"
             $( "#login-error" ).effect( "shake",{ direction: "left", times: 3, distance: 1} );
-
         }
     });
     })
