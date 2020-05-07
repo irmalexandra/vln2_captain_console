@@ -18,24 +18,17 @@
 
                 {% for field in user_form %}
                     <label> {{ field.label_tag }}</label>
-                    {% if field.label == 'Email address' %}
-                        <input type="email" class="form-control is-valid" {{ field }}
-                        <br>
-                    {% else %}
-                        <input type="text" class="form-control" {{ field }}
-                        <br>
-                    {% endif %}
+                    {{ field }}
+                    <br>
                 {% endfor %}
 
                 {% for field in profile_form %}
                     <label> {{ field.label }}</label>
-                    {% if field.label == 'Postcode' %}
-                        <input type="number" class="form-control is-valid" {{ field }}
-                    {% elif field.label == 'Profile image' %}
-                        <input type="url" class="form-control is-valid" {{ field }}
+                    {% if field.label == 'Profile image' %}
+                        {{ field }}
                         <small class="form-text text-muted">Insert image as a URL</small>
                     {% else %}
-                        <input type="text" class="form-control" {{ field }}
+                        {{ field }}
                     {% endif %}
                     <br>
                 {% endfor %}
