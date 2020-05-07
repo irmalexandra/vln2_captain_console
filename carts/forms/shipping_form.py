@@ -13,4 +13,4 @@ class ShippingForm(ModelForm):
 
     class Meta:
         model = ShippingInformation
-        fields = ('last_name', 'first_name', 'address_1', 'address_2', 'city', 'postcode', 'country')
+        fields = ('first_name', 'last_name', 'address_1', 'address_2', 'city', 'postcode', 'country')

@@ -12,4 +12,4 @@ class PaymentForm(ModelForm):
 
     class Meta:
         model = PaymentInformation
-        fields = ('last_name', 'first_name', 'card_number', 'expiration_date', 'cvv')
+        fields = ('first_name', 'last_name' , 'card_number', 'expiration_date', 'cvv')
