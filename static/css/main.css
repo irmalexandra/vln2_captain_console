@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
-#login-error  {
+.error-field  {
   display: none;
   color: #FF0000;
   width: 250px !important;
@@ -24,6 +24,7 @@
 .navbar-brand img {
   width: 125px;
 }
+
 
 .carousel-inner img {
   width: 100%;

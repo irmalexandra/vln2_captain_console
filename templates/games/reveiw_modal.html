@@ -1,8 +1,8 @@
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="reveiwModal" aria-hidden="true">
+<div class="modal fade" id="reveiwModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="reviewModalLabel">Login</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -21,9 +21,10 @@
 
                 </div>
              {% endfor %}
+
       </div>
       <div class="modal-footer">
-          <div class="error-field">Invalid Username or Password</div>
+          <div id="login-error" class="error-field">Invalid Username or Password</div>
           <button type="button" class="btn btn-primary" id="login-button">Login</button>
       </div>
       </form>

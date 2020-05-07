@@ -1,6 +1,5 @@
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from users.models import Profile
 from users.forms.update_profile_form import EditProfileForm, EditUserForm
@@ -31,21 +30,19 @@ def user_login(request):
     else:
         return HttpResponse('badcredentials')
 
-
 def register(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            #username = form.cleaned_data.get('username') # for a registration successful message
-            return redirect('/users/login')
-        else:
-            return render(request, 'users/register.html', {
-                'form': form
-            })
-    return render(request, 'users/register.html', {
-        'form': RegisterForm()
-    })
+
+    form = RegisterForm(request.POST)
+
+    if form.is_valid():
+        form.save()
+        username = request.POST.get('username')
+        password = request.POST.get('password1')
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        return HttpResponse('loggedin')
+    else:
+        return JsonResponse(form.errors)
 
 
 @login_required
@@ -89,3 +86,13 @@ def update_profile(request):
         'profile_form': EditProfileForm(instance=current_profile),
         'user_form': EditUserForm(instance=current_profile.user)
     })
+
+
+@login_required
+def update_payment_info(request):
+    pass
+
+
+@login_required
+def update_shipping_info(request):
+    pass

@@ -13,12 +13,15 @@
             <a href="/games/{{ game.id }}">
               <img class="card-img-top img-fluid rounded mx-auto d-block" src="{{ game.product_display_image }}">
             </a>
-              <a href="/carts/add/{{ game.id }}?next={{ request.path }}">Add To Cart</a>
+
           </div>
 
           <div class="card-body">
-            <h4 class="card-title">{{ game.name }}</h4>
+              <h4 class="card-title">{{ game.name }}</h4>
+              <p>{{ game.price }} kr.</p>
+              <a href="/carts/add/{{ game.id }}?next={{ request.path }}" class="btn btn-outline-secondary">Add to Cart</a>
           </div>
+
         </div>
         {% endfor %}
         </div>
