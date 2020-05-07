@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
-.main {
-  min-height: 1000px;
+
+#login-error  {
+  display: none;
+  color: #FF0000;
+  width: 250px !important;
 }
 
 .search_button {
@@ -11,6 +14,11 @@
 .card-img-top {
   height: 200px;
   width: 275px;
+}
+
+.rounded-circle {
+  height: 200px;
+  width: 200px;
 }
 
 .navbar-brand img {
@@ -24,6 +32,10 @@
 
 .card-body h4 {
   min-height: 50px;
+}
+
+.rows {
+  margin-left: -100px;
 }
 
 .product-details {
