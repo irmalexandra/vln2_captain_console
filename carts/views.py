@@ -7,49 +7,9 @@ from users.models import Profile
 from django.views.decorators.csrf import csrf_exempt
 
 
+
 def index(request):
-    class Model:
-        name = ""
-        quantity = 0
-        img = ""
-        price = 0
-        id = 0
-
-    models = []
-    price_sum = 0
-    if request.user.is_authenticated:
-        user_id = Profile.objects.filter(user=request.user).first().id
-        user_cart = Cart.objects.filter(userID=user_id).first()
-        if user_cart:
-            cart = CartItems.objects.filter(cartID=user_cart.id)
-            for product in cart:
-                model = Model()
-                model.quantity = product.quantity
-                model.price = product.price
-                model.id = product.productID
-                item = Product.objects.filter(id=product.productID).first()
-                price_sum += product.price
-                model.img = item.product_display_image
-                model.name = item.name
-                models.append(model)
-
-    else:
-        if "cart" in request.session.keys():
-            for product in request.session['cart']:
-                model = Model()
-                model.quantity = product['quantity']
-                model.price = product['price']
-                price_sum += product['price']
-                model.img = product['img']
-                model.name = product['name']
-                model.id = product['id']
-                models.append(model)
-
-    context = {
-        'price_sum': price_sum,
-        'models': models
-    }
-
+    context = get_models(request)
     return render(request, 'carts/index.html', context)
 
 
@@ -77,8 +37,9 @@ def update_cart_items(request):
 
 
 def shipping_info(request):
+    context = get_models(request)
 
-    return render(request, 'carts/shipping_info.html')
+    return render(request, 'carts/shipping_info.html', context)
 
 
 def cart_add(request, id):
@@ -148,3 +109,49 @@ def clear_cart(request):
             request.session.save()
 
         return HttpResponse("success")
+
+
+def get_models(request):
+    class Model:
+        name = ""
+        quantity = 0
+        img = ""
+        price = 0
+        id = 0
+
+    models = []
+    price_sum = 0
+    if request.user.is_authenticated:
+        user_id = Profile.objects.filter(user=request.user).first().id
+        user_cart = Cart.objects.filter(userID=user_id).first()
+        if user_cart:
+            cart = CartItems.objects.filter(cartID=user_cart.id)
+            for product in cart:
+                model = Model()
+                model.quantity = product.quantity
+                model.price = product.price * product.quantity
+                model.id = product.productID
+                item = Product.objects.filter(id=product.productID).first()
+                price_sum += product.price * product.quantity
+                model.img = item.product_display_image
+                model.name = item.name
+                models.append(model)
+
+    else:
+        if "cart" in request.session.keys():
+            for product in request.session['cart']:
+                model = Model()
+                model.quantity = product['quantity']
+                model.price = product['price'] * product['quantity']
+                price_sum += product['price'] * product['quantity']
+                model.img = product['img']
+                model.name = product['name']
+                model.id = product['id']
+                models.append(model)
+
+    context = {
+        'price_sum': price_sum,
+        'products': models
+    }
+
+    return context

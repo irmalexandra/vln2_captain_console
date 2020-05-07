@@ -1,8 +1,8 @@
 
 const NUMBER_OF_PRODUCTS = $("#table-body").children().length- 1
 const TABLE_ROWS = $("#table-body").children()
-var PRODUCT_IDS = []
-var PRODUCTS = {}
+let PRODUCT_IDS = []
+let PRODUCTS = {}
 
 for(i = 0; i < NUMBER_OF_PRODUCTS; i++ ){
     let id = TABLE_ROWS[i].childNodes[5].childNodes[1].childNodes[0].id
@@ -15,14 +15,16 @@ update_total = function () {
         let price = document.getElementById("price-" + PRODUCT_IDS[i]).innerHTML
         total += parseInt(price)
     }
-    document.getElementById("price-total").innerHTML = total
+    document.getElementById("price-total").innerHTML = "Total: " + total + " kr."
 }
 populate_products = function () {
     for (i = 0; i < PRODUCT_IDS.length ; i++) {
+        price = parseInt(document.getElementById("price-" + PRODUCT_IDS[i]).innerHTML)
+        quantity = parseInt(document.getElementById(PRODUCT_IDS[i]).value)
         PRODUCTS[PRODUCT_IDS[i]] =
             {
                 'id': PRODUCT_IDS[i],
-                'price': document.getElementById("price-" + PRODUCT_IDS[i]).innerHTML,
+                'price': price / quantity,
                 'quantity':  document.getElementById(PRODUCT_IDS[i]).value
             }
         document.getElementById("price-" + PRODUCT_IDS[i]).innerHTML = PRODUCTS[PRODUCT_IDS[i]]['quantity'] * PRODUCTS[PRODUCT_IDS[i]]['price']
@@ -35,6 +37,10 @@ update_total()
 $(".quantity").focusout(function (e) {
     let quantity = e.currentTarget.value
     let id = e.currentTarget.id
+
+    if(quantity<1){
+        e.currentTarget.value = 1
+    }
 
     $.ajax({
         type:'POST',
@@ -50,9 +56,12 @@ $(".quantity").focusout(function (e) {
         }
     })
 
-}).change(function (e) {
+}).click(function (e) {
     let quantity = e.currentTarget.value
     let id = e.currentTarget.id
+
+
+
     document.getElementById("price-" + id).innerHTML = parseInt(quantity) * parseInt(PRODUCTS[id]["price"])
     update_total()
 })
@@ -73,7 +82,17 @@ $(".remove-button").click(function (e) {
             $("#product-row-" + id).remove()
             PRODUCT_IDS.splice(PRODUCT_IDS.indexOf(id),1)
             delete PRODUCTS[id]
-            update_total()
+            if(PRODUCT_IDS.length == 0){
+                let replacement = document.createElement("H3")
+                replacement.innerText = "There are no products in your cart"
+                $("#product-table").remove()
+                $("#proceed-button").remove()
+                document.getElementById("main-cart-menu").appendChild(replacement)
+            }
+            else{
+                update_total()
+            }
+
         }
     })
 })
@@ -87,19 +106,15 @@ $("#clear-all").click(function (e) {
     }).done(function (data) {
         if (data === "success") {
             console.log("Cart cleared")
-            let replacement = document.createElement("h1").innerHTML = "Cart is empty"
-            $("#product-table").replaceWith(replacement)
-            $("#submit-button").remove()
+            let replacement = document.createElement("H3")
+            replacement.innerText = "There are no products in your cart"
+            $("#product-table").remove()
+            $("#proceed-button").remove()
+            document.getElementById("main-cart-menu").appendChild(replacement)
             PRODUCT_IDS = []
             PRODUCTS = {}
-            alert("Cart cleared")
         }
     })
-
 })
 
-$('#submit-button').on('click', function (e) {
-    e.preventDefault()
-
-});
 
