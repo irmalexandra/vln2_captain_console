@@ -39,6 +39,7 @@ def update_cart_items(request):
 def shipping_info(request):
     context = get_models(request)
 
+
     return render(request, 'carts/shipping_info.html', context)
 
 

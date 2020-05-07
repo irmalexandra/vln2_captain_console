@@ -2,12 +2,33 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row">
+    <!-- LEFT SIDE -->
         <div class="col-6 text-center">
             <h1>Shipping info</h1>
             <hr class="light">
             <br>
+            <form class="form-group" method="post">
+            {% csrf_token %}
+            <fieldset>
+
+                {% for field in shipping_info_form %}
+                    <label> {{ field.label_tag }}</label>
+                    {{ field }}
+                    <br>
+                {% endfor %}
+
+
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </form>
 
         </div>
+
+
+
+
+
+    <!-- RIGHT SIDE -->
         <div class="col-6 text-center">
             <h1>Cart</h1>
             <hr class="light">
