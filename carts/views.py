@@ -88,7 +88,7 @@ def cart_add(request, id):
         user_id = Profile.objects.filter(user=request.user).first().id
         user_cart = Cart.objects.filter(userID=user_id).first()
         if not user_cart:
-            Cart.objects.create(userID=user_id, check_out=False)
+            user_cart = Cart.objects.create(userID=user_id, check_out=False)
         cart_items = CartItems.objects.filter(cartID=user_cart.id, productID=product.id)
         if len(cart_items) != 0:
             first_item = cart_items.first()
