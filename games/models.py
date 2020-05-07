@@ -15,3 +15,4 @@ class Game(Product):
     console_id = models.ForeignKey(Console, on_delete=models.SET_NULL, null=True)
     genres = models.ManyToManyField(Genre)
     copies_sold = models.IntegerField(default=0)
+
