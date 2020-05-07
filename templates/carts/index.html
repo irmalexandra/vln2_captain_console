@@ -13,6 +13,7 @@
         <br>
         <div class="d-flex flex-row flex-wrap justify-content-center">
         <form action="" method="get" id="actual-form">
+        {% if models %}
         <table class="table" id="product-table">
             <thead id="table-head">
                 <tr>
@@ -27,6 +28,7 @@
                 <tbody id="table-body">
 
                     {% for product in models %}
+
                         <tr class="product-row" id="product-row-{{ product.id }}">
                             <th scope="row">
                                 <img class="card-img-top img-fluid rounded mx-auto d-block" src="{{ product.img }}" style="height: 100px; width: 100px">
@@ -44,6 +46,7 @@
                                 <button type="button" id="{{ product.id }}" class = "remove-button btn btn-primary">Remove</button>
                             </th>
                         </tr>
+
                     {% endfor %}
 
                         <tr>
@@ -63,6 +66,11 @@
             </tbody>
         </table>
         <input type="submit" id="submit-button">
+
+        {% else %}
+            <h3>There are no products in your cart</h3>
+
+        {% endif %}
         </form>
         </div>
         </div>
