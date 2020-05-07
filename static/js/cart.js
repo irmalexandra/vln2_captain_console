@@ -1,8 +1,8 @@
 
 const NUMBER_OF_PRODUCTS = $("#table-body").children().length- 1
 const TABLE_ROWS = $("#table-body").children()
-const PRODUCT_IDS = []
-const PRODUCTS = {}
+var PRODUCT_IDS = []
+var PRODUCTS = {}
 
 for(i = 0; i < NUMBER_OF_PRODUCTS; i++ ){
     let id = TABLE_ROWS[i].childNodes[5].childNodes[1].childNodes[0].id
@@ -71,25 +71,32 @@ $(".remove-button").click(function (e) {
     }).done(function (data) {
         if (data === "success") {
             $("#product-row-" + id).remove()
-            console.log(PRODUCT_IDS)
-            console.log(id)
             PRODUCT_IDS.splice(PRODUCT_IDS.indexOf(id),1)
-            console.log(PRODUCT_IDS)
+            delete PRODUCTS[id]
             update_total()
-            console.log("Product removed")
         }
     })
 })
 $("#clear-all").click(function (e) {
     e.preventDefault()
-    let replacement = document.createElement("h1").innerHTML = "Cart is empty"
-    $("#product-table").replaceWith(replacement)
-    $("#submit-button").remove()
-    alert("Cart cleared")
 
+    $.ajax({
+        type:'POST',
+        async:false,
+        url: '/clear_cart'
+    }).done(function (data) {
+        if (data === "success") {
+            console.log("Cart cleared")
+            let replacement = document.createElement("h1").innerHTML = "Cart is empty"
+            $("#product-table").replaceWith(replacement)
+            $("#submit-button").remove()
+            PRODUCT_IDS = []
+            PRODUCTS = {}
+            alert("Cart cleared")
+        }
+    })
 
 })
-
 
 $('#submit-button').on('click', function (e) {
     e.preventDefault()

@@ -20,18 +20,18 @@ def index(request):
     if request.user.is_authenticated:
         user_id = Profile.objects.filter(user=request.user).first().id
         user_cart = Cart.objects.filter(userID=user_id).first()
-        cart = CartItems.objects.filter(cartID=user_cart.id)
-
-        for product in cart:
-            model = Model()
-            model.quantity = product.quantity
-            model.price = product.price
-            model.id = product.productID
-            item = Product.objects.filter(id=product.productID).first()
-            price_sum += product.price
-            model.img = item.product_display_image
-            model.name = item.name
-            models.append(model)
+        if user_cart:
+            cart = CartItems.objects.filter(cartID=user_cart.id)
+            for product in cart:
+                model = Model()
+                model.quantity = product.quantity
+                model.price = product.price
+                model.id = product.productID
+                item = Product.objects.filter(id=product.productID).first()
+                price_sum += product.price
+                model.img = item.product_display_image
+                model.name = item.name
+                models.append(model)
 
     else:
         if "cart" in request.session.keys():
@@ -98,16 +98,23 @@ def cart_add(request, id):
             CartItems.objects.create(productID=product.id, quantity=1, cartID=user_cart, price=product.price)
 
     else:
+        duplicate = False
         if 'cart' not in request.session.keys():
             request.session['cart'] = []
+        for x in range(len(request.session['cart'])):
+            if request.session['cart'][x]['id'] == product.id:
+                request.session['cart'][x]['quantity'] += 1
+                duplicate = True
 
-        request.session['cart'].append({
-            'name': product.name,
-            'price': product.price,
-            'img': product.product_display_image,
-            'quantity': 1,
-            'id': product.id
-        })
+        if not duplicate:
+            request.session['cart'].append({
+                'name': product.name,
+                'price': product.price,
+                'img': product.product_display_image,
+                'quantity': 1,
+                'id': product.id
+            })
+        request.session.save()
 
     return redirect(request.GET['next'])
 
@@ -129,9 +136,15 @@ def remove_product(request):
 
         return HttpResponse("success")
 
+@csrf_exempt
+def clear_cart(request):
+    if request.is_ajax():
+        if request.user.is_authenticated:
+            user_id = Profile.objects.filter(user=request.user).first().id
+            user_cart = Cart.objects.filter(userID=user_id).first()
+            user_cart.delete()
+        else:
+            request.session.clear()
+            request.session.save()
 
-def cart_clear(request):
-    cart = Cart(request)
-    cart.clear()
-    return redirect("cart_detail")
-
+        return HttpResponse("success")
