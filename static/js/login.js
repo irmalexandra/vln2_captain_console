@@ -15,12 +15,10 @@ $(document).ready(function () {
                 window.location = window.location;
             }
             else if (data == "badcredentials") {
-
-                console.log("im bad cred")
                 document.getElementById('login-error').style.display = "block"
                 $( "#login-error" ).effect( "shake",{ direction: "left", times: 3, distance: 1} );
-
             }
         });
-        })
+     })
+
 })

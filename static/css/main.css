@@ -22,6 +22,11 @@
   width: 275px;
 }
 
+.rounded-circle {
+  height: 200px;
+  width: 200px;
+}
+
 .navbar-brand img {
   width: 125px;
 }
@@ -34,6 +39,10 @@
 
 .card-body h4 {
   min-height: 50px;
+}
+
+.rows {
+  margin-left: -100px;
 }
 
 .product-details {
