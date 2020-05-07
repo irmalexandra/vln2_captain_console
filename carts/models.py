@@ -46,7 +46,7 @@ class CartItems(models.Model):
 
 
 class Order(models.Model):
-    cartID = models.ForeignKey(CartItems, on_delete=models.PROTECT)
+    cartID = models.ForeignKey(Cart, on_delete=models.PROTECT)
     datetime = models.DateTimeField(default=now)
     shipping_information_id = models.ForeignKey(ShippingInformation, on_delete=models.PROTECT)
     Payment_information_id = models.ForeignKey(PaymentInformation, on_delete=models.PROTECT)

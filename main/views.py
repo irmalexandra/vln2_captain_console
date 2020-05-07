@@ -6,6 +6,7 @@ from main.models import Product
 
 
 def index(request):
+    print("In main index :o")
     top_sellers = views.get_game_by_copies_sold()
     releases = views.get_game_latest_releases()
     context = {'top_sellers': top_sellers, 'release_date': releases}

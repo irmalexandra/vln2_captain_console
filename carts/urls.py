@@ -3,12 +3,10 @@ from . import views
 
 urlpatterns = [
     path('carts/add/<int:id>/', views.cart_add, name='cart_add'),
-    path('carts/item_clear/<int:id>/', views.item_clear, name='item_clear'),
-    path('carts/item_increment/<int:id>/',
-         views.item_increment, name='item_increment'),
-    path('carts/item_decrement/<int:id>/',
-         views.item_decrement, name='item_decrement'),
+    path('remove_product', views.remove_product, name='remove_product'),
     path('carts/cart_clear/', views.cart_clear, name='cart_clear'),
-    path('carts/cart_detail/', views.cart_detail, name='order_details'),
     path('carts/', views.index, name="cart-index"),
+    path('update_cart_items', views.update_cart_items),
+    path('carts/shipping_information', views.shipping_info, name='shipping_info'),
+
 ]
