@@ -1,77 +1,77 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-    <!-- LEFT SIDE -->
-        <div class="col-6 text-center">
-            <h1>Shipping info</h1>
-            <hr class="light">
-            <br>
-            <form class="form-group" method="post">
-            {% csrf_token %}
-            <fieldset>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- LEFT SIDE -->
+            <div class="col-6 text-center">
+                <h1>Shipping info</h1>
+                <hr class="light">
+                <br>
+                <form class="form-group" method="post" id="shipping_form">
+                    {% csrf_token %}
+                    <fieldset>
 
-                {% for field in shipping_info_form %}
-                    <label> {{ field.label_tag }}</label>
-                    {{ field }}
-                    <br>
-                {% endfor %}
-
-
-            </fieldset>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-        </form>
-
-        </div>
-
-
-
-
-
-    <!-- RIGHT SIDE -->
-        <div class="col-6 text-center">
-            <h1>Cart</h1>
-            <hr class="light">
-            <br>
-            <div class="d-flex flex-row flex-wrap justify-content-center">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">name</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">price</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <form >
-                        {% for product in products %}
-                            <tr>
-
-                                <th>
-                                    <h4 class="card-title">{{ product.name }}</h4>
-                                </th>
-                                <th>
-                                    <h4>{{ product.quantity }}</h4>
-                                </th>
-                                <th>
-                                    <h4>{{ product.price }}</h4>
-                                </th>
-                            </tr>
+                        {% for field in shipping_info_form %}
+                            <label> {{ field.label_tag }}</label>
+                            {{ field }}
+                            <br>
                         {% endfor %}
-                    </form>
-                    <tr>
-                        <th scope="row">
-                        </th>
-                        <th>
-                        </th>
-                        <th>
-                            <h4>Total: {{ price_sum }}kr.</h4>
-                        </th>
-                    </tr>
-                    </tbody>
-                </table>
+
+
+                    </fieldset>
+                </form>
+
+            </div>
+
+
+
+
+
+            <!-- RIGHT SIDE -->
+            <div class="col-6 text-center">
+                <h1>Cart</h1>
+                <hr class="light">
+                <br>
+                <div class="d-flex flex-row flex-wrap justify-content-center">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">name</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">price</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <form >
+                            {% for product in products %}
+                                <tr>
+
+                                    <th>
+                                        <h4 class="card-title">{{ product.name }}</h4>
+                                    </th>
+                                    <th>
+                                        <h4>{{ product.quantity }}</h4>
+                                    </th>
+                                    <th>
+                                        <h4>{{ product.price }}</h4>
+                                    </th>
+                                </tr>
+                            {% endfor %}
+                        </form>
+                        <tr>
+                            <th scope="row">
+                            </th>
+                            <th>
+                            </th>
+                            <th>
+                                <h4>Total: {{ price_sum }}kr.</h4>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-primary" type="submit" form="shipping_form" >Checkout</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

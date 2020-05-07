@@ -30,6 +30,9 @@ class ShippingInformation(models.Model):
     def __str__(self):
         return "Shipping information: " + self.first_name + " " + self.last_name
 
+    def raw_info(self):
+        return str(self.first_name) + str(self.last_name) + str(self.address_1) + str(self.address_2) + str(self.city) + str(self.postcode) + str(self.country)
+
 
 class Cart(models.Model):
     userID = models.IntegerField()

@@ -1,8 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from carts.forms.cart_items_form import CartItemsForm
+from carts.forms.payment_form import PaymentForm
+from carts.forms.shipping_form import ShippingForm
 from main.models import Product
-from carts.models import Cart, CartItems
+from carts.models import Cart, CartItems, PaymentInformation, ShippingInformation, Order
 from users.models import Profile
 from django.views.decorators.csrf import csrf_exempt
 
@@ -36,9 +38,49 @@ def update_cart_items(request):
         return HttpResponse("success")
 
 
-def shipping_info(request):
+def input_shipping_info(request):
     context = get_models(request)
 
+    if request.method == "POST":
+        shipping_form = ShippingForm(data=request.POST)
+
+        if shipping_form.is_valid():
+
+            if request.user.is_authenticated:
+                profile = Profile.objects.filter(user=request.user).first()
+                shipping_info = ShippingInformation.objects.filter(id=profile.shipping_information_id.id).first()
+                ship = ShippingInformation.objects.all()
+                dupe_id = None
+                for info in ship:
+                    if info.last_name == request.POST['last_name'] and \
+                            info.first_name == request.POST['first_name'] and\
+                            info.city == request.POST['city'] and\
+                            info.postcode == int(request.POST['postcode']) and\
+                            info.address_2 == request.POST['address_2'] and\
+                            info.address_1 == request.POST['address_1'] and \
+                            info.country == request.POST['country']:
+
+                        dupe_id = info.id
+
+                if dupe_id != None:
+                    order = Order.objects.create(shipping_information_id=dupe_id)
+                else:
+                    shipping_info.save()
+                    print(shipping_info.id)
+                    order = Order(shipping_information_id=shipping_info.id)
+
+            print("Shits saved")
+
+    if request.user.is_authenticated:
+        profile = Profile.objects.filter(user=request.user).first()
+        shipping_info = ShippingInformation.objects.filter(id=profile.shipping_information_id.id).first()
+
+    else:
+        shipping_info = ShippingInformation()
+
+
+
+    context['shipping_info_form'] = ShippingForm(instance=shipping_info)
 
     return render(request, 'carts/shipping_info.html', context)
 
