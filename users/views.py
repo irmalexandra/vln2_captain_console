@@ -86,3 +86,13 @@ def update_profile(request):
         'profile_form': EditProfileForm(instance=current_profile),
         'user_form': EditUserForm(instance=current_profile.user)
     })
+
+
+@login_required
+def update_payment_info(request):
+    pass
+
+
+@login_required
+def update_shipping_info(request):
+    pass
