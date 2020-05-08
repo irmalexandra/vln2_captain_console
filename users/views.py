@@ -103,13 +103,13 @@ def update_payment_info(request):
         payment_form = PaymentForm(instance=user_payment_info, data=request.POST)
 
         if payment_form.is_valid():
-            current_profile.payment_information_id = payment_form.save(commit=False)
-            payment_form.save()
+            current_profile.payment_information_id = payment_form.save()
             current_profile.save()
             return redirect('profile')
         payment_form = PaymentForm(instance=user_payment_info, data=request.POST)
     else:
         payment_form = PaymentForm(instance=user_payment_info)
+
     return render(request, 'users/update_payment_info.html', {
         'payment_form': payment_form
     })
@@ -127,12 +127,13 @@ def update_shipping_info(request):
         shipping_form = ShippingForm(instance=user_shipping_info, data=request.POST)
 
         if shipping_form.is_valid():
-            current_profile.shipping_information_id = shipping_form.save(commit=False)
-            shipping_form.save()
+            current_profile.shipping_information_id = shipping_form.save()
             current_profile.save()
             return redirect('profile')
+        shipping_form = ShippingForm(instance=user_shipping_info, data=request.POST)
+    else:
+        shipping_form = ShippingForm(instance=user_shipping_info, initial={"address_2": "optional"})
 
-    shipping_form = ShippingForm(instance=user_shipping_info)
     return render(request, 'users/update_shipping_info.html', {
         'shipping_form': shipping_form
     })
