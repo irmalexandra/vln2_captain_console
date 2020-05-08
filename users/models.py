@@ -26,7 +26,7 @@ class Profile(models.Model):
 class Review(models.Model):
     profileID = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
     gameID = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
-    rating = models.IntegerField()
+    recommend = models.BooleanField(default=True)
     feedback = models.CharField(max_length=999)
     datetime = models.DateTimeField()
 

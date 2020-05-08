@@ -1,13 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
 
-
-.main {
-  min-height: 700px;
-  margin: 0 auto;
-
-}
-
 .error-field  {
   display: none;
   color: #FF0000;

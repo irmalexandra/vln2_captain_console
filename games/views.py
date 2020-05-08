@@ -49,7 +49,15 @@ def get_game_by_id(request, id):
     context = {}
     if reviews:
         context['reviews'] = reviews
+        avg_rating = 0
+        for review in reviews:
+            if review.recommend:
+                avg_rating + 1
+
+        avg_rating /= len(reviews)
+        context['avg_rating'] = avg_rating
     context['game'] = get_object_or_404(Game, pk=id)
+    context['product_id'] = id
     return render(request, 'games/game_details.html', context)
 
 
@@ -72,15 +80,15 @@ def add_review(request):
 
     if request.method == "POST":
         feedback = request.POST['feedback']
-        rating = request.POST['rating']
+        recommend = request.POST['recommend']
         date = datetime.date.today()
         profile_id = profile.id
         product_id = request.POST['product_id']
-        new_review = Review.objects.filter(profileID_id=profile_id, gameID_id=product_id)
-        if new_review:
-            new_review.update(feedback=feedback, rating=rating)
+        review = Review.objects.filter(profileID_id=profile_id, gameID_id=product_id)
+        if review:
+            review.update(feedback=feedback, recommend=recommend)
         else:
-            Review.objects.create(rating=rating,
+            Review.objects.create(recommend=recommend,
                                   feedback=feedback,
                                   datetime=date,
                                   profileID_id=profile_id,
