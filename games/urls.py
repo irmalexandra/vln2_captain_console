@@ -9,6 +9,6 @@ urlpatterns = [
     path('test', views.get_game_by_copies_sold),
     path('price=low_to_high', views.sort_by_price_ascending, name="game_price_ascending"),
     path('price=high_to_low', views.sort_by_price_descending, name="game_price_descending"),
-    path('popular', views.sort_by_most_popular, name="game_most_popular")
-
+    path('popular', views.sort_by_most_popular, name="game_most_popular"),
+    path('add_review', views.add_review, name="add_review")
 ]

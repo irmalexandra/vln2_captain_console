@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'users.context_processors.login_form',
                 'users.context_processors.register_form',
+                'users.context_processors.review_form',
             ],
         },
     },
