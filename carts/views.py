@@ -94,26 +94,15 @@ def input_payment_info(request, shipping_id):
                         expiration_fixed == request.POST['expiration_date'] and \
                         info.cvv == request.POST['cvv']:
                     dupe = True
-                    form_instance = PaymentInformation.objects.filter(id=info.id)
+                    payment_instance = PaymentInformation.objects.filter(id=info.id)
                     print("DUPE")
                     break
 
                 if dupe == None:  # <----- if NOT duplicate
-                    form_instance = payment_form.save()
-                    the_id = form_instance.id
-                    print(the_id)
+                    payment_instance = payment_form.save()
 
-                if request.user.is_authenticated:
-                    user_id = Profile.objects.filter(user=request.user).first().id
-                    cart = Cart.objects.filter(userID=user_id).first()
-                    shipping = ShippingInformation.objects.filter(id=shipping_id).first()
-                    order = Order.objects.create(shipping_information_id=shipping, payment_information_id=form_instance, cartID=cart)
-                    order.save()
-                    cart.check_out = True
-                    cart.save()
-                    new_cart = Cart.objects.create(userID=user_id, check_out=False)
-
-
+                shipping_instance = ShippingInformation.objects.filter(id=shipping_id).first()
+                create_order(request, shipping_instance, payment_instance)
 
 
     if request.user.is_authenticated:
@@ -124,9 +113,34 @@ def input_payment_info(request, shipping_id):
         payment_info = PaymentInformation()
 
     context = get_models(request)
-
     context['payment_info_form'] = PaymentForm(instance=payment_info)
     return render(request, 'carts/payment_info.html', context)
+
+
+
+def create_order(request, shipping_instance, payment_instance):
+    if request.user.is_authenticated:
+        user_id = Profile.objects.filter(user=request.user).first().id
+        cart = Cart.objects.filter(userID=user_id, check_out=False).first()
+        order = Order.objects.create(
+            shipping_information_id=shipping_instance,
+            payment_information_id=payment_instance,
+            cartID=cart
+        )
+        order.save()
+        cart.check_out = True
+        cart.save()
+        print("cart saved", cart.id)
+        Cart.objects.create(userID=user_id, check_out=False)
+    else:
+        print("Idk fam")
+
+
+
+
+
+
+
 
 
 def cart_add(request):
@@ -137,7 +151,7 @@ def cart_add(request):
 
         if request.user.is_authenticated:
             user_id = Profile.objects.filter(user=request.user).first().id
-            user_cart = Cart.objects.filter(userID=user_id).first()
+            user_cart = Cart.objects.filter(userID=user_id, check_out=False).first()
             if not user_cart:
                 user_cart = Cart.objects.create(userID=user_id, check_out=False)
             cart_items = CartItems.objects.filter(cartID=user_cart.id, productID=product.id)
