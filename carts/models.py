@@ -1,5 +1,6 @@
 import datetime as datetime
 from django.db import models
+from creditcards.models import CardExpiryField, CardNumberField, SecurityCodeField
 
 # Create your models here.
 from django.utils.timezone import now
@@ -10,9 +11,9 @@ from main.models import Product
 class PaymentInformation(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    card_number = models.CharField(max_length=10)
-    expiration_date = models.DateTimeField()
-    cvv = models.CharField(max_length=5)
+    card_number = CardNumberField()
+    expiration_date = CardExpiryField()
+    cvv = SecurityCodeField()
 
     def __str__(self):
         return self.first_name + " " + self.last_name

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-
+    <p style="display:none;" id="product_id">{{ product_id }}</p>
     {% include 'games/reveiw_modal.html' %}
     <div class="container-fluid text-left">
       <div class="row padding justify-content-center">
@@ -34,7 +34,8 @@
         <div class="col-md-6 col-xs-12 col-sm-12">
           <h2>Publisher </h2><p>{{ game.manufacturer.name }}</p>
           <h2>Description</h2><p>{{ game.description }}</p>
-          <h2>Price </h2><p>{{ game.price }}</p>
+          <h2>Average Rating</h2><p>{{ avg_rating }} / 5</p>
+          <h2>Price </h2><p>{{ game.price }} kr.</p>
           <a href="/carts/add/{{ game.id }}?next={{ request.path }}" class="btn btn-outline-secondary">Add to Cart</a>
           {% if user.is_authenticated %}
           <a class="btn btn-outline-secondary" href="#" data-toggle="modal" data-target="#reviewModal">Add Review</a>
@@ -51,10 +52,10 @@
             </div>
             {% if reviews %}
             {% for review in reviews %}
-      			<div class="col-md-4 text-left">
-              <h3>Date:</h3> {{ review.datetime }}
-      				<h3>Rating:</h3> {{ review.rating }}
-              <h3>Review:</h3> {{ review.feedback }}
+      			<div class="col-md-4 text-center">
+              <h3>Date</h3> {{ review.datetime }}
+                    <h3>Recommend</h3> {{ review.recommend }} / 5
+              <h3>Review</h3> {{ review.feedback }}
               <hr class="light">
       			</div>
             {% endfor %}
