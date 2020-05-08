@@ -94,40 +94,51 @@ def update_profile(request):
 @login_required
 def update_payment_info(request):
     current_profile = Profile.objects.filter(user=request.user).first()
-    current_payment_info = PaymentInformation.objects.filter(id=current_profile.payment_information_id.id).first()
-    payment_form = PaymentForm(instance=current_payment_info)
+    payment_id = current_profile.payment_information_id
 
-    if current_payment_info == None:
+    if payment_id is None:
         current_payment_info = PaymentInformation()
-        current_payment_info.save()
+    else:
+        current_payment_info = PaymentInformation.objects.filter(
+            id=current_profile.payment_information_id.id).first()
 
     if request.method == 'POST':
         payment_form = PaymentForm(instance=current_payment_info, data=request.POST)
 
         if payment_form.is_valid():
+            current_profile.payment_information_id = payment_form.save(commit=False)
             payment_form.save()
+            current_profile.save()
             return redirect('profile')
-    print()
+
+    payment_form = PaymentForm(instance=current_payment_info)
     return render(request, 'users/update_payment_info.html', {
         'payment_form': payment_form
     })
 
 @login_required
 def update_shipping_info(request):
+
     current_profile = Profile.objects.filter(user=request.user).first()
-    current_shipping_info = ShippingInformation.objects.filter(id=current_profile.shipping_information_id.id).first()
-    if current_shipping_info == None:
+    shipping_id = current_profile.shipping_information_id
+
+    if shipping_id is None:
         current_shipping_info = ShippingInformation()
-        current_shipping_info.save()
+    else:
+        current_shipping_info = ShippingInformation.objects.filter(
+            id=current_profile.shipping_information_id.id).first()
 
     if request.method == 'POST':
-        current_shipping_form = ShippingForm(instance=current_shipping_info, data=request.POST)
+        shipping_form = ShippingForm(instance=current_shipping_info, data=request.POST)
 
-        if current_shipping_form.is_valid():
-            current_shipping_info.save()
+        if shipping_form.is_valid():
+            current_profile.shipping_information_id = shipping_form.save(commit=False)
+            shipping_form.save()
+            current_profile.save()
             return redirect('profile')
 
+    shipping_form = ShippingForm(instance=current_shipping_info)
     return render(request, 'users/update_shipping_info.html', {
-        'shipping_form': ShippingForm(instance=current_shipping_info)
+        'shipping_form': shipping_form
     })
 
