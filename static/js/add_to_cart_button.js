@@ -34,7 +34,6 @@ $(document).ready(function () {
                     $(status).fadeOut(2000)
                 }
                 setTimeout(sleeper, 1500);
-
             }
         })
     })

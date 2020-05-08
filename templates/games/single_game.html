@@ -3,12 +3,14 @@
     <a href="/games/{{ game.id }}">
       <img class="card-img-top img-fluid rounded mx-auto d-block" src="{{ game.product_display_image }}">
     </a>
+      <div id="status-{{ game.id }}" class="alert alert-primary add-to-cart-alert" role="alert" style="width: fit-content"></div>
   </div>
   <div class="card-body">
     <h4 class="card-title">{{ game.name }}</h4>
+      <div id="status-{{ game.id }}" class="alert alert-primary fixed-top" role="alert" style="width: fit-content"></div>
     <p class="product-description text-left">{{ game.description }}</p>
     <p>{{ game.price }} kr.</p>
     <button class="btn btn-outline-secondary add_to_cart_button" id="{{ game.id }}" >Add to Cart</button>
-    <div id="status-{{ game.id }}" class="alert alert-primary card-text" role="alert" style="width: fit-content"></div>
+
   </div>
 </div>
