@@ -4,14 +4,14 @@
         <div class="row">
             <!-- LEFT SIDE -->
             <div class="col-6 text-center">
-                <h1>Shipping information</h1>
+                <h1>Payment information</h1>
                 <hr class="light">
                 <br>
                 <form class="form-group" method="post" id="shipping_form">
                     {% csrf_token %}
                     <fieldset>
 
-                        {% for field in shipping_info_form %}
+                        {% for field in payment_info_form %}
                             <label> {{ field.label_tag }}</label>
                             {{ field }}
                             <br>
