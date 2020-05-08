@@ -53,16 +53,12 @@ def input_shipping_info(request):
                         info.address_1 == request.POST['address_1'] and \
                         info.country == request.POST['country']:
                     the_id = info.id
-                    print(info)
-                    print(info.id)
                     print("DUPE")
                     break
 
             if the_id == None: #<----- if NOT duplicate
-                form_instance = shipping_form.save(commit=False)
+                form_instance = shipping_form.save()
                 the_id = form_instance.id
-                print(the_id)
-                form_instance.save()
 
             return redirect('payment_info', the_id)
 
@@ -82,26 +78,40 @@ def input_shipping_info(request):
 
     return render(request, 'carts/shipping_info.html', context)
 
-def input_payment_info(request, id):
+def input_payment_info(request, shipping_id):
 
     if request.method == "POST":
         payment_form = PaymentForm(data=request.POST)
         if payment_form.is_valid():
-            print("IS WALDO")
-            the_id = None
+            dupe = None
             all_payment_info = PaymentInformation.objects.all()
             for info in all_payment_info:
-                print(info.expiration_date, request.POST['expiration_date'])
+                expiration_date = str(info.expiration_date)
+                expiration_fixed = expiration_date[5:7] + "/" + expiration_date[2:4]
                 if info.last_name == request.POST['last_name'] and \
                         info.first_name == request.POST['first_name'] and \
-                        info.card_number == request.POST['card_number'] and \
-                        info.expiration_date == int(request.POST['expiration_date']) and \
-                        info.cvv == request.POST['ccv']:
-                    the_id = info.id
-                    print(info)
-                    print(info.id)
+                        int(info.card_number) == int(request.POST['card_number']) and \
+                        expiration_fixed == request.POST['expiration_date'] and \
+                        info.cvv == request.POST['cvv']:
+                    dupe = True
+                    form_instance = PaymentInformation.objects.filter(id=info.id)
                     print("DUPE")
                     break
+
+                if dupe == None:  # <----- if NOT duplicate
+                    form_instance = payment_form.save()
+                    the_id = form_instance.id
+                    print(the_id)
+
+                if request.user.is_authenticated:
+                    user_id = Profile.objects.filter(user=request.user).first().id
+                    cart = Cart.objects.filter(userID=user_id).first()
+                    shipping = ShippingInformation.objects.filter(id=shipping_id).first()
+                    order = Order.objects.create(shipping_information_id=shipping, payment_information_id=form_instance, cartID=cart)
+                    order.save()
+                    print("order should b shipping:",shipping_id,"payment:",the_id)
+
+
 
     if request.user.is_authenticated:
         profile = Profile.objects.filter(user=request.user).first()
