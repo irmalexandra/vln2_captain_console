@@ -3,7 +3,8 @@ const NUMBER_OF_PRODUCTS = $("#table-body").children().length- 1
 const TABLE_ROWS = $("#table-body").children()
 let PRODUCT_IDS = []
 let PRODUCTS = {}
-
+let csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value
+console.log(csrf_token + "<--- token?")
 for(i = 0; i < NUMBER_OF_PRODUCTS; i++ ){
     let id = TABLE_ROWS[i].childNodes[5].childNodes[1].childNodes[0].id
     PRODUCT_IDS.push(id)
