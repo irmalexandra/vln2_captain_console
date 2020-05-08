@@ -2,7 +2,7 @@
 {% block content %}
     <p style="display:none;" id="product_id">{{ product_id }}</p>
     {% include 'games/reveiw_modal.html' %}
-    <div class="container-fluid text-left">
+    <div class="container-fluid text-left game-container">
       <div class="row padding justify-content-center">
         <div class="container-fluid justify-content-center text-center">
           <h1>{{ game.name }}</h1>
@@ -32,15 +32,25 @@
           </div>
         </div>
         <div class="col-md-6 col-xs-12 col-sm-12">
-          <h2>Publisher </h2><p>{{ game.manufacturer.name }}</p>
+        <br>
+        <br>
+        <br>
+          <h3>{{ game.manufacturer.name }}</h3>
           <h2>Description</h2><p>{{ game.description }}</p>
-          <h2>Average Rating</h2><p>{{ avg_rating }} / 5</p>
-          <h2>Price </h2><p>{{ game.price }} kr.</p>
+            {% if reviews %}
+                <h3>{{ recommendations }}% of reviewers recommend this title</h3>
+                {% else %}
+                <h3>There are currently no reviews for this title</h3>
+            {% endif %}
+
+          <h2>{{ game.price }} kr.</h2>
           <a href="/carts/add/{{ game.id }}?next={{ request.path }}" class="btn btn-outline-secondary">Add to Cart</a>
           {% if user.is_authenticated %}
           <a class="btn btn-outline-secondary" href="#" data-toggle="modal" data-target="#reviewModal">Add Review</a>
           {% endif %}
+        {% if reviews %}
           <a href="#" class="fun btn btn-outline-secondary" data-toggle="collapse" data-target="#reviews">View Reviews</a>
+        {% endif %}
         </div>
       </div>
       <div class="collapse" id="reviews">
@@ -53,15 +63,20 @@
             {% if reviews %}
             {% for review in reviews %}
       			<div class="col-md-4 text-center">
-              <h3>Date</h3> {{ review.datetime }}
-                    <h3>Recommend</h3> {{ review.recommend }} / 5
-              <h3>Review</h3> {{ review.feedback }}
+              <h5>{{ review.datetime }}</h5>
+                    <h5>{% if review.recommend %}
+                                            <i class="fas fa-thumbs-up"></i>
+                                       {% else %}
+                                            <i class="fas fa-thumbs-down"></i>
+                                       {% endif %}</h5>
+              <h4>Comments</h4> <p>{{ review.feedback }}</p>
+                <small>{{ review.profileID.user.username }}</small>
               <hr class="light">
       			</div>
             {% endfor %}
             {% else %}
             <div class="container-fluid justify-content-center text-center">
-            <h2>There are currently no reviews for this game</h2>
+            <h2>There are currently no reviews for this title</h2>
             {% endif %}
             </div>
       		</div>

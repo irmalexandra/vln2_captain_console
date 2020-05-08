@@ -1,9 +1,11 @@
+import django
 from django.db import models
 
 # Create your models here.
 from carts.models import Order, ShippingInformation, PaymentInformation
 from games.models import Game
 from django.contrib.auth.models import User
+import datetime
 
 from main.models import Product
 
@@ -28,7 +30,7 @@ class Review(models.Model):
     gameID = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     recommend = models.BooleanField(default=True)
     feedback = models.CharField(max_length=999)
-    datetime = models.DateTimeField()
+    datetime = models.DateTimeField(auto_now_add=True, blank=True)
 
 
 class GameReview(models.Model):
