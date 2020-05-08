@@ -14,6 +14,7 @@ LABEL_DICT = {'username': 'Username', 'email': 'Email', 'first_name': 'First nam
               'address_2': 'Address 2', 'city': 'City', 'postcode': 'Postcode', 'country': 'Country',
               'profile_image': 'Profile image'}
 
+
 def index(request):
     context = {"users": "active"}
     return render(request, "users/index.html", context)
@@ -30,8 +31,8 @@ def user_login(request):
     else:
         return HttpResponse('badcredentials')
 
-def register(request):
 
+def register(request):
     form = RegisterForm(request.POST)
 
     if form.is_valid():
@@ -47,7 +48,6 @@ def register(request):
 
 @login_required
 def profile(request):
-
     user = User.objects.filter(username=request.user.username).first()
     current_profile = Profile.objects.filter(user=request.user).first()
     if current_profile == None:

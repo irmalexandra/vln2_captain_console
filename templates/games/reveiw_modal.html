@@ -1,8 +1,9 @@
-<div class="modal fade" id="reveiwModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{% if user.is_authenticated %}
+<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+        <h5 class="modal-title" id="reviewModalLabel">Review</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -10,7 +11,7 @@
       <form class="form" method="POST">
       <div class="modal-body">
             {% csrf_token %}
-            {% for field in login_form %}
+            {% for field in review_form %}
                 <div class="container">
                     <div class="labelText">
                         <b>{{ field.label_tag }}</b>
@@ -24,10 +25,10 @@
 
       </div>
       <div class="modal-footer">
-          <div id="login-error" class="error-field">Invalid Username or Password</div>
-          <button type="button" class="btn btn-primary" id="login-button">Login</button>
+          <button type="button" class="btn btn-primary" id="review-button">Submit</button>
       </div>
       </form>
     </div>
   </div>
 </div>
+{% endif %}

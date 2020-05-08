@@ -5,6 +5,8 @@ from carts.models import Order, ShippingInformation, PaymentInformation
 from games.models import Game
 from django.contrib.auth.models import User
 
+from main.models import Product
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -17,13 +19,13 @@ class Profile(models.Model):
     payment_information_id = models.ForeignKey(ShippingInformation, on_delete=models.SET_NULL, null=True)
     shipping_information_id = models.ForeignKey(PaymentInformation, on_delete=models.SET_NULL, null=True)
 
-
     def __str__(self):
-
         return "username: " + self.user.username
+
 
 class Review(models.Model):
     profileID = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
+    gameID = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     rating = models.IntegerField()
     feedback = models.CharField(max_length=999)
     datetime = models.DateTimeField()
