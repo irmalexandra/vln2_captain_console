@@ -3,7 +3,7 @@ from users.models import Profile
 from django.contrib.auth.models import User
 from django import forms
 
-class EditUserForm(ModelForm):
+class UserForm(ModelForm):
     first_name = forms.CharField(max_length=30, required=False, help_text='Optional')
     last_name = forms.CharField(max_length=30, required=False, help_text='Optional')
     class Meta:
@@ -14,7 +14,7 @@ class EditUserForm(ModelForm):
             'last_name'
         )
 
-class EditProfileForm(ModelForm):
+class ProfileForm(ModelForm):
     address_1 = forms.CharField(max_length=255, required=False, help_text='Optional')
     address_2 = forms.CharField(max_length=255, required=False, help_text='Optional')
     city = forms.CharField(max_length=255, required=False, help_text='Optional')
