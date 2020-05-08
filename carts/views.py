@@ -109,7 +109,10 @@ def input_payment_info(request, shipping_id):
                     shipping = ShippingInformation.objects.filter(id=shipping_id).first()
                     order = Order.objects.create(shipping_information_id=shipping, payment_information_id=form_instance, cartID=cart)
                     order.save()
-                    print("order should b shipping:",shipping_id,"payment:",the_id)
+                    cart.check_out = True
+                    cart.save()
+                    new_cart = Cart.objects.create(userID=user_id, check_out=False)
+
 
 
 
@@ -211,7 +214,7 @@ def get_models(request):
     price_sum = 0
     if request.user.is_authenticated:
         user_id = Profile.objects.filter(user=request.user).first().id
-        user_cart = Cart.objects.filter(userID=user_id).first()
+        user_cart = Cart.objects.filter(userID=user_id, check_out=False).first()
         if user_cart:
             cart = CartItems.objects.filter(cartID=user_cart.id)
             for product in cart:
