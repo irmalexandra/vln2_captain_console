@@ -31,6 +31,9 @@ class ShippingInformation(models.Model):
     def __str__(self):
         return "Shipping information: " + self.first_name + " " + self.last_name
 
+    def raw_info(self):
+        return str(self.first_name) + str(self.last_name) + str(self.address_1) + str(self.address_2) + str(self.city) + str(self.postcode) + str(self.country)
+
 
 class Cart(models.Model):
     userID = models.IntegerField()
@@ -49,7 +52,7 @@ class Order(models.Model):
     cartID = models.ForeignKey(Cart, on_delete=models.PROTECT)
     datetime = models.DateTimeField(default=now)
     shipping_information_id = models.ForeignKey(ShippingInformation, on_delete=models.PROTECT)
-    Payment_information_id = models.ForeignKey(PaymentInformation, on_delete=models.PROTECT)
+    payment_information_id = models.ForeignKey(PaymentInformation, on_delete=models.PROTECT)
 
     def __str__(self):
         return "order made by " + self.Payment_information_id.__str__()

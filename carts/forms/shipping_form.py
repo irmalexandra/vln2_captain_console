@@ -10,6 +10,7 @@ class ShippingForm(ModelForm):
     city = forms.CharField(max_length=255, label='City')
     postcode = forms.IntegerField(label='Postcode')
     country = forms.CharField(max_length=255, label='Country')
+
     class Meta:
         model = ShippingInformation
         fields = ('first_name', 'last_name', 'address_1', 'address_2', 'city', 'postcode', 'country')

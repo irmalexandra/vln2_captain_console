@@ -4,6 +4,11 @@
   min-height: 750px;
 }
 
+.add-to-cart-alert{
+  position: absolute !important;
+  z-index: 10 !important;
+}
+
 .error-field  {
   display: none;
   color: #FF0000;
@@ -174,7 +179,7 @@ figure {
   background-size: cover;
   background-position: center center;
   -webkit-transform: translateZ(0);
-          transform: translateZ(0);
+  transform: translateZ(0);
   will-change: transform;
 }
 /*--- Bootstrap Padding Fix --*/

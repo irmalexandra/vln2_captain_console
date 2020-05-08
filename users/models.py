@@ -18,8 +18,8 @@ class Profile(models.Model):
     postcode = models.IntegerField(null=True)
     country = models.CharField(max_length=255, null=True)
     profile_image = models.CharField(max_length=999, null=True)
-    payment_information_id = models.ForeignKey(ShippingInformation, on_delete=models.SET_NULL, null=True)
-    shipping_information_id = models.ForeignKey(PaymentInformation, on_delete=models.SET_NULL, null=True)
+    payment_information_id = models.ForeignKey(PaymentInformation, on_delete=models.SET_NULL, null=True)
+    shipping_information_id = models.ForeignKey(ShippingInformation, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return "username: " + self.user.username
