@@ -43,33 +43,34 @@ def input_shipping_info(request):
 
     if request.method == "POST":
         shipping_form = ShippingForm(data=request.POST)
-
         if shipping_form.is_valid():
 
-            if request.user.is_authenticated:
-                profile = Profile.objects.filter(user=request.user).first()
-                shipping_info = ShippingInformation.objects.filter(id=profile.shipping_information_id.id).first()
-                ship = ShippingInformation.objects.all()
-                dupe_id = None
-                for info in ship:
-                    if info.last_name == request.POST['last_name'] and \
-                            info.first_name == request.POST['first_name'] and\
-                            info.city == request.POST['city'] and\
-                            info.postcode == int(request.POST['postcode']) and\
-                            info.address_2 == request.POST['address_2'] and\
-                            info.address_1 == request.POST['address_1'] and \
-                            info.country == request.POST['country']:
+            the_id = None
+            all_shipping_info = ShippingInformation.objects.all()
+            for info in all_shipping_info:
+                if info.last_name == request.POST['last_name'] and \
+                        info.first_name == request.POST['first_name'] and \
+                        info.city == request.POST['city'] and \
+                        info.postcode == int(request.POST['postcode']) and \
+                        info.address_2 == request.POST['address_2'] and \
+                        info.address_1 == request.POST['address_1'] and \
+                        info.country == request.POST['country']:
+                    the_id = info.id
+                    print(info)
+                    print(info.id)
+                    print("DUPE")
+                    break
 
-                        dupe_id = info.id
+            if the_id == None: #<----- if NOT duplicate
+                form_instance = shipping_form.save(commit=False)
+                the_id = form_instance.id
+                print(the_id)
+                form_instance.save()
 
-                if dupe_id != None:
-                    order = Order.objects.create(shipping_information_id=dupe_id)
-                else:
-                    shipping_info.save()
-                    print(shipping_info.id)
-                    order = Order(shipping_information_id=shipping_info.id)
+            return redirect('payment_info', the_id)
 
-            print("Shits saved")
+
+
 
     if request.user.is_authenticated:
         profile = Profile.objects.filter(user=request.user).first()
@@ -83,6 +84,39 @@ def input_shipping_info(request):
     context['shipping_info_form'] = ShippingForm(instance=shipping_info)
 
     return render(request, 'carts/shipping_info.html', context)
+
+def input_payment_info(request, id):
+
+    if request.method == "POST":
+        payment_form = PaymentForm(data=request.POST)
+        if payment_form.is_valid():
+            print("IS WALDO")
+            the_id = None
+            all_payment_info = PaymentInformation.objects.all()
+            for info in all_payment_info:
+                print(info.expiration_date, request.POST['expiration_date'])
+                if info.last_name == request.POST['last_name'] and \
+                        info.first_name == request.POST['first_name'] and \
+                        info.card_number == request.POST['card_number'] and \
+                        info.expiration_date == int(request.POST['expiration_date']) and \
+                        info.cvv == request.POST['ccv']:
+                    the_id = info.id
+                    print(info)
+                    print(info.id)
+                    print("DUPE")
+                    break
+
+    if request.user.is_authenticated:
+        profile = Profile.objects.filter(user=request.user).first()
+        payment_info = PaymentInformation.objects.filter(id=profile.shipping_information_id.id).first()
+
+    else:
+        payment_info = PaymentInformation()
+
+    context = get_models(request)
+
+    context['payment_info_form'] = PaymentForm(instance=payment_info)
+    return render(request, 'carts/payment_info.html', context)
 
 
 def cart_add(request, id):
