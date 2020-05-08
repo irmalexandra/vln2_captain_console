@@ -1,12 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from carts.forms.cart_items_form import CartItemsForm
 from carts.forms.payment_form import PaymentForm
 from carts.forms.shipping_form import ShippingForm
 from main.models import Product
 from carts.models import Cart, CartItems, PaymentInformation, ShippingInformation, Order
 from users.models import Profile
-from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -15,7 +13,6 @@ def index(request):
     return render(request, 'carts/index.html', context)
 
 
-@csrf_exempt
 def update_cart_items(request):
     if request.is_ajax():
         item_id = int(request.POST.get('id'))
@@ -119,44 +116,48 @@ def input_payment_info(request, id):
     return render(request, 'carts/payment_info.html', context)
 
 
-def cart_add(request, id):
-    product = Product.objects.filter(id=id).first()
+def cart_add(request):
+    if request.is_ajax():
+        returned_quantity = 1
+        product_id = int(request.POST.get('id'))
+        product = Product.objects.filter(id=product_id).first()
 
-    if request.user.is_authenticated:
-        user_id = Profile.objects.filter(user=request.user).first().id
-        user_cart = Cart.objects.filter(userID=user_id).first()
-        if not user_cart:
-            user_cart = Cart.objects.create(userID=user_id, check_out=False)
-        cart_items = CartItems.objects.filter(cartID=user_cart.id, productID=product.id)
-        if len(cart_items) != 0:
-            first_item = cart_items.first()
-            first_item.quantity += 1
-            first_item.save()
+        if request.user.is_authenticated:
+            user_id = Profile.objects.filter(user=request.user).first().id
+            user_cart = Cart.objects.filter(userID=user_id).first()
+            if not user_cart:
+                user_cart = Cart.objects.create(userID=user_id, check_out=False)
+            cart_items = CartItems.objects.filter(cartID=user_cart.id, productID=product.id)
+            if len(cart_items) != 0:
+                first_item = cart_items.first()
+                first_item.quantity += 1
+                returned_quantity = first_item.quantity
+                first_item.save()
+            else:
+                CartItems.objects.create(productID=product.id, quantity=1, cartID=user_cart, price=product.price)
+
         else:
-            CartItems.objects.create(productID=product.id, quantity=1, cartID=user_cart, price=product.price)
+            duplicate = False
+            if 'cart' not in request.session.keys():
+                request.session['cart'] = []
+            for x in range(len(request.session['cart'])):
+                if request.session['cart'][x]['id'] == product.id:
+                    request.session['cart'][x]['quantity'] += 1
+                    returned_quantity = request.session['cart'][x]['quantity']
+                    duplicate = True
 
-    else:
-        duplicate = False
-        if 'cart' not in request.session.keys():
-            request.session['cart'] = []
-        for x in range(len(request.session['cart'])):
-            if request.session['cart'][x]['id'] == product.id:
-                request.session['cart'][x]['quantity'] += 1
-                duplicate = True
+            if not duplicate:
+                request.session['cart'].append({
+                    'name': product.name,
+                    'price': product.price,
+                    'img': product.product_display_image,
+                    'quantity': 1,
+                    'id': product.id
+                })
+            request.session.save()
+        return HttpResponse(returned_quantity)
 
-        if not duplicate:
-            request.session['cart'].append({
-                'name': product.name,
-                'price': product.price,
-                'img': product.product_display_image,
-                'quantity': 1,
-                'id': product.id
-            })
-        request.session.save()
 
-    return redirect(request.GET['next'])
-
-@csrf_exempt
 def remove_product(request):
     if request.is_ajax():
         product_id = int(request.POST.get("id"))
@@ -174,7 +175,7 @@ def remove_product(request):
 
         return HttpResponse("success")
 
-@csrf_exempt
+
 def clear_cart(request):
     if request.is_ajax():
         if request.user.is_authenticated:

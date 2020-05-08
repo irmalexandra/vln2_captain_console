@@ -1,13 +1,13 @@
-
 const NUMBER_OF_PRODUCTS = $("#table-body").children().length- 1
 const TABLE_ROWS = $("#table-body").children()
 let PRODUCT_IDS = []
 let PRODUCTS = {}
-let csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value
-console.log(csrf_token + "<--- token?")
+const csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value
+
 for(i = 0; i < NUMBER_OF_PRODUCTS; i++ ){
     let id = TABLE_ROWS[i].childNodes[5].childNodes[1].childNodes[0].id
     PRODUCT_IDS.push(id)
+
 }
 
 update_total = function () {
@@ -44,6 +44,7 @@ $(".quantity").focusout(function (e) {
     }
 
     $.ajax({
+        headers:{ "X-CSRFToken": csrf_token } ,
         type:'POST',
         async:false,
         url: '/update_cart_items',
@@ -53,6 +54,7 @@ $(".quantity").focusout(function (e) {
         }
     }).done(function (data) {
         if (data === "success") {
+
             console.log("Cart Updated")
         }
     })
@@ -71,7 +73,9 @@ $(".remove-button").click(function (e) {
     e.preventDefault()
     let id = e.currentTarget.id
 
+
     $.ajax({
+        headers:{ "X-CSRFToken": csrf_token } ,
         type:'POST',
         async:false,
         url: '/remove_product',
@@ -93,6 +97,7 @@ $(".remove-button").click(function (e) {
             else{
                 update_total()
             }
+            console.log("Product removed")
 
         }
     })
@@ -101,6 +106,7 @@ $("#clear-all").click(function (e) {
     e.preventDefault()
 
     $.ajax({
+        headers:{ "X-CSRFToken": csrf_token } ,
         type:'POST',
         async:false,
         url: '/clear_cart'
