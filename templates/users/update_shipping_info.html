@@ -10,7 +10,6 @@
                 {% for field in shipping_form %}
                     <label> {{ field.label_tag }}</label>
                     {{ field }}
-                    <br>
                     {% for error in field.errors %}
                       <p class="error">{{ error }}</p>
                     {% endfor %}
