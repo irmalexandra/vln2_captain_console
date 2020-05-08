@@ -7,21 +7,21 @@
         <form class="form-group" method="post">
             {% csrf_token %}
             <fieldset>
-
                 {% for field in shipping_form %}
+                    <br>
                     <label> {{ field.label_tag }}</label>
                     {{ field }}
                     {% for error in field.errors %}
                       <p class="error">{{ error }}</p>
                     {% endfor %}
                 {% endfor %}
-
             </fieldset>
+            <br>
             <button type="submit" class="btn btn-primary">Save changes</button>
         </form>
         <br>
     </div>
     <br>
     <script src="{% static 'js/update_shipping_info.js'%}"></script>
-
+    <script src="{% static 'js/in_field_placeholder.js' %}"></script>
 {% endblock %}

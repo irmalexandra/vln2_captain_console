@@ -1,6 +1,6 @@
 email_input = document.getElementById("id_email")
 email_input.classList.add("form-control")
-email_input.classList.add("is-valid")
+
 
 first_name_input = document.getElementById("id_first_name")
 first_name_input.classList.add("form-control")
@@ -19,11 +19,10 @@ city_input.classList.add("form-control")
 
 postcode_input = document.getElementById("id_postcode")
 postcode_input.classList.add("form-control")
-postcode_input.classList.add("is-valid")
+
 
 country_input = document.getElementById("id_country")
 country_input.classList.add("form-control")
 
 profile_img_input = document.getElementById("id_profile_image")
 profile_img_input.classList.add("form-control")
-profile_img_input.classList.add("is-valid")
