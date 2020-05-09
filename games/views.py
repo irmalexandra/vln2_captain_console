@@ -17,6 +17,14 @@ SORT_DICT = {
     6: '-copies_sold',
     7: '-release_date'
 }
+SORT_LABELS = {
+    1: 'A-Z',
+    2: 'Z-A',
+    3: 'Price: Low to High',
+    4: 'Price: High to Low',
+    6: 'Top Sellers',
+    7: 'Latest'
+}
 
 
 def genre_filter_view(request, id):
@@ -44,42 +52,72 @@ def filter_sorter(request, genre_id=None, console_id=None, sort=None):
                'consoles': Console.objects.all().order_by('name')}
 
     if genre_id:
-        request.session['genre'] = genre_id
+        if type(genre_id).__name__ == 'int':
+            request.session['genre'] = genre_id
+        else:
+            request.session.pop('genre', None)
+
     if console_id:
-        request.session['console'] = console_id
+        if type(console_id).__name__ == 'int':
+            request.session['console'] = console_id
+        else:
+            request.session.pop('console', None)
+
     if sort:
-        request.session['sort'] = sort
+        if type(sort).__name__ == 'int':
+            request.session['sort'] = sort
+
+    if 'genre' not in request.session:
+        context['genre_label'] = 'All'
+    if 'console' not in request.session:
+        context['console_label'] = 'All'
+    if 'sort' not in request.session:
+        print(SORT_LABELS[1])
+        context['sort_label'] = SORT_LABELS[1]
 
     if 'genre' in request.session and 'console' in request.session and 'sort' in request.session:
         context['games'] = Game.objects.filter(genres=request.session['genre'],
                                                console_id=request.session['console']).order_by(
             SORT_DICT[request.session['sort']])
+        context['genre_label'] = Genre.objects.filter(id=request.session['genre']).first().name
+        context['console_label'] = Console.objects.filter(id=request.session['console']).first().name
+        context['sort_label'] = SORT_LABELS[request.session['sort']]
         return render(request, 'games/index.html', context)
 
     elif 'genre' in request.session and 'sort' in request.session:
         context['games'] = Game.objects.filter(genres=request.session['genre']).order_by(
             SORT_DICT[request.session['sort']])
+        context['genre_label'] = Genre.objects.filter(id=request.session['genre']).first().name
+        context['sort_label'] = SORT_LABELS[request.session['sort']]
         return render(request, 'games/index.html', context)
 
     elif 'console' in request.session and 'sort' in request.session:
         context['games'] = Game.objects.filter(console_id=request.session['console']).order_by(
             SORT_DICT[request.session['sort']])
+        context['console_label'] = Console.objects.filter(id=request.session['console']).first().name
+        context['sort_label'] = SORT_LABELS[request.session['sort']]
+        return render(request, 'games/index.html', context)
 
     elif 'genre' in request.session and 'console' in request.session:
         context['games'] = Game.objects.filter(genres=request.session['genre'],
                                                console_id=request.session['console']).order_by('name')
+        context['genre_label'] = Genre.objects.filter(id=request.session['genre']).first().name
+        context['console_label'] = Console.objects.filter(id=request.session['console']).first().name
         return render(request, 'games/index.html', context)
 
     elif 'genre' in request.session:
         context['games'] = Game.objects.filter(genres=request.session['genre']).order_by('name')
+        context['genre_label'] = Genre.objects.filter(id=request.session['genre']).first().name
         return render(request, 'games/index.html', context)
 
     elif 'console' in request.session:
         context['games'] = Game.objects.filter(console_id=request.session['console']).order_by('name')
+        context['console_label'] = Console.objects.filter(id=request.session['console']).first().name
         return render(request, 'games/index.html', context)
 
     elif 'sort' in request.session:
         context['games'] = Game.objects.all().order_by(SORT_DICT[request.session['sort']])
+        context['sort_label'] = SORT_LABELS[request.session['sort']]
         return render(request, 'games/index.html', context)
 
     else:
@@ -193,7 +231,6 @@ def add_review(request):
                                   gameID_id=product_id)
 
     return HttpResponse("Check")
-
 
 # def filter_by_genre(request, id):
 #     context = {'games': Game.objects.filter(genres=id),

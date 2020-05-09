@@ -16,5 +16,7 @@ urlpatterns = [
     # path('console/<int:id>', views.filter_by_console, name="filter_by_console"),
     path('sort/<int:id>', views.game_sort_view, name='game_sort_view'),
     path('filter_by_genre/<int:id>', views.genre_filter_view, name='filter_by_genre'),
+    path('filter_by_genre/<str:id>', views.genre_filter_view, name='filter_by_genre'),
     path('filter_by_console/<int:id>', views.console_filter_view, name='filter_by_console'),
+    path('filter_by_console/<str:id>', views.console_filter_view, name='filter_by_console'),
 ]
