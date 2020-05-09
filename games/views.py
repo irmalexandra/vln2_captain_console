@@ -177,7 +177,8 @@ def get_game_by_id(request, id):
     if request.user.is_authenticated:
         recent = RecentlyViewed.objects.filter(productID=id).first()
         if recent is None:
-            RecentlyViewed.objects.create(productID=Game.objects.filter(id=id).first(), profileID_id=request.user.profile.id)
+            RecentlyViewed.objects.create(productID=Game.objects.filter(id=id).first(),
+                                          profileID_id=request.user.profile.id)
         else:
             recent.date = datetime.datetime.now()
             recent.save()
@@ -211,6 +212,7 @@ def get_game_by_copies_sold():
 def get_game_latest_releases():
     games = Game.objects.all().order_by('-release_date')
     return games
+
 
 def get_recently_viewed(request):
     recents = RecentlyViewed.objects.filter(profileID_id=request.user.profile.id).order_by('-date')
