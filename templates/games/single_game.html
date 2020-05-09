@@ -6,7 +6,11 @@
       <div id="status-{{ game.id }}" class="alert alert-primary add-to-cart-alert" role="alert" style="width: fit-content"></div>
   </div>
   <div class="card-body">
-    <h4 class="card-title">{{ game.name }}</h4>
+    <h4 class="card-title">{{ game.name }}
+      <br>
+      <small><b>{{ game.console_id}}</b></small>
+    </h4>
+
       <div id="status-{{ game.id }}" class="alert alert-primary fixed-top" role="alert" style="width: fit-content"></div>
     <p class="product-description text-left">{{ game.description }}</p>
     <p>{{ game.price }} kr.</p>

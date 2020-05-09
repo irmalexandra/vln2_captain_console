@@ -5,7 +5,10 @@
     </a>
   </div>
   <div class="card-body">
-    <h4 class="card-title">{{ game.name }}</h4>
+    <h4 class="card-title">{{ game.name }}
+      <br>
+      <small><b>{{ game.console_id}}</b></small>
+    </h4>
     <p class="product-description text-left">{{ game.description }}</p>
     <p>{{ game.price }} kr.</p>
     <a href="#" class="btn btn-outline-secondary">Add to Cart</a>
