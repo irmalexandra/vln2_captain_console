@@ -130,7 +130,13 @@ hr.light {
   color: #2e9CCA !important;
   text-shadow: 1px 1px 10px #000000;
   text-decoration: underline;
+}
 
+#search-button {
+  margin-top: 16px
+}
+.search-results {
+  color: #000000;
 }
 
 /*---Media Queries --*/

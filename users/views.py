@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-from users.models import Profile
+from users.models import Profile, SearchHistory
 from carts.models import ShippingInformation, PaymentInformation
 from users.forms.update_profile_form import ProfileForm, UserForm
 from users.forms.register_form import RegisterForm
@@ -66,9 +66,11 @@ def profile(request):
             INFO_KEY_DICT[key] = user_dict[key]
 
     complete_info_dict = dict((LABEL_DICT[key], value) for (key, value) in INFO_KEY_DICT.items())
+    searches = SearchHistory.objects.filter(profileID=current_profile.id).order_by('-id').all()
 
     return render(request, 'users/profile.html', {
-        'info_dict': complete_info_dict
+        'info_dict': complete_info_dict,
+        'searches': searches
     })
 
 
