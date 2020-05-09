@@ -1,11 +1,9 @@
-import django
 from django.db import models
-
-# Create your models here.
+from django_countries.fields import CountryField
 from carts.models import Order, ShippingInformation, PaymentInformation
 from games.models import Game
 from django.contrib.auth.models import User
-import datetime
+
 
 from main.models import Product
 
@@ -16,7 +14,7 @@ class Profile(models.Model):
     address_2 = models.CharField(max_length=255, null=True)
     city = models.CharField(max_length=255, null=True)
     postcode = models.IntegerField(null=True)
-    country = models.CharField(max_length=255, null=True)
+    country = CountryField(null=True)
     profile_image = models.CharField(max_length=999, null=True)
     payment_information_id = models.ForeignKey(PaymentInformation, on_delete=models.SET_NULL, null=True)
     shipping_information_id = models.ForeignKey(ShippingInformation, on_delete=models.SET_NULL, null=True)
