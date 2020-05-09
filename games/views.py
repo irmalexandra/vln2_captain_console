@@ -14,7 +14,8 @@ SORT_DICT = {
     3: 'price',
     4: '-price',
     5: 'copies_sold',
-    6: '-copies_sold'
+    6: '-copies_sold',
+    7: '-release_date'
 }
 
 
@@ -33,6 +34,7 @@ def game_sort_view(request, id):
 def game_default_view(request):
     request.session.pop('genre', None)
     request.session.pop('console', None)
+    request.session.pop('sort', None)
     return filter_sorter(request)
 
 
