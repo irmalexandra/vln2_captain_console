@@ -1,8 +1,7 @@
-import datetime as datetime
+
 from django.db import models
 from creditcards.models import CardExpiryField, CardNumberField, SecurityCodeField
-
-# Create your models here.
+from django_countries.fields import CountryField
 from django.utils.timezone import now
 
 from main.models import Product
@@ -26,7 +25,7 @@ class ShippingInformation(models.Model):
     address_2 = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     postcode = models.IntegerField()
-    country = models.CharField(max_length=255)
+    country = CountryField()
 
     def __str__(self):
         return "Shipping information: " + self.first_name + " " + self.last_name
