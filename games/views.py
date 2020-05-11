@@ -15,7 +15,9 @@ SORT_DICT = {
     4: '-price',
     5: 'copies_sold',
     6: '-copies_sold',
-    7: '-release_date'
+    7: '-release_date',
+    8: '-rating',
+    9: 'rating'
 }
 SORT_LABELS = {
     1: 'A-Z',
@@ -23,7 +25,9 @@ SORT_LABELS = {
     3: 'Price: Low to High',
     4: 'Price: High to Low',
     6: 'Top Sellers',
-    7: 'Latest'
+    7: 'Latest',
+    8: 'Rating: Highest-Lowest',
+    9: 'Rating: Lowest-Highest'
 }
 
 
@@ -174,6 +178,7 @@ def filter_sorter(request, genre_id=None, console_id=None, sort=None):
 
 
 def get_game_by_id(request, id):
+    context = {}
     if request.user.is_authenticated:
         recent = RecentlyViewed.objects.filter(productID=id).first()
         if recent is None:
@@ -183,20 +188,18 @@ def get_game_by_id(request, id):
             recent.date = datetime.datetime.now()
             recent.save()
     reviews = Review.objects.filter(gameID_id=id)
-    context = {}
+    #
     if reviews:
         context['reviews'] = reviews
-        recommendations = 0
-        for review in reviews:
-            if review.recommend:
-                user = review.profileID.user.username
-                print(review.recommend)
-                recommendations += 1
-                print(recommendations)
+    #     recommendations = 0
+    #     for review in reviews:
+    #         if review.recommend:
+    #             user = review.profileID.user.username
+    #             recommendations += 1
+    #
+    #     recommendations /= len(reviews)
+    #     recommendations *= 100
 
-        recommendations /= len(reviews)
-        recommendations *= 100
-        context['recommendations'] = recommendations
     context['game'] = get_object_or_404(Game, pk=id)
     context['product_id'] = id
     return render(request, 'games/game_details.html', context)
@@ -243,6 +246,19 @@ def add_review(request):
                                   datetime=date,
                                   profileID_id=profile_id,
                                   gameID_id=product_id)
+        reviews = Review.objects.filter(gameID_id=request.POST['product_id'])
+        if reviews:
+            recommendations = 0
+            for review in reviews:
+                if review.recommend:
+                    user = review.profileID.user.username
+                    recommendations += 1
+
+            recommendations /= len(reviews)
+            recommendations *= 100
+        game = Game.objects.filter(id=product_id).first()
+        game.rating = recommendations
+        game.save()
 
     return HttpResponse("Check")
 
