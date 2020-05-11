@@ -3,24 +3,24 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div id="profile-image" class="col-xl-12 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+            <div id="profile-image" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                 <h2>My profile</h2>
                 <br>
-                {% for key, value in info_dict.items %}
+                {% for key, value in profile_info_dict.items %}
                     {%  if key == "Profile image" %}
                         {%  if value != None %}
                             <img class="rounded-circle" src={{ value }}>
                         {% endif %}
                     {% endif %}
                 {% endfor %}
-                <br>
-                <br>
             </div>
-            <div id="profile-field" class="col-xl-6 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+            <div id="profile-field" class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12 card">
+                <h3>Profile information</h3>
+                <hr class="light float-left">
                 <form>
                 {% csrf_token %}
-                    <fieldset disabled class="col-xl-8">
-                        {% for key, value in info_dict.items %}
+                    <fieldset disabled class="col-xl-12 col-lg-7 col-md-7 col-sm-9 col-xs-12">
+                        {% for key, value in profile_info_dict.items %}
                             {%  if key != "Profile image" %}
                                 <label for="disabledTextInput">{{ key }}:</label>
                                 {%  if value != None %}
@@ -33,26 +33,68 @@
                         {% endfor %}
                     </fieldset>
                 </form>
-                <a class="btn btn-primary my-2" href="profile/edit">Edit profile</a>
-                <br>
-                <a class="btn btn-primary my-2" href="profile/editpayment">Edit payment information</a>
-                <br>
-                <a class="btn btn-primary my-2" href="profile/editshipping">Edit shipping information</a>
+
+                <a class="btn btn-primary my-2 edit-button" href="profile/edit">Edit profile</a>
             </div>
-            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+            <div id="shipping-field" class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12 card">
+                <h3>Shipping information</h3>
+                <hr class="light float-left">
+                <form>
+                {% csrf_token %}
+                    <fieldset disabled class="col-xl-12 col-lg-7 col-md-7 col-sm-9 col-xs-12">
+                        {% for key, value in shipping_info_dict.items %}
+                            {%  if key != "Profile image" %}
+                                <label for="disabledTextInput">{{ key }}:</label>
+                                {%  if value != None %}
+                                    <input type="text" id="disabledTextInput" class="form-control" placeholder={{ value }}>
+                                {% else %}
+                                    <input type="text" id="disabledTextInput" class="form-control" placeholder="">
+                                {% endif %}
+                                <br>
+                                {% endif %}
+                        {% endfor %}
+                    </fieldset>
+                </form>
+                <a class="btn btn-primary my-2 edit-button" href="profile/editshipping">Edit shipping information</a>
+            </div>
+            <div id="payment-field" class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12 card">
+                <h3>Payment information</h3>
+                <hr class="light float-left">
+                <form>
+                {% csrf_token %}
+                    <fieldset disabled class="col-xl-12 col-lg-7 col-md-7 col-sm-9 col-xs-12">
+                        {% for key, value in payment_info_dict.items %}
+                            {%  if key != "Profile image" %}
+                                <label for="disabledTextInput">{{ key }}:</label>
+                                {%  if value != None %}
+                                    <input type="text" id="disabledTextInput" class="form-control" placeholder={{ value }}>
+                                {% else %}
+                                    <input type="text" id="disabledTextInput" class="form-control" placeholder="">
+                                {% endif %}
+                                <br>
+                                {% endif %}
+                        {% endfor %}
+                    </fieldset>
+                </form>
+
+                <a class="btn btn-primary my-2 edit-button" href="profile/editpayment">Edit payment information</a>
+
+            </div>
+            <hr class="light float-left">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <a id="search-button" class="fun btn btn-outline-secondary collapsed" href="#" data-toggle="collapse"
                    data-target="#searches" aria-expanded="false">View recent searches</a>
                 <div class="collapse" id="searches">
                     <div class="row text-center">
                         {% if searches %}
-                            <ul class="list-group col-xl-6 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                            <ul class="list-group col-xl-4 col-lg-6 col-md-7 col-sm-8 col-xs-9 search-results">
                             {% for search in searches %}
-                                <li class="list-group-item"><a class="search-results" href="#">{{ search.search }}</a></li>
+                                <li class="list-group-item list-group-item-primary"><a class="search-result" href="#">{{ search.search }}</a></li>
                             {% endfor %}
                             </ul>
                         {% else %}
                             <div class="container-fluid justify-content-center text-center">
-                                <h2>There are no search entries tied to this account.</h2>
+                                <h4 class="float-left">There are no search entries tied to this account.</h4>
                             </div>
                         {% endif %}
                     </div>
