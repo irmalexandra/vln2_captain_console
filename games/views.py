@@ -195,9 +195,7 @@ def get_game_by_id(request, id):
                 print(recommendations)
 
         recommendations /= len(reviews)
-        print(recommendations)
         recommendations *= 100
-        print(recommendations)
         context['recommendations'] = recommendations
     context['game'] = get_object_or_404(Game, pk=id)
     context['product_id'] = id

@@ -7,3 +7,6 @@ from main.models import Product
 class Console(Product):
     warranty = models.DateTimeField()
     specifications = models.TextField()
+
+    def get_url(self):
+        return 'consoles'
