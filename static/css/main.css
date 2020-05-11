@@ -1,7 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
+.game-container {
+  min-height: 750px;
+}
+
 .add-to-cart-alert{
-  position: absolute !important;
+  width: 90%;
+  position: absolute;
   z-index: 10 !important;
 }
 
@@ -126,7 +131,13 @@ hr.light {
   color: #2e9CCA !important;
   text-shadow: 1px 1px 10px #000000;
   text-decoration: underline;
+}
 
+#search-button {
+  margin-top: 16px
+}
+.search-results {
+  color: #000000;
 }
 
 /*---Media Queries --*/
@@ -180,7 +191,7 @@ figure {
 }
 /*--- Bootstrap Padding Fix --*/
 [class*="col-"] {
-  padding: 1rem;
+    padding: 1rem;
 }
 
 

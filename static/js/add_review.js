@@ -1,19 +1,7 @@
 $(document).ready(function () {
     $('#review-button').on('click', function (e) {
-        let recommend
-        var yes = document.getElementById('id_recommend_0').value
-        var no = document.getElementById('id_recommend_1').value
-        console.log(yes)
-        console.log(no)
-        if (yes == 'True'){
-            console.log("im in yes")
+        var recommend = document.getElementById('id_recommend').value
 
-            recommend = yes
-        }
-        if (no == 'True'){
-            console.log("im in no")
-            recommend = no
-        }
         console.log(recommend)
         var feedback = $.trim($('#id_feedback').val());
         var datetime = $.trim($('#id_datetime').val());

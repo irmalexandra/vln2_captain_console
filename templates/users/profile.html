@@ -1,42 +1,66 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
-        <h2>My profile</h2>
-        <br>
-        {% for key, value in info_dict.items %}
-            {%  if key == "Profile image" %}
-                {%  if value != None %}
-                    <img class="rounded-circle" src={{ value }}>
-                {% endif %}
-            {% endif %}
-        {% endfor %}
-        <br>
-        <br>
-        <form>
-        {% csrf_token %}
-            <fieldset disabled>
+    <div class="container-fluid">
+        <div class="row">
+            <div id="profile-image" class="col-xl-12 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <h2>My profile</h2>
+                <br>
                 {% for key, value in info_dict.items %}
-                    {%  if key != "Profile image" %}
-                        <label for="disabledTextInput">{{ key }}:</label>
+                    {%  if key == "Profile image" %}
                         {%  if value != None %}
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder={{ value }}>
-                        {% else %}
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="">
+                            <img class="rounded-circle" src={{ value }}>
                         {% endif %}
-                        <br>
-                        {% endif %}
+                    {% endif %}
                 {% endfor %}
-            </fieldset>
-        </form>
-        <br>
-        <a class="btn btn-primary my-2" href="profile/edit">Edit profile</a>
-        <br>
-        <a class="btn btn-primary my-2" href="profile/editpayment">Edit payment information</a>
-        <br>
-        <a class="btn btn-primary my-2" href="profile/editshipping">Edit shipping information</a>
-
-
+                <br>
+                <br>
+            </div>
+            <div id="profile-field" class="col-xl-6 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <form>
+                {% csrf_token %}
+                    <fieldset disabled class="col-xl-8">
+                        {% for key, value in info_dict.items %}
+                            {%  if key != "Profile image" %}
+                                <label for="disabledTextInput">{{ key }}:</label>
+                                {%  if value != None %}
+                                    <input type="text" id="disabledTextInput" class="form-control" placeholder={{ value }}>
+                                {% else %}
+                                    <input type="text" id="disabledTextInput" class="form-control" placeholder="">
+                                {% endif %}
+                                <br>
+                                {% endif %}
+                        {% endfor %}
+                    </fieldset>
+                </form>
+                <a class="btn btn-primary my-2" href="profile/edit">Edit profile</a>
+                <br>
+                <a class="btn btn-primary my-2" href="profile/editpayment">Edit payment information</a>
+                <br>
+                <a class="btn btn-primary my-2" href="profile/editshipping">Edit shipping information</a>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <a id="search-button" class="fun btn btn-outline-secondary collapsed" href="#" data-toggle="collapse"
+                   data-target="#searches" aria-expanded="false">View recent searches</a>
+                <div class="collapse" id="searches">
+                    <div class="row text-center">
+                        {% if searches %}
+                            <ul class="list-group col-xl-6 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                            {% for search in searches %}
+                                <li class="list-group-item"><a class="search-results" href="#">{{ search.search }}</a></li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <div class="container-fluid justify-content-center text-center">
+                                <h2>There are no search entries tied to this account.</h2>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <br>
+    <script src="{% static 'js/use_search_result.js'%}"></script>
 {% endblock %}
 

@@ -30,8 +30,8 @@ def sort_by_price_descending(request):
 
 
 def get_console_by_id(request, id):
-    context = {'console': get_object_or_404(Console, pk=id)}
-    return render(request, 'consoles/console_details.html', context)
+    context = {'product': get_object_or_404(Console, pk=id)}
+    return render(request, 'product_details.html', context)
 
 
 def get_console_by_copies_sold(request):
