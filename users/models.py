@@ -50,3 +50,9 @@ class RecentlyViewed(models.Model):
     date = models.DateTimeField(auto_now_add=True, blank=True)
     productID = models.ForeignKey(Game, on_delete=models.CASCADE, null=True)
     profileID = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
+
+
+class RecentlyViewedAnonymous(models.Model):
+    date = models.DateTimeField(auto_now_add=True, blank=True)
+    productID = models.ForeignKey(Game, on_delete=models.CASCADE, null=True)
+    sessionID = models.CharField(max_length=255)

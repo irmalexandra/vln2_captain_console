@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 import datetime
 from consoles.models import Console
 from games.models import Game, Genre
-from users.models import Profile, Review, GameReview, RecentlyViewed
+from users.models import Profile, Review, GameReview, RecentlyViewed, RecentlyViewedAnonymous
 
 # Create your views here.
 SORT_DICT = {
@@ -180,26 +180,25 @@ def filter_sorter(request, genre_id=None, console_id=None, sort=None):
 def get_game_by_id(request, id):
     context = {}
     if request.user.is_authenticated:
-        recent = RecentlyViewed.objects.filter(productID=id).first()
+        recent = RecentlyViewed.objects.filter(productID=id, profileID_id=request.user.profile.id).first()
         if recent is None:
             RecentlyViewed.objects.create(productID=Game.objects.filter(id=id).first(),
                                           profileID_id=request.user.profile.id)
         else:
             recent.date = datetime.datetime.now()
             recent.save()
+    else:
+        if 'recent_viewed' not in request.session:
+            request.session['recent_viewed'] = []
+        if len(request.session['recent_viewed']) >= 4:
+            request.session['recent_viewed'].pop()
+        request.session['recent_viewed'].insert(0, id)
+    print(request.session['recent_viewed'])
+    request.session.save()
+
     reviews = Review.objects.filter(gameID_id=id)
-    #
     if reviews:
         context['reviews'] = reviews
-    #     recommendations = 0
-    #     for review in reviews:
-    #         if review.recommend:
-    #             user = review.profileID.user.username
-    #             recommendations += 1
-    #
-    #     recommendations /= len(reviews)
-    #     recommendations *= 100
-
     context['game'] = get_object_or_404(Game, pk=id)
     context['product_id'] = id
     return render(request, 'games/game_details.html', context)
@@ -216,10 +215,17 @@ def get_game_latest_releases():
 
 
 def get_recently_viewed(request):
-    recents = RecentlyViewed.objects.filter(profileID_id=request.user.profile.id).order_by('-date')
     products = []
-    for product in recents:
-        products.append(product.productID)
+    if request.user.is_authenticated:
+        recent = RecentlyViewed.objects.filter(profileID_id=request.user.profile.id).order_by('-date')
+        for product in recent:
+            products.append(product.productID)
+    else:
+        if 'recent_viewed' in request.session:
+            for id in request.session['recent_viewed']:
+                products.append(get_object_or_404(Game, pk=id))
+    print(request.session['recent_viewed'])
+
     return products
 
 

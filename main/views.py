@@ -18,19 +18,18 @@ def index(request):
     releases = views.get_game_latest_releases()
 
     context = {'top_sellers': top_sellers, 'release_date': releases}
+    recently_viewed = views.get_recently_viewed(request)
+    context['recently_viewed'] = recently_viewed
 
-    if request.user.is_authenticated:
-        recently_viewed = views.get_recently_viewed(request)
-        context['recently_viewed'] = recently_viewed
     return render(request, 'main/index.html', context)
 
 
 def search(request):
     search_string = request.GET.get('search_field')
-    # if request.user.is_authenticated:
-    #     profile = Profile.objects.filter(user=request.user).first()
-    #     search_instance = SearchHistory.objects.create(profileID=profile, search=search_string)
-    #     search_instance.save()
+    if request.user.is_authenticated:
+         profile = Profile.objects.filter(user=request.user).first()
+         search_instance = SearchHistory.objects.create(profileID=profile, search=search_string)
+         search_instance.save()
 
     games = Game.objects.filter(name__icontains=search_string)
     consoles = Console.objects.filter(name__icontains=search_string)
