@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div id="profile-image" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div id="profile-image" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                 <h2>My profile</h2>
                 <br>
                 {% for key, value in profile_info_dict.items %}
@@ -14,7 +14,7 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            <div id="profile-field" class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div id="profile-field" class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12 card">
                 <h3>Profile information</h3>
                 <hr class="light float-left">
                 <form>
@@ -33,9 +33,10 @@
                         {% endfor %}
                     </fieldset>
                 </form>
-                <a class="btn btn-primary my-2" href="profile/edit">Edit profile</a>
+
+                <a class="btn btn-primary my-2 edit-button" href="profile/edit">Edit profile</a>
             </div>
-            <div id="shipping-field" class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div id="shipping-field" class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12 card">
                 <h3>Shipping information</h3>
                 <hr class="light float-left">
                 <form>
@@ -54,9 +55,9 @@
                         {% endfor %}
                     </fieldset>
                 </form>
-                <a class="btn btn-primary my-2" href="profile/editshipping">Edit shipping information</a>
+                <a class="btn btn-primary my-2 edit-button" href="profile/editshipping">Edit shipping information</a>
             </div>
-            <div id="payment-field" class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div id="payment-field" class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12 card">
                 <h3>Payment information</h3>
                 <hr class="light float-left">
                 <form>
@@ -75,7 +76,9 @@
                         {% endfor %}
                     </fieldset>
                 </form>
-                <a class="btn btn-primary my-2" href="profile/editpayment">Edit payment information</a>
+
+                <a class="btn btn-primary my-2 edit-button" href="profile/editpayment">Edit payment information</a>
+
             </div>
             <hr class="light float-left">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
