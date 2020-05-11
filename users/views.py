@@ -13,10 +13,10 @@ from django.contrib.auth.models import User
 INFO_KEY_DICT = {'username': '', 'email': '', 'first_name': '', 'last_name': '', 'address_1': '',
                  'address_2': '', 'city': '', 'postcode': '', 'country': '', 'profile_image': ''}
 LABEL_DICT = {'username': 'Username', 'email': 'Email', 'first_name': 'First name', 'last_name': 'Last name',
-              'address_1': 'Address 1',
-              'address_2': 'Address 2', 'city': 'City', 'postcode': 'Postcode', 'country': 'Country',
-              'profile_image': 'Profile image'}
-
+              'address_1': 'Address 1', 'address_2': 'Address 2', 'city': 'City', 'postcode': 'Postcode',
+              'country': 'Country','profile_image': 'Profile image', 'card_number': 'Card number',
+              'expiration_date': 'Expiration date', 'cvv': 'CVV/CVC'}
+EXCLUDED_FIELDS_TPL = ('_state', 'id')
 
 def index(request):
     context = {"users": "active"}
@@ -68,9 +68,29 @@ def profile(request):
     complete_info_dict = dict((LABEL_DICT[key], value) for (key, value) in INFO_KEY_DICT.items())
     searches = SearchHistory.objects.filter(profileID=current_profile.id).order_by('-id').all()
 
+    user_payment_info = current_profile.payment_information_id
+    if user_payment_info is None:
+        user_payment_info = PaymentInformation()
+
+    user_shipping_info = current_profile.shipping_information_id
+    if user_shipping_info is None:
+        user_shipping_info = ShippingInformation()
+
+    user_payment_dict = user_payment_info.__dict__
+    user_shipping_dict = user_shipping_info.__dict__
+    for key in EXCLUDED_FIELDS_TPL:
+        del user_payment_dict[key]
+        del user_shipping_dict[key]
+
+    complete_payment_dict = dict((LABEL_DICT[key], value) for (key, value) in user_payment_dict.items())
+    complete_shipping_dict = dict((LABEL_DICT[key], value) for (key, value) in user_shipping_dict.items())
+
     return render(request, 'users/profile.html', {
-        'info_dict': complete_info_dict,
+        'profile_info_dict': complete_info_dict,
+        'payment_info_dict': complete_payment_dict,
+        'shipping_info_dict': complete_shipping_dict,
         'searches': searches
+
     })
 
 
@@ -89,7 +109,7 @@ def update_profile(request):
 
     return render(request, 'users/update_profile.html', {
         'profile_form': ProfileForm(instance=current_profile),
-        'user_form': UserForm(instance=current_profile.user)
+        'user_form': UserForm(instance=current_profile.user, auto_id='False')
     })
 
 

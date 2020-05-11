@@ -22,9 +22,12 @@
 <body>
 {% include 'navigation.html' %}
 <div class="main justify-content-center">
-{% include 'login-modal.html' %}
-{% include 'register-modal.html' %}
-
+{% if not user.is_authenticated %}
+    {% include 'login-modal.html' %}
+    {% include 'register-modal.html' %}
+    <script src="{% static 'js/login.js'%}"></script>
+    <script src="{% static 'js/register.js' %}"></script>
+{% endif %}
 
     {% block content %}
 
@@ -36,8 +39,7 @@
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js%22%"></script>
-<script src="{% static 'js/login.js'%}"></script>
-<script src="{% static 'js/register.js' %}"></script>
+
 <script src="{% static 'js/add_review.js'%}"></script>
 </body>
 

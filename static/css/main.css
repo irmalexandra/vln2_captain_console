@@ -16,7 +16,7 @@
   width: 250px !important;
 }
 
-.search_button {
+.search-button {
   background-color: #29648A;
   color: #aaabb8;
 }
@@ -133,11 +133,12 @@ hr.light {
   text-decoration: underline;
 }
 
-#search-button {
-  margin-top: 16px
+.search-result {
+  color: #000000 !important;
 }
 .search-results {
-  color: #000000;
+  padding-top: 1px !important;
+
 }
 
 /*---Media Queries --*/
@@ -167,6 +168,12 @@ figure {
   height: 60%;
   margin: 0!important;
 }
+
+.edit-button {
+    position: absolute;
+    bottom: 0;
+}
+
 .fixed-wrap {
   clip: rect(0, auto, auto, 0);
   position: absolute;
