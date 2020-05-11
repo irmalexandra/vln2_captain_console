@@ -53,5 +53,3 @@ class Order(models.Model):
     shipping_information_id = models.ForeignKey(ShippingInformation, on_delete=models.PROTECT)
     payment_information_id = models.ForeignKey(PaymentInformation, on_delete=models.PROTECT)
 
-    def __str__(self):
-        return "order made by " + self.Payment_information_id.__str__()
