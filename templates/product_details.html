@@ -1,23 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
     <p style="display:none;" id="product_id">{{ product_id }}</p>
-    {% include 'games/reveiw_modal.html' %}
+    {% include 'games/review_modal.html' %}
     <div class="container-fluid text-left game-container">
       <div class="row padding justify-content-center">
         <div class="container-fluid justify-content-center text-center">
-          <h1>{{ game.name }}</h1>
+          <h1>{{ product.name }}</h1>
           <hr class="light">
         </div>
         <div class="col-md-6 col-xs-12 col-sm-12 text-center">
-
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner">
                   <div class="carousel-item active">
-                      <img src="{{ game.product_display_image }}" class="img-fluid">
+                      <img src="{{ product.product_display_image }}" class="img-fluid">
                   </div>
-                  {% for game_img in game.extra_images.all %}
+                  {% for product_img in product.extra_images.all %}
                       <div class="carousel-item">
-                          <img src="{{ game_img.url }}" class="img-fluid">
+                          <img src="{{ product_img.url }}" class="img-fluid">
                       </div>
                   {% endfor %}
               </div>
@@ -35,17 +34,17 @@
         <br>
         <br>
         <br>
-          <h3>{{ game.manufacturer.name }}</h3>
-          <h2>Description</h2><p>{{ game.description }}</p>
+          <h3>{{ product.manufacturer.name }}</h3>
+          <h2>Description</h2><p>{{ product.description }}</p>
             {% if reviews %}
-                <h3>{{ game.rating }}% of reviewers recommend this title</h3>
-                {% else %}
+                <h3>{{ product.rating }}% of reviewers recommend this title</h3>
+                {% elif product.console_id %}
                 <h3>This title currently has no review rating</h3>
             {% endif %}
 
-          <h2>{{ game.price }} kr.</h2>
-          <a href="/carts/add/{{ game.id }}?next={{ request.path }}" class="btn btn-outline-secondary">Add to Cart</a>
-          {% if user.is_authenticated %}
+          <h2>{{ product.price }} kr.</h2>
+          <a href="/carts/add/{{ product.id }}?next={{ request.path }}" class="btn btn-outline-secondary">Add to Cart</a>
+          {% if user.is_authenticated and product.console_id %}
           <a class="btn btn-outline-secondary" href="#" data-toggle="modal" data-target="#reviewModal">Add Review</a>
           {% endif %}
         {% if reviews %}
@@ -63,25 +62,24 @@
             {% if reviews %}
             {% for review in reviews %}
       			<div class="col-md-4 text-center">
-              <h5>{{ review.datetime }}</h5>
-                    <h5>{% if review.recommend %}
-                                            <i class="fas fa-thumbs-up"></i>
-                                       {% else %}
-                                            <i class="fas fa-thumbs-down"></i>
-                                       {% endif %}</h5>
-              <h4>Comments</h4> <p>{{ review.feedback }}</p>
-                <small>{{ review.profileID.user.username }}</small>
-              <hr class="light">
+                  <h5>{{ review.datetime }}</h5>
+                        <h5>{% if review.recommend %}
+                        <i class="fas fa-thumbs-up"></i>
+                       {% else %}
+                            <i class="fas fa-thumbs-down"></i>
+                       {% endif %}</h5>
+                  <h4>Comments</h4> <p>{{ review.feedback }}</p>
+                    <small>{{ review.profileID.user.username }}</small>
+                  <hr class="light">
       			</div>
             {% endfor %}
             {% else %}
-            <div class="container-fluid justify-content-center text-center">
-            <h2>There are currently no reviews for this title</h2>
+                <div class="container-fluid justify-content-center text-center">
+                <h2>There are currently no reviews for this title</h2>
             {% endif %}
             </div>
       		</div>
       	</div>
       </div>
     </div>
-
 {% endblock %}

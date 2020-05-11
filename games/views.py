@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 import datetime
 from consoles.models import Console
 from games.models import Game, Genre
-from users.models import Profile, Review, GameReview, RecentlyViewed, RecentlyViewedAnonymous
+from users.models import Profile, Review, GameReview, RecentlyViewed
 
 # Create your views here.
 SORT_DICT = {
@@ -180,7 +180,7 @@ def filter_sorter(request, genre_id=None, console_id=None, sort=None):
 def get_game_by_id(request, id):
     context = {}
     if request.user.is_authenticated:
-        recent = RecentlyViewed.objects.filter(productID=id, profileID_id=request.user.profile.id).first()
+        recent = RecentlyViewed.objects.filter(productID=id).first()
         if recent is None:
             RecentlyViewed.objects.create(productID=Game.objects.filter(id=id).first(),
                                           profileID_id=request.user.profile.id)
@@ -197,11 +197,21 @@ def get_game_by_id(request, id):
     request.session.save()
 
     reviews = Review.objects.filter(gameID_id=id)
+    #
     if reviews:
         context['reviews'] = reviews
-    context['game'] = get_object_or_404(Game, pk=id)
+    #     recommendations = 0
+    #     for review in reviews:
+    #         if review.recommend:
+    #             user = review.profileID.user.username
+    #             recommendations += 1
+    #
+    #     recommendations /= len(reviews)
+    #     recommendations *= 100
+
+    context['product'] = get_object_or_404(Game, pk=id)
     context['product_id'] = id
-    return render(request, 'games/game_details.html', context)
+    return render(request, 'product_details.html', context)
 
 
 def get_game_by_copies_sold():
