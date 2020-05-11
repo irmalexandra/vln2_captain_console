@@ -197,9 +197,9 @@ def get_game_by_id(request, id):
         recommendations /= len(reviews)
         recommendations *= 100
         context['recommendations'] = recommendations
-    context['game'] = get_object_or_404(Game, pk=id)
+    context['product'] = get_object_or_404(Game, pk=id)
     context['product_id'] = id
-    return render(request, 'games/game_details.html', context)
+    return render(request, 'product_details.html', context)
 
 
 def get_game_by_copies_sold():

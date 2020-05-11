@@ -3,7 +3,6 @@
     <a href="/{{ product.get_url }}/{{ product.id }}">
       <img class="card-img-top img-fluid rounded mx-auto d-block" src="{{ product.product_display_image }}">
     </a>
-      <div id="status-{{ game.id }}" class="alert alert-primary add-to-cart-alert" role="alert" style="width: fit-content"></div>
   </div>
   <div class="card-body">
     <h4 class="card-title">{{ product.name }}
@@ -12,7 +11,7 @@
       <small><b>{{ product.console_id}}</b></small>
       {% endif %}
     </h4>
-      <div id="status-{{ product.id }}" class="alert alert-primary fixed-top" role="alert" style="width: fit-content"></div>
+      <div id="status-{{ product.id }}" class="alert alert-primary add-to-cart-alert" role="alert" style="width: fit-content"></div>
     <p class="product-description text-left">{{ product.description }}</p>
     <p>{{ product.price }} kr.</p>
     <button class="btn btn-outline-secondary add_to_cart_button" id="{{ product.id }}" >Add to Cart</button>

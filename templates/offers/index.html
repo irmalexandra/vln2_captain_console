@@ -7,7 +7,7 @@
             <br>
             <div class="d-flex flex-row flex-wrap justify-content-center">
                 {% for game in game_offers %}
-                    {% include  'games/single_game.html' with game=game %}
+                    {% include 'product_card.html' with product=game %}
                 {% endfor %}
             </div>
         </div>
@@ -18,7 +18,7 @@
             <div class="container-fluid padding">
                 <div class="d-flex flex-row flex-wrap justify-content-center">
                     {% for console in console_offers %}
-                        {% include  'consoles/single_console.html' with console=console %}
+                        {% include 'product_card.html' with product=console %}
                     {% endfor %}
                 </div>
             </div>
