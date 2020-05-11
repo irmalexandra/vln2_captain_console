@@ -35,7 +35,7 @@ class ShippingInformation(models.Model):
 
 
 class Cart(models.Model):
-    userID = models.IntegerField()
+    userID = models.IntegerField(null=True)
     check_out = models.BooleanField()
     date_created = models.DateTimeField(default=now)
 
@@ -53,5 +53,3 @@ class Order(models.Model):
     shipping_information_id = models.ForeignKey(ShippingInformation, on_delete=models.PROTECT)
     payment_information_id = models.ForeignKey(PaymentInformation, on_delete=models.PROTECT)
 
-    def __str__(self):
-        return "order made by " + self.Payment_information_id.__str__()

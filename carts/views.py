@@ -62,9 +62,6 @@ def input_shipping_info(request):
 
             return redirect('payment_info', the_id)
 
-
-
-
     if request.user.is_authenticated:
         profile = Profile.objects.filter(user=request.user).first()
         shipping_info = ShippingInformation.objects.filter(id=profile.shipping_information_id.id).first()
@@ -72,17 +69,16 @@ def input_shipping_info(request):
     else:
         shipping_info = ShippingInformation()
 
-
-
     context['shipping_info_form'] = ShippingForm(instance=shipping_info)
-
     return render(request, 'carts/shipping_info.html', context)
+
 
 def input_payment_info(request, shipping_id):
 
     if request.method == "POST":
         payment_form = PaymentForm(data=request.POST)
         if payment_form.is_valid():
+            shipping_instance = ShippingInformation.objects.filter(id=shipping_id).first()
             dupe = None
             all_payment_info = PaymentInformation.objects.all()
             for info in all_payment_info:
@@ -98,12 +94,10 @@ def input_payment_info(request, shipping_id):
                     print("DUPE")
                     break
 
-                if dupe == None:  # <----- if NOT duplicate
-                    payment_instance = payment_form.save()
+            if dupe == None:  # <----- if NOT duplicate
+                payment_instance = payment_form.save()
 
-                shipping_instance = ShippingInformation.objects.filter(id=shipping_id).first()
-                create_order(request, shipping_instance, payment_instance)
-
+            create_order(request, shipping_instance, payment_instance)
 
     if request.user.is_authenticated:
         profile = Profile.objects.filter(user=request.user).first()
@@ -115,7 +109,6 @@ def input_payment_info(request, shipping_id):
     context = get_models(request)
     context['payment_info_form'] = PaymentForm(instance=payment_info)
     return render(request, 'carts/payment_info.html', context)
-
 
 
 def create_order(request, shipping_instance, payment_instance):
@@ -130,10 +123,20 @@ def create_order(request, shipping_instance, payment_instance):
         order.save()
         cart.check_out = True
         cart.save()
-        print("cart saved", cart.id)
         Cart.objects.create(userID=user_id, check_out=False)
     else:
-        print("Idk fam")
+        cart = Cart.objects.create(userID=None, check_out=True)
+        for product in request.session['cart']:
+            CartItems.objects.create(productID=product['id'], quantity=product['quantity'], price=product['price'] , cartID=cart)
+
+        order = Order.objects.create(
+            shipping_information_id=shipping_instance,
+            payment_information_id=payment_instance,
+            cartID=cart
+        )
+        cart.save()
+        order.save()
+        request.session['cart'] = []
 
 
 
