@@ -76,7 +76,6 @@ def filter_sorter(request, genre_id=None, console_id=None, sort=None):
     if 'console' not in request.session:
         context['console_label'] = 'All'
     if 'sort' not in request.session:
-        print(SORT_LABELS[1])
         context['sort_label'] = SORT_LABELS[1]
 
     if 'genre' in request.session and 'console' in request.session and 'sort' in request.session:
@@ -190,11 +189,15 @@ def get_game_by_id(request, id):
     else:
         if 'recent_viewed' not in request.session:
             request.session['recent_viewed'] = []
-        if len(request.session['recent_viewed']) >= 4:
-            request.session['recent_viewed'].pop()
-        request.session['recent_viewed'].insert(0, id)
-    print(request.session['recent_viewed'])
-    request.session.save()
+        if id in request.session['recent_viewed']:
+            index1 = request.session['recent_viewed'].index(id)
+            request.session['recent_viewed'].insert(0, request.session['recent_viewed'][index1])
+            request.session['recent_viewed'].pop(index1+1)
+        else:
+            if len(request.session['recent_viewed']) >= 4:
+                request.session['recent_viewed'].pop()
+            request.session['recent_viewed'].insert(0, id)
+        request.session.save()
 
     reviews = Review.objects.filter(gameID_id=id)
     #
@@ -234,7 +237,6 @@ def get_recently_viewed(request):
         if 'recent_viewed' in request.session:
             for id in request.session['recent_viewed']:
                 products.append(get_object_or_404(Game, pk=id))
-    print(request.session['recent_viewed'])
 
     return products
 
@@ -267,7 +269,6 @@ def add_review(request):
             recommendations = 0
             for review in reviews:
                 if review.recommend:
-                    user = review.profileID.user.username
                     recommendations += 1
 
             recommendations /= len(reviews)
