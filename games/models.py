@@ -16,3 +16,4 @@ class Game(Product):
     genres = models.ManyToManyField(Genre)
     copies_sold = models.IntegerField(default=0)
 
+

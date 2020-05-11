@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 
 # Create your views here.
+from consoles.models import Console
 from games import views
+from games.models import Game
 from main.models import Product
 from users.models import Profile, SearchHistory
 
@@ -30,5 +32,7 @@ def search(request):
     #     search_instance = SearchHistory.objects.create(profileID=profile, search=search_string)
     #     search_instance.save()
 
-    results = Product.objects.filter(name__icontains=search_string)
-    return render(request, 'main/search_results.html', {'search_results': results})
+    games = Game.objects.filter(name__icontains=search_string)
+    consoles = Console.objects.filter(name__icontains=search_string)
+    return render(request, 'main/search_results.html', {'games': games,
+                                                        'consoles': consoles})
