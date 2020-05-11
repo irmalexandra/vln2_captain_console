@@ -136,8 +136,12 @@ hr.light {
 #search-button {
   margin-top: 16px
 }
+.search-result {
+  color: #000000 !important;
+}
 .search-results {
-  color: #000000;
+  padding-top: 1px !important;
+
 }
 
 /*---Media Queries --*/

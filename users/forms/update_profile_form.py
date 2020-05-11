@@ -8,9 +8,11 @@ from django_countries.widgets import CountrySelectWidget
 class UserForm(ModelForm):
     first_name = forms.CharField(max_length=30, required=False, help_text='Optional')
     last_name = forms.CharField(max_length=30, required=False, help_text='Optional')
+
     class Meta:
         model = User
         fields = (
+            'username',
             'email',
             'first_name',
             'last_name'
