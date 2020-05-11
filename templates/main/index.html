@@ -3,95 +3,44 @@
     <div class="container-fluid padding text-center">
       <div class="row padding text-center">
         <div class="col-12 text-center">
-        <h1>Top Sellers</h1>
-        <hr class="light">
-        <br>
-        <div class="d-flex flex-row flex-wrap justify-content-center">
-        {% for game in top_sellers|slice:":4" %}
-        <div class="card col-xl-3 col-lg-6 col-md-6 col-sm-12 col-xs-12 padding p-2 text-center justify-content-center">
-          <div class="game-card-img-frame">
-            <a href="/games/{{ game.id }}">
-              <img class="card-img-top img-fluid rounded mx-auto d-block" src="{{ game.product_display_image }}">
-            </a>
-
-          </div>
-
-          <div class="card-body">
-            <h4 class="card-title">{{ game.name }}
-              <br>
-              <small><b>{{ game.console_id}}</b></small>
-            </h4>
-              <p>{{ game.price }} kr.</p>
-              <a href="/carts/add/{{ game.id }}?next={{ request.path }}" class="btn btn-outline-secondary">Add to Cart</a>
-          </div>
-
-        </div>
-        {% endfor %}
-        </div>
+            <h1>Top Sellers</h1>
+            <hr class="light">
+            <br>
+            <div class="d-flex flex-row flex-wrap justify-content-center">
+                {% for game in top_sellers|slice:":4" %}
+                    {% include 'product_card.html' with product=game %}
+                {% endfor %}
+            </div>
         </div>
       </div>
       <div class="row padding text-center">
         <div class="col-12 text-center">
-        <h1>Latest Releases</h1>
-        <hr class="light">
-        <br>
-        <div class="d-flex flex-row flex-wrap justify-content-center">
-        {% for game in release_date|slice:":4" %}
-        <div class="card col-xl-3 col-lg-6 col-md-6 col-sm-12 col-xs-12 padding p-2 text-center justify-content-center">
-          <div class="game-card-img-frame">
-            <a href="/games/{{ game.id }}">
-              <img class="card-img-top img-fluid rounded mx-auto d-block" src="{{ game.product_display_image }}">
-            </a>
-
-          </div>
-
-          <div class="card-body">
-            <h4 class="card-title">{{ game.name }}
-              <br>
-              <small><b>{{ game.console_id}}</b></small>
-            </h4>
-              <p>{{ game.price }} kr.</p>
-              <a href="/carts/add/{{ game.id }}?next={{ request.path }}" class="btn btn-outline-secondary">Add to Cart</a>
-          </div>
+            <h1>Latest Releases</h1>
+            <hr class="light">
+            <br>
+            <div class="d-flex flex-row flex-wrap justify-content-center">
+            {% for game in release_date|slice:":4" %}
+                {% include 'product_card.html' with product=game %}
+            {% endfor %}
+            </div>
         </div>
-      {% endfor %}
-
-      </div>
-      </div>
       </div>
     </div>
     {% if user.is_authenticated %}
         {% if recently_viewed %}
-    <div class="row padding text-center">
-        <div class="col-12 text-center">
-        <h1>Recently Viewed</h1>
-        <hr class="light">
-        <br>
-        <div class="d-flex flex-row flex-wrap justify-content-center">
-        {% for game in recently_viewed|slice:":4" %}
-        <div class="card col-xl-3 col-lg-6 col-md-6 col-sm-12 col-xs-12 padding p-2 text-center justify-content-center">
-          <div class="game-card-img-frame">
-            <a href="/games/{{ game.id }}">
-              <img class="card-img-top img-fluid rounded mx-auto d-block" src="{{ game.product_display_image }}">
-            </a>
-
-          </div>
-
-          <div class="card-body">
-            <h4 class="card-title">{{ game.name }}
-              <br>
-              <small><b>{{ game.console_id}}</b></small>
-            </h4>
-              <p>{{ game.price }} kr.</p>
-              <a href="/carts/add/{{ game.id }}?next={{ request.path }}" class="btn btn-outline-secondary">Add to Cart</a>
-          </div>
-
-        </div>
-        {% endfor %}
-        </div>
-        </div>
-      </div>
-    {% endif %}
+            <div class="row padding text-center">
+                <div class="col-12 text-center">
+                    <h1>Recently Viewed</h1>
+                    <hr class="light">
+                    <br>
+                    <div class="d-flex flex-row flex-wrap justify-content-center">
+                        {% for game in recently_viewed|slice:":4" %}
+                            {% include  'product_card.html' with product=game %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     {% endif %}
 
 {% endblock %}

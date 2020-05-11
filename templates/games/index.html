@@ -6,9 +6,9 @@
     {% include 'filter_sort_games.html' %}
     <div class="d-flex flex-row flex-wrap justify-content-center">
         {% for game in games %}
-        {% include  'games/single_game.html' with game=game %}
-    {% endfor %}
-      </div>
-  </div>
+            {% include 'product_card.html' with product=game %}
+        {% endfor %}
+    </div>
+</div>
     <script src="{% static 'js/add_to_cart_button.js' %}"></script>
 {% endblock %}

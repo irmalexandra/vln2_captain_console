@@ -188,7 +188,6 @@ def get_game_by_id(request, id):
             recent.date = datetime.datetime.now()
             recent.save()
     reviews = Review.objects.filter(gameID_id=id)
-    #
     if reviews:
         context['reviews'] = reviews
     #     recommendations = 0
@@ -200,9 +199,9 @@ def get_game_by_id(request, id):
     #     recommendations /= len(reviews)
     #     recommendations *= 100
 
-    context['game'] = get_object_or_404(Game, pk=id)
+    context['product'] = get_object_or_404(Game, pk=id)
     context['product_id'] = id
-    return render(request, 'games/game_details.html', context)
+    return render(request, 'product_details.html', context)
 
 
 def get_game_by_copies_sold():
