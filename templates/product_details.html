@@ -37,7 +37,7 @@
           <h3>{{ product.manufacturer.name }}</h3>
           <h2>Description</h2><p>{{ product.description }}</p>
             {% if reviews %}
-                <h3>{{ recommendations }}% of reviewers recommend this title</h3>
+                <h3>{{ product.rating }}% of reviewers recommend this title</h3>
                 {% elif product.console_id %}
                 <h3>This title currently has no review rating</h3>
             {% endif %}
