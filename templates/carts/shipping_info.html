@@ -20,7 +20,12 @@
                         {% endfor %}
                     </fieldset>
                 </form>
+            <div class="row">
+                <div class="col-auto mr-auto">
+                    <button type="reset" class="btn btn-primary return-button">Back</button></div>
             </div>
+            </div>
+
 
             <!-- RIGHT SIDE -->
             <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
@@ -71,4 +76,5 @@
     </div>
     <script src="{% static 'js/update_shipping_info.js'%}"></script>
     <script src="{% static 'js/in_field_placeholder.js' %}"></script>
+    <script src="{% static 'js/back_function.js' %}"></script>
 {% endblock %}
