@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect
 from consoles.models import Console
 from games import views
 from games.models import Game
-from main.models import Product
 from users.models import Profile, SearchHistory
 
 
