@@ -1,6 +1,3 @@
-username_input = document.getElementById("username")
-username_input.classList.add("form-control")
-
 email_input = document.getElementById("email")
 email_input.classList.add("form-control")
 
