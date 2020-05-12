@@ -2,7 +2,8 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from users.models import Profile, SearchHistory
-from carts.models import ShippingInformation, PaymentInformation
+from carts.models import ShippingInformation, PaymentInformation, CartItems
+from carts.views import get_order_history
 from users.forms.update_profile_form import ProfileForm, UserForm
 from users.forms.register_form import RegisterForm
 from carts.forms.payment_form import PaymentForm
@@ -67,6 +68,7 @@ def profile(request):
 
     complete_info_dict = dict((LABEL_DICT[key], value) for (key, value) in INFO_KEY_DICT.items())
     searches = SearchHistory.objects.filter(profileID=current_profile.id).order_by('-id').all()
+    order_list = get_order_history(request)
 
     user_payment_info = current_profile.payment_information_id
     if user_payment_info is None:
@@ -78,6 +80,7 @@ def profile(request):
 
     user_payment_dict = user_payment_info.__dict__
     user_shipping_dict = user_shipping_info.__dict__
+
     for key in EXCLUDED_FIELDS_TPL:
         del user_payment_dict[key]
         del user_shipping_dict[key]
@@ -89,8 +92,8 @@ def profile(request):
         'profile_info_dict': complete_info_dict,
         'payment_info_dict': complete_payment_dict,
         'shipping_info_dict': complete_shipping_dict,
-        'searches': searches
-
+        'searches': searches,
+        'orders': order_list
     })
 
 

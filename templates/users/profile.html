@@ -7,8 +7,8 @@
                 <h2>My profile</h2>
                 <br>
                 {% for key, value in profile_info_dict.items %}
-                    {%  if key == "Profile image" %}
-                        {%  if value != None %}
+                    {% if key == "Profile image" %}
+                        {% if value != None %}
                             <img class="rounded-circle" src={{ value }}>
                         {% endif %}
                     {% endif %}
@@ -18,18 +18,18 @@
                 <h3>Profile information</h3>
                 <hr class="light float-left">
                 <form>
-                {% csrf_token %}
+                    {% csrf_token %}
                     <fieldset disabled class="col-xl-12 col-lg-7 col-md-7 col-sm-9 col-xs-12">
                         {% for key, value in profile_info_dict.items %}
-                            {%  if key != "Profile image" %}
+                            {% if key != "Profile image" %}
                                 <label for="disabledTextInput">{{ key }}:</label>
-                                {%  if value != None %}
+                                {% if value != None %}
                                     <input type="text" id="disabledTextInput" class="form-control" value="{{ value }}">
                                 {% else %}
                                     <input type="text" id="disabledTextInput" class="form-control" value="">
                                 {% endif %}
                                 <br>
-                                {% endif %}
+                            {% endif %}
                         {% endfor %}
                     </fieldset>
                     <br>
@@ -40,18 +40,18 @@
                 <h3>Shipping information</h3>
                 <hr class="light float-left">
                 <form>
-                {% csrf_token %}
+                    {% csrf_token %}
                     <fieldset disabled class="col-xl-12 col-lg-7 col-md-7 col-sm-9 col-xs-12">
                         {% for key, value in shipping_info_dict.items %}
-                            {%  if key != "Profile image" %}
+                            {% if key != "Profile image" %}
                                 <label for="disabledTextInput">{{ key }}:</label>
-                                {%  if value != None %}
+                                {% if value != None %}
                                     <input type="text" id="disabledTextInput" class="form-control" value="{{ value }}">
                                 {% else %}
                                     <input type="text" id="disabledTextInput" class="form-control" value="">
                                 {% endif %}
                                 <br>
-                                {% endif %}
+                            {% endif %}
                         {% endfor %}
                     </fieldset>
                 </form>
@@ -61,48 +61,72 @@
                 <h3>Payment information</h3>
                 <hr class="light float-left">
                 <form>
-                {% csrf_token %}
+                    {% csrf_token %}
                     <fieldset disabled class="col-xl-12 col-lg-7 col-md-7 col-sm-9 col-xs-12">
                         {% for key, value in payment_info_dict.items %}
-                            {%  if key != "Profile image" %}
+                            {% if key != "Profile image" %}
                                 <label for="disabledTextInput">{{ key }}:</label>
-                                {%  if value != None %}
+                                {% if value != None %}
                                     <input type="text" id="disabledTextInput" class="form-control" value="{{ value }}">
                                 {% else %}
                                     <input type="text" id="disabledTextInput" class="form-control" value="">
                                 {% endif %}
                                 <br>
-                                {% endif %}
+                            {% endif %}
                         {% endfor %}
                     </fieldset>
                 </form>
-
                 <a class="btn btn-primary my-2 edit-button" href="profile/editpayment">Edit payment information</a>
-
             </div>
             <hr class="light float-left">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <a id="search-button" class="fun btn btn-outline-secondary collapsed" href="#" data-toggle="collapse"
-                   data-target="#searches" aria-expanded="false">View recent searches</a>
-                <div class="collapse" id="searches">
-                    <div class="row text-center">
-                        {% if searches %}
-                            <ul class="list-group col-xl-4 col-lg-6 col-md-7 col-sm-8 col-xs-9 search-results">
-                            {% for search in searches %}
-                                <li class="list-group-item list-group-item-primary"><a class="search-result" href="#">{{ search.search }}</a></li>
-                            {% endfor %}
-                            </ul>
-                        {% else %}
-                            <div class="container-fluid justify-content-center text-center">
-                                <h4 class="float-left">There are no search entries tied to this account.</h4>
-                            </div>
-                        {% endif %}
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+                <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 card">
+                    <a id="search-button" class="fun btn btn-outline-secondary collapsed" href="#" data-toggle="collapse"
+                       data-target="#searches" aria-expanded="false">View recent searches</a>
+                    <div class="collapse" id="searches">
+                        <div class="row text-center">
+                            {% if searches %}
+                                <ul class="list-group col-xl-4 col-lg-6 col-md-7 col-sm-8 col-xs-9 search-results">
+                                    {% for search in searches %}
+                                        <li class="list-group-item list-group-item-primary"><a class="search-result"
+                                                                                               href="#">{{ search.search }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <div class="container-fluid justify-content-center text-center">
+                                    <h4 class="float-left">There are no search entries tied to this account</h4>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 card">
+                    <a id="search-button" class="fun btn btn-outline-secondary collapsed" href="#" data-toggle="collapse"
+                       data-target="#order-history" aria-expanded="false">View order history</a>
+                    <div class="collapse " id="order-history">
+                        <div class="row text-center">
+                            {% if order_history %}
+                                <ul class="list-group col-xl-4 col-lg-6 col-md-7 col-sm-8 col-xs-9 search-results">
+                                    {% for order in order_history %}
+                                        <li class="list-group-item list-group-item-primary">
+                                            <a class="search-result" href="#">{{ order }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <div class="container-fluid justify-content-center text-center">
+                                    <h4 class="float-left">There are no orders tied to this account</h4>
+                                </div>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <br>
-    <script src="{% static 'js/use_search_result.js'%}"></script>
+    <script src="{% static 'js/use_search_result.js' %}"></script>
 {% endblock %}
 
