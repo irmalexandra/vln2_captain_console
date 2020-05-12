@@ -7,7 +7,6 @@ from carts.models import Cart, CartItems, PaymentInformation, ShippingInformatio
 from users.models import Profile
 
 
-
 def index(request):
     context = get_cart_info(request)
     return render(request, 'carts/index.html', context)
@@ -56,7 +55,7 @@ def input_shipping_info(request):
                     print("DUPE")
                     break
 
-            if the_id == None: #<----- if NOT duplicate
+            if the_id == None:  # <----- if NOT duplicate
                 form_instance = shipping_form.save()
                 the_id = form_instance.id
 
@@ -71,13 +70,11 @@ def input_shipping_info(request):
     else:
         shipping_info = ShippingInformation()
 
-
     context['shipping_info_form'] = ShippingForm(instance=shipping_info)
     return render(request, 'carts/shipping_info.html', context)
 
 
 def input_payment_info(request, shipping_id):
-
     if request.method == "POST":
         payment_form = PaymentForm(data=request.POST)
         if payment_form.is_valid():
@@ -117,8 +114,7 @@ def input_payment_info(request, shipping_id):
 
 
 def overview(request, shipping_id, payment_id):
-
-
+    context = get_cart_info(request)
     if request.method == 'POST':
         shipping_instance = ShippingInformation.objects.filter(id=shipping_id).first()
         payment_instance = PaymentInformation.objects.filter(id=payment_id).first()
@@ -145,11 +141,11 @@ def overview(request, shipping_id, payment_id):
 
         cart.save()
         order.save()
-
+        context['order_complete'] = True
 
     payment_info = PaymentInformation.objects.filter(id=payment_id).first()
     shipping_info = ShippingInformation.objects.filter(id=shipping_id).first()
-    context = get_cart_info(request)
+
     context['payment_info'] = payment_info
     context['shipping_info'] = shipping_info
 

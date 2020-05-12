@@ -73,10 +73,10 @@
                         </table>
                         <button class="btn btn-primary" type="submit" form="shipping_form" >Proceed to payment</button>
                     </div>
-
-                {% else %}
-                    <h1>Order made!</h1>
                 {% endif %}
+            {% if order_complete %}
+                {% include 'carts/order_complete_modal.html' %}
+            {% endif %}
             </div>
         </div>
     </div>
