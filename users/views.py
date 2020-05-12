@@ -154,7 +154,7 @@ def update_shipping_info(request):
             return redirect('profile')
         shipping_form = ShippingForm(instance=user_shipping_info, data=request.POST)
     else:
-        shipping_form = ShippingForm(instance=user_shipping_info, initial={"address_2": "optional"})
+        shipping_form = ShippingForm(instance=user_shipping_info)
 
     return render(request, 'users/update_shipping_info.html', {
         'shipping_form': shipping_form
