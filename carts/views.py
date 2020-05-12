@@ -9,7 +9,7 @@ from users.models import Profile
 
 
 def index(request):
-    context = get_models(request)
+    context = get_cart_info(request)
     return render(request, 'carts/index.html', context)
 
 
@@ -36,7 +36,7 @@ def update_cart_items(request):
 
 
 def input_shipping_info(request):
-    context = get_models(request)
+    context = get_cart_info(request)
 
     if request.method == "POST":
         shipping_form = ShippingForm(data=request.POST)
@@ -111,12 +111,13 @@ def input_payment_info(request, shipping_id):
     else:
         payment_info = PaymentInformation()
 
-    context = get_models(request)
+    context = get_cart_info(request)
     context['payment_info_form'] = PaymentForm(instance=payment_info)
     return render(request, 'carts/payment_info.html', context)
 
 
 def overview(request, shipping_id, payment_id):
+
 
     if request.method == 'POST':
         shipping_instance = ShippingInformation.objects.filter(id=shipping_id).first()
@@ -141,16 +142,18 @@ def overview(request, shipping_id, payment_id):
             payment_information_id=payment_instance,
             cartID=cart
         )
+
         cart.save()
         order.save()
 
-    else:
-        context = get_models(request)
-        payment_info = PaymentInformation.objects.filter(id=payment_id).first()
-        shipping_info = ShippingInformation.objects.filter(id=shipping_id).first()
-        context['payment_info_form'] = PaymentForm(instance=payment_info)
-        context['shipping_info_form'] = ShippingForm(instance=shipping_info)
-        return render(request, 'carts/overview.html', context)
+
+    payment_info = PaymentInformation.objects.filter(id=payment_id).first()
+    shipping_info = ShippingInformation.objects.filter(id=shipping_id).first()
+    context = get_cart_info(request)
+    context['payment_info'] = payment_info
+    context['shipping_info'] = shipping_info
+
+    return render(request, 'carts/overview.html', context)
 
 
 def cart_add(request):
@@ -226,7 +229,7 @@ def clear_cart(request):
         return HttpResponse("success")
 
 
-def get_models(request):
+def get_cart_info(request):
     class Model:
         name = ""
         quantity = 0

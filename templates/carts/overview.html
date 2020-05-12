@@ -9,63 +9,74 @@
                 <hr class="light">
                 <form class="form-group text-left col-xl-9 col-lg-6 col-md-7 col-sm-10 col-xs-12" method="post" id="shipping_form">
                     {% csrf_token %}
-                    <fieldset>
-                        {% for field in shipping_info_form %}
-                            <br>
-                            <label> {{ field.label_tag }}</label>
-                            {{ field }}
-                            {% for error in field.errors %}
-                              <p class="error">{{ error }}</p>
-                            {% endfor %}
-                        {% endfor %}
-                    </fieldset>
+
+                    <h2>Shipping info</h2>
+                    <ul>First name: {{ shipping_info.first_name }}</ul>
+                    <ul>Last name: {{ shipping_info.last_name }}</ul>
+                    <ul>Address: {{ shipping_info.address_1 }}</ul>
+                    {% if shipping_info.address_2 %}
+                        <ul>Address 2: {{ shipping_info.address_2 }}</ul>
+                    {% endif %}
+                    <ul>City: {{ shipping_info.first_name }}</ul>
+                    <ul>Country: {{ shipping_info.country.name }}</ul>
+
+                    <h2>Payment info</h2>
+                    <ul>First name: {{ payment_info.first_name }}</ul>
+                    <ul>Last name: {{ payment_info.last_name }}</ul>
+                    <ul>Card number: {{ payment_info.card_number }}</ul>
                 </form>
             </div>
 
             <!-- RIGHT SIDE -->
             <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-                <h1>Cart</h1>
-                <hr class="light">
-                <br>
-                <div class="d-flex flex-row flex-wrap justify-content-center">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col">name</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">price</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <form >
-                            {% for product in products %}
-                                <tr>
+                {% if products %}
 
-                                    <th>
-                                        <h4 class="card-title">{{ product.name }}</h4>
-                                    </th>
-                                    <th>
-                                        <h4>{{ product.quantity }}</h4>
-                                    </th>
-                                    <th>
-                                        <h4>{{ product.price }}</h4>
-                                    </th>
-                                </tr>
-                            {% endfor %}
-                        </form>
-                        <tr>
-                            <th scope="row">
-                            </th>
-                            <th>
-                            </th>
-                            <th>
-                                <h4>Total: {{ price_sum }}kr.</h4>
-                            </th>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <button class="btn btn-primary" type="submit" form="shipping_form" >Proceed to payment</button>
-                </div>
+                    <h1>Cart</h1>
+                    <hr class="light">
+                    <br>
+                    <div class="d-flex flex-row flex-wrap justify-content-center">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">name</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <form >
+                                {% for product in products %}
+                                    <tr>
+
+                                        <th>
+                                            <h4 class="card-title">{{ product.name }}</h4>
+                                        </th>
+                                        <th>
+                                            <h4>{{ product.quantity }}</h4>
+                                        </th>
+                                        <th>
+                                            <h4>{{ product.price }}</h4>
+                                        </th>
+                                    </tr>
+                                {% endfor %}
+                            </form>
+                            <tr>
+                                <th scope="row">
+                                </th>
+                                <th>
+                                </th>
+                                <th>
+                                    <h4>Total: {{ price_sum }}kr.</h4>
+                                </th>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-primary" type="submit" form="shipping_form" >Proceed to payment</button>
+                    </div>
+
+                {% else %}
+                    <h1>Order made!</h1>
+                {% endif %}
             </div>
         </div>
     </div>
