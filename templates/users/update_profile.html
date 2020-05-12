@@ -25,11 +25,17 @@
                 {% endfor %}
 
             </fieldset>
-            <button type="submit" class="btn btn-primary">Save changes</button>
+            <div class="row">
+                <div class="col-auto mr-auto">
+                    <button type="reset" class="btn btn-primary return-button">Return to profile</button></div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Save changes</button></div>
+            </div>
         </form>
         <br>
     </div>
     <br>
     <script src="{% static 'js/update_profile.js'%}"></script>
     <script src="{% static 'js/in_field_placeholder.js' %}"></script>
+    <script src="{% static 'js/back_function.js' %}"></script>
 {% endblock %}
