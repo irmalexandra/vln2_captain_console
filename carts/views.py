@@ -138,14 +138,6 @@ def create_order(request, shipping_instance, payment_instance):
     order.save()
 
 
-
-
-
-
-
-
-
-
 def cart_add(request):
     if request.is_ajax():
         returned_quantity = 1
