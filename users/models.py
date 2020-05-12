@@ -48,6 +48,6 @@ class SearchHistory(models.Model):
 
 class RecentlyViewed(models.Model):
     date = models.DateTimeField(auto_now_add=True, blank=True)
-    productID = models.ForeignKey(Game, on_delete=models.CASCADE, null=True)
+    productID = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     profileID = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
 

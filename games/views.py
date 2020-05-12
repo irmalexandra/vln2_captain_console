@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 import datetime
 from consoles.models import Console
 from games.models import Game, Genre
+from main.views import add_recently_viewed
 from users.models import Profile, Review, GameReview, RecentlyViewed
 
 # Create your views here.
@@ -132,117 +133,18 @@ def filter_sorter(request, genre_id=None, console_id=None, sort=None):
         return render(request, 'games/index.html', context)
 
 
-# def index_ascending(request):
-#     context = {'games': Game.objects.all().order_by('name'),
-#                "games_tab": "active",
-#                'genres': Genre.objects.all().order_by('name'),
-#                'consoles': Console.objects.all().order_by('name')}
-#     return render(request, 'games/index.html', context)
-#
-#
-# def index_descending(request):
-#     context = {'games': Game.objects.all().order_by('-name'),
-#                "games_tab": "active",
-#                'genres': Genre.objects.all().order_by('name'),
-#                'consoles': Console.objects.all().order_by('name')}
-#     return render(request, 'games/index.html', context)
-#
-#
-# def sort_by_price_ascending(request):
-#     context = {'games': Game.objects.all().order_by('price'),
-#                "games_tab": "active",
-#                'genres': Genre.objects.all().order_by('name'),
-#                'consoles': Console.objects.all().order_by('name')}
-#     return render(request, 'games/index.html', context)
-#
-#
-# def sort_by_price_descending(request):
-#     context = {'games': Game.objects.all().order_by('-price'),
-#                "games_tab": "active",
-#                'genres': Genre.objects.all().order_by('name'),
-#                'consoles': Console.objects.all().order_by('name')}
-#     return render(request, 'games/index.html', context)
-#
-#
-# def sort_by_most_popular(request):
-#     context = {'games': Game.objects.all().order_by('copies_sold'),
-#                "games_tab": "active",
-#                'genres': Genre.objects.all().order_by('name'),
-#                'consoles': Console.objects.all().order_by('name')}
-#     return render(request, 'games/index.html', context)
-#
-#
-# def sort_by_most_popular(request):
-#     context = {'games': Game.objects.all().order_by('-copies_sold'),
-#                "games_tab": "active",
-#                'genres': Genre.objects.all().order_by('name'),
-#                'consoles': Console.objects.all().order_by('name')}
-#     return render(request, 'games/index.html', context)
-
-
 def get_game_by_id(request, id):
     context = {}
-    if request.user.is_authenticated:
-        recent = RecentlyViewed.objects.filter(productID=id).first()
-        if recent is None:
-            RecentlyViewed.objects.create(productID=Game.objects.filter(id=id).first(),
-                                          profileID_id=request.user.profile.id)
-        else:
-            recent.date = datetime.datetime.now()
-            recent.save()
-    else:
-        if 'recent_viewed' not in request.session:
-            request.session['recent_viewed'] = []
-        if id in request.session['recent_viewed']:
-            index1 = request.session['recent_viewed'].index(id)
-            request.session['recent_viewed'].insert(0, request.session['recent_viewed'][index1])
-            request.session['recent_viewed'].pop(index1+1)
-        else:
-            if len(request.session['recent_viewed']) >= 4:
-                request.session['recent_viewed'].pop()
-            request.session['recent_viewed'].insert(0, id)
-        request.session.save()
+
+    add_recently_viewed(request, id)
 
     reviews = Review.objects.filter(gameID_id=id)
-    #
     if reviews:
         context['reviews'] = reviews
-    #     recommendations = 0
-    #     for review in reviews:
-    #         if review.recommend:
-    #             user = review.profileID.user.username
-    #             recommendations += 1
-    #
-    #     recommendations /= len(reviews)
-    #     recommendations *= 100
 
     context['product'] = get_object_or_404(Game, pk=id)
     context['product_id'] = id
     return render(request, 'product_details.html', context)
-
-
-def get_game_by_copies_sold():
-    games = Game.objects.all().order_by('-copies_sold')
-    return games
-
-
-def get_game_latest_releases():
-    games = Game.objects.all().order_by('-release_date')
-    return games
-
-
-def get_recently_viewed(request):
-    products = []
-    if request.user.is_authenticated:
-        recent = RecentlyViewed.objects.filter(profileID_id=request.user.profile.id).order_by('-date')
-        for product in recent:
-            products.append(product.productID)
-    else:
-        if 'recent_viewed' in request.session:
-            for id in request.session['recent_viewed']:
-                products.append(get_object_or_404(Game, pk=id))
-
-    return products
 
 
 def get_game_offers(request):
@@ -282,19 +184,3 @@ def add_review(request):
         game.save()
 
     return HttpResponse("Check")
-
-# def filter_by_genre(request, id):
-#     context = {'games': Game.objects.filter(genres=id),
-#                "games_tab": "active",
-#                'genres': Genre.objects.all().order_by('name'),
-#                'consoles': Console.objects.all().order_by('name')}
-#     return render(request, 'games/index.html', context)
-#
-#
-# def filter_by_console(request, id):
-#     context = {'games': Game.objects.filter(console_id=id),
-#                "games_tab": "active",
-#                'genres': Genre.objects.all().order_by('name'),
-#                'consoles': Console.objects.all().order_by('name')}
-#     return render(request, 'games/index.html', context)
-#     return render(request, 'games/index.html', context)

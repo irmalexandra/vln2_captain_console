@@ -1,16 +1,14 @@
 <div class="d-flex flex-row flex-wrap justify-content-end my-2 btn-group">
   <div class="dropdown dropdown-btn mx-2">
+  <small>Sort by:</small>
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdown-sort" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Sort
+      {{ console_sort_label }}
     </button>
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-        <a  class="dropdown-item" href="{% url "console_price_ascending" %}">Price: Low to High</a>
-        <div class="dropdown-divider"></div>
-        <a  class="dropdown-item" href="{% url "console_price_descending" %}">Price: High to Low</a>
-        <div class="dropdown-divider"></div>
-        <a  class="dropdown-item" href="{% url "console_index_ascending" %}">Name: A-Z</a>
-        <div class="dropdown-divider"></div>
-        <a  class="dropdown-item" href="{% url "console_index_descending" %}">Name: Z-A</a>
+        {% for key, value in console_sort_dict.items %}
+            <div class="dropdown-divider"></div>
+        <a  class="dropdown-item" href="{% url "console_sort_view" key %}">{{ value }}</a>
+        {% endfor %}
     </div>
   </div>
 </div>
