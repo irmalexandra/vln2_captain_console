@@ -8,5 +8,5 @@ class Console(Product):
     warranty = models.DateTimeField()
     specifications = models.TextField()
 
-    def get_url(self):
-        return 'consoles'
+    url = "consoles"
+

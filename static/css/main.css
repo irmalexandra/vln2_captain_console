@@ -10,6 +10,12 @@
   z-index: 10 !important;
 }
 
+.add-to-cart-alert-details{
+  min-width: 20%;
+  position: absolute;
+  z-index: 10 !important;
+}
+
 .error-field  {
   display: none;
   color: #FF0000;

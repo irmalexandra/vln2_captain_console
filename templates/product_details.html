@@ -43,7 +43,8 @@
             {% endif %}
 
           <h2>{{ product.price }} kr.</h2>
-          <a href="/carts/add/{{ product.id }}?next={{ request.path }}" class="btn btn-outline-secondary">Add to Cart</a>
+            <div id="status-{{ product.id }}" class="alert alert-primary add-to-cart-alert-details text-center" role="alert" style="width: fit-content"></div>
+          <button class="btn btn-outline-secondary add_to_cart_button" id="{{ product.id }}" >Add to Cart</button>
           {% if user.is_authenticated and product.console_id %}
           <a class="btn btn-outline-secondary" href="#" data-toggle="modal" data-target="#reviewModal">Add Review</a>
           {% endif %}
