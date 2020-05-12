@@ -5,7 +5,7 @@
 }
 
 .add-to-cart-alert{
-  width: 90%;
+  min-width: 80%;
   position: absolute;
   z-index: 10 !important;
 }

@@ -16,18 +16,21 @@ SORT_DICT = {
     5: 'copies_sold',
     6: '-copies_sold',
     7: '-release_date',
-    8: '-rating',
-    9: 'rating'
+    8: 'release_date',
+    9: '-rating',
+    10: 'rating'
 }
 SORT_LABELS = {
     1: 'A-Z',
     2: 'Z-A',
     3: 'Price: Low to High',
     4: 'Price: High to Low',
+    5: 'Least Popular',
     6: 'Top Sellers',
     7: 'Latest',
-    8: 'Rating: Highest-Lowest',
-    9: 'Rating: Lowest-Highest'
+    8: 'Oldest',
+    9: 'Rating: Highest-Lowest',
+    10: 'Rating: Lowest-Highest'
 }
 
 
@@ -53,7 +56,8 @@ def game_default_view(request):
 def filter_sorter(request, genre_id=None, console_id=None, sort=None):
     context = {"games_tab": "active",
                'genres': Genre.objects.all().order_by('name'),
-               'consoles': Console.objects.all().order_by('name')}
+               'consoles': Console.objects.all().order_by('name'),
+               'sort_dict': SORT_LABELS}
 
     if genre_id:
         if type(genre_id).__name__ == 'int':

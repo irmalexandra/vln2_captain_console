@@ -1,4 +1,5 @@
 const csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value
+console.log("hello from add to cart")
 $(".alert").hide()
 $(document).ready(function () {
     $(".add_to_cart_button").click(function (e) {
