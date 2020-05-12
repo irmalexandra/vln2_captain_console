@@ -1,34 +1,29 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
     <div class="container-fluid">
         <div class="row">
             <!-- LEFT SIDE -->
-            <div class="col-6 text-center">
+            <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
                 <h1>Shipping information</h1>
                 <hr class="light">
-                <br>
-                <form class="form-group" method="post" id="shipping_form">
+                <form class="form-group text-left col-xl-9 col-lg-6 col-md-7 col-sm-10 col-xs-12" method="post" id="shipping_form">
                     {% csrf_token %}
                     <fieldset>
-
                         {% for field in shipping_info_form %}
+                            <br>
                             <label> {{ field.label_tag }}</label>
                             {{ field }}
-                            <br>
+                            {% for error in field.errors %}
+                              <p class="error">{{ error }}</p>
+                            {% endfor %}
                         {% endfor %}
-
-
                     </fieldset>
                 </form>
-
             </div>
 
-
-
-
-
             <!-- RIGHT SIDE -->
-            <div class="col-6 text-center">
+            <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
                 <h1>Cart</h1>
                 <hr class="light">
                 <br>
@@ -69,9 +64,11 @@
                         </tr>
                         </tbody>
                     </table>
-                    <button class="btn btn-primary" type="submit" form="shipping_form" >Checkout</button>
+                    <button class="btn btn-primary" type="submit" form="shipping_form" >Proceed to payment</button>
                 </div>
             </div>
         </div>
     </div>
+    <script src="{% static 'js/update_shipping_info.js'%}"></script>
+    <script src="{% static 'js/in_field_placeholder.js' %}"></script>
 {% endblock %}
