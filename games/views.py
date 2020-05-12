@@ -6,7 +6,7 @@ import datetime
 from consoles.models import Console
 from games.models import Game, Genre
 from main.views import add_recently_viewed
-from users.models import Profile, Review, GameReview, RecentlyViewed
+from users.models import Profile, Review, GameReview
 
 # Create your views here.
 SORT_DICT = {

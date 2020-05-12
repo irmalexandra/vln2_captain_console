@@ -6,7 +6,6 @@ from django.shortcuts import render, get_object_or_404
 # Create your views here.
 from consoles.models import Console
 from main.views import add_recently_viewed
-from users.models import RecentlyViewed
 
 SORT_DICT = {
     1: 'name',
@@ -58,7 +57,7 @@ def sorter(request, sort=None):
 
 
 def get_console_by_id(request, id):
-    add_recently_viewed(request, id)
+    add_recently_viewed(request, id, False)
     context = {'product': get_object_or_404(Console, pk=id)}
     return render(request, 'product_details.html', context)
 

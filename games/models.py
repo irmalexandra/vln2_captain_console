@@ -17,7 +17,6 @@ class Game(Product):
     copies_sold = models.IntegerField(default=0)
     rating = models.IntegerField(default=0)
 
-    def get_url(self):
-        return 'games'
+    url = 'games'
 
 

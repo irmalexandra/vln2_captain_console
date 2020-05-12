@@ -1,9 +1,9 @@
 from django.db import models
 from django_countries.fields import CountryField
 from carts.models import Order, ShippingInformation, PaymentInformation
+from consoles.models import Console
 from games.models import Game
 from django.contrib.auth.models import User
-
 
 from main.models import Product
 
@@ -46,8 +46,13 @@ class SearchHistory(models.Model):
     profileID = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
 
-class RecentlyViewed(models.Model):
+class RecentlyViewedGames(models.Model):
     date = models.DateTimeField(auto_now_add=True, blank=True)
-    productID = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    gameID = models.ForeignKey(Game, on_delete=models.CASCADE, null=True)
     profileID = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
 
+
+class RecentlyViewedConsoles(models.Model):
+    date = models.DateTimeField(auto_now_add=True, blank=True)
+    consoleID = models.ForeignKey(Console, on_delete=models.CASCADE, null=True)
+    profileID = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)

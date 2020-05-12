@@ -1,11 +1,13 @@
 import datetime
+from itertools import chain
 
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 from consoles.models import Console
 from games.models import Game
-from users.models import Profile, SearchHistory, RecentlyViewed
+from main.models import Product
+from users.models import Profile, SearchHistory, RecentlyViewedGames, RecentlyViewedConsoles
 
 
 def index(request):
@@ -40,26 +42,47 @@ def search(request):
 def get_recently_viewed(request):
     products = []
     if request.user.is_authenticated:
-        recent = RecentlyViewed.objects.filter(profileID_id=request.user.profile.id).order_by('-date')
-        for product in recent:
-            products.append(product.productID)
+        recent_games = RecentlyViewedGames.objects.filter(profileID_id=request.user.profile.id).order_by('-date')
+        recent_consoles = RecentlyViewedConsoles.objects.filter(profileID_id=request.user.profile.id).order_by('-date')
+        recent_products = sorted(chain(recent_games, recent_consoles), key=lambda prod: prod.date, reverse=True)
+        for product in recent_products:
+            if type(product).__name__ == 'RecentlyViewedGames':
+                products.append(product.gameID)
+            else:
+                products.append(product.consoleID)
     else:
         if 'recent_viewed' in request.session:
             for id in request.session['recent_viewed']:
-                products.append(get_object_or_404(Game, pk=id))
+                product = Game.objects.filter(id=id).first()
+                if product:
+                    products.append(product)
+                else:
+                    product = Console.objects.filter(id=id).first()
+                    if product:
+                        products.append(product)
 
     return products
 
 
-def add_recently_viewed(request, id):
+def add_recently_viewed(request, id, game=True):
     if request.user.is_authenticated:
-        recent = RecentlyViewed.objects.filter(productID=id, profileID_id=request.user.profile.id).first()
-        if recent is None:
-            RecentlyViewed.objects.create(productID=Console.objects.filter(id=id).first(),
-                                          profileID_id=request.user.profile.id)
+        if game:
+            recent = RecentlyViewedGames.objects.filter(gameID=id, profileID_id=request.user.profile.id).first()
+            if recent is None:
+                RecentlyViewedGames.objects.create(gameID=Game.objects.filter(id=id).first(),
+                                                   profileID_id=request.user.profile.id)
+            else:
+                recent.date = datetime.datetime.now()
+                recent.save()
         else:
-            recent.date = datetime.datetime.now()
-            recent.save()
+            recent = RecentlyViewedConsoles.objects.filter(consoleID=id,
+                                                           profileID_id=request.user.profile.id).first()
+            if recent is None:
+                RecentlyViewedConsoles.objects.create(consoleID=Console.objects.filter(id=id).first(),
+                                                      profileID_id=request.user.profile.id)
+            else:
+                recent.date = datetime.datetime.now()
+                recent.save()
     else:
         if 'recent_viewed' not in request.session:
             request.session['recent_viewed'] = []
@@ -72,6 +95,8 @@ def add_recently_viewed(request, id):
                 request.session['recent_viewed'].pop()
             request.session['recent_viewed'].insert(0, id)
         request.session.save()
+
+
 
 
 def get_game_by_copies_sold():

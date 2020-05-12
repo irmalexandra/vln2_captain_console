@@ -30,8 +30,13 @@ class Product(models.Model):
     product_display_image = models.CharField(max_length=999, null=True)
     extra_images = models.ManyToManyField(ExtraImages)
 
+    url = "product"
+
     def __str__(self):
         return self.name
+
+    def get_url(self):
+        return self.url
 
 
 
