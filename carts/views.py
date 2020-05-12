@@ -95,6 +95,7 @@ def input_payment_info(request, shipping_id):
                     break
 
             if dupe == None:  # <----- if NOT duplicate
+                print("not dupe")
                 payment_instance = payment_form.save()
 
             create_order(request, shipping_instance, payment_instance)
@@ -112,31 +113,30 @@ def input_payment_info(request, shipping_id):
 
 
 def create_order(request, shipping_instance, payment_instance):
+
     if request.user.is_authenticated:
         user_id = Profile.objects.filter(user=request.user).first().id
         cart = Cart.objects.filter(userID=user_id, check_out=False).first()
-        order = Order.objects.create(
-            shipping_information_id=shipping_instance,
-            payment_information_id=payment_instance,
-            cartID=cart
-        )
-        order.save()
-        cart.check_out = True
-        cart.save()
         Cart.objects.create(userID=user_id, check_out=False)
+        cart.check_out = True
+
     else:
         cart = Cart.objects.create(userID=None, check_out=True)
         for product in request.session['cart']:
-            CartItems.objects.create(productID=product['id'], quantity=product['quantity'], price=product['price'] , cartID=cart)
-
-        order = Order.objects.create(
-            shipping_information_id=shipping_instance,
-            payment_information_id=payment_instance,
-            cartID=cart
-        )
-        cart.save()
-        order.save()
+            CartItems.objects.create(productID=product['id'],
+                                     quantity=product['quantity'],
+                                     price=product['price'],
+                                     cartID=cart)
         request.session['cart'] = []
+
+    order = Order.objects.create(
+        shipping_information_id=shipping_instance,
+        payment_information_id=payment_instance,
+        cartID=cart
+    )
+    cart.save()
+    order.save()
+
 
 
 
