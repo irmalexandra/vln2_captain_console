@@ -64,10 +64,13 @@ def input_shipping_info(request):
 
     if request.user.is_authenticated:
         profile = Profile.objects.filter(user=request.user).first()
-        shipping_info = ShippingInformation.objects.filter(id=profile.shipping_information_id.id).first()
-
+        if profile.shipping_information_id:
+            shipping_info = ShippingInformation.objects.filter(id=profile.shipping_information_id.id).first()
+        else:
+            shipping_info = ShippingInformation()
     else:
         shipping_info = ShippingInformation()
+
 
     context['shipping_info_form'] = ShippingForm(instance=shipping_info)
     return render(request, 'carts/shipping_info.html', context)
@@ -90,20 +93,21 @@ def input_payment_info(request, shipping_id):
                         expiration_fixed == request.POST['expiration_date'] and \
                         info.cvv == request.POST['cvv']:
                     dupe = True
-                    payment_instance = PaymentInformation.objects.filter(id=info.id)
+                    payment_instance = PaymentInformation.objects.filter(id=info.id).first()
                     print("DUPE")
                     break
 
             if dupe == None:  # <----- if NOT duplicate
                 print("not dupe")
                 payment_instance = payment_form.save()
-
-            create_order(request, shipping_instance, payment_instance)
+            return redirect('overview', shipping_id=shipping_id, payment_id=payment_instance.id)
 
     if request.user.is_authenticated:
         profile = Profile.objects.filter(user=request.user).first()
-        payment_info = PaymentInformation.objects.filter(id=profile.shipping_information_id.id).first()
-
+        if profile.payment_information_id:
+            payment_info = PaymentInformation.objects.filter(id=profile.payment_information_id.id).first()
+        else:
+            payment_info = PaymentInformation()
     else:
         payment_info = PaymentInformation()
 
@@ -112,30 +116,41 @@ def input_payment_info(request, shipping_id):
     return render(request, 'carts/payment_info.html', context)
 
 
-def create_order(request, shipping_instance, payment_instance):
+def overview(request, shipping_id, payment_id):
 
-    if request.user.is_authenticated:
-        user_id = Profile.objects.filter(user=request.user).first().id
-        cart = Cart.objects.filter(userID=user_id, check_out=False).first()
-        Cart.objects.create(userID=user_id, check_out=False)
-        cart.check_out = True
+    if request.method == 'POST':
+        shipping_instance = ShippingInformation.objects.filter(id=shipping_id).first()
+        payment_instance = PaymentInformation.objects.filter(id=payment_id).first()
+        if request.user.is_authenticated:
+            user_id = Profile.objects.filter(user=request.user).first().id
+            cart = Cart.objects.filter(userID=user_id, check_out=False).first()
+            Cart.objects.create(userID=user_id, check_out=False)
+            cart.check_out = True
+
+        else:
+            cart = Cart.objects.create(userID=None, check_out=True)
+            for product in request.session['cart']:
+                CartItems.objects.create(productID=product['id'],
+                                         quantity=product['quantity'],
+                                         price=product['price'],
+                                         cartID=cart)
+            request.session['cart'] = []
+
+        order = Order.objects.create(
+            shipping_information_id=shipping_instance,
+            payment_information_id=payment_instance,
+            cartID=cart
+        )
+        cart.save()
+        order.save()
 
     else:
-        cart = Cart.objects.create(userID=None, check_out=True)
-        for product in request.session['cart']:
-            CartItems.objects.create(productID=product['id'],
-                                     quantity=product['quantity'],
-                                     price=product['price'],
-                                     cartID=cart)
-        request.session['cart'] = []
-
-    order = Order.objects.create(
-        shipping_information_id=shipping_instance,
-        payment_information_id=payment_instance,
-        cartID=cart
-    )
-    cart.save()
-    order.save()
+        context = get_models(request)
+        payment_info = PaymentInformation.objects.filter(id=payment_id).first()
+        shipping_info = ShippingInformation.objects.filter(id=shipping_id).first()
+        context['payment_info_form'] = PaymentForm(instance=payment_info)
+        context['shipping_info_form'] = ShippingForm(instance=shipping_info)
+        return render(request, 'carts/overview.html', context)
 
 
 def cart_add(request):
