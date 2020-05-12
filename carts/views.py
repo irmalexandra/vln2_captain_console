@@ -118,7 +118,6 @@ def input_payment_info(request, shipping_id):
 
 def overview(request, shipping_id, payment_id):
 
-
     if request.method == 'POST':
         shipping_instance = ShippingInformation.objects.filter(id=shipping_id).first()
         payment_instance = PaymentInformation.objects.filter(id=payment_id).first()
