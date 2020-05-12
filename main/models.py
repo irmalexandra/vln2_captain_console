@@ -25,7 +25,6 @@ class Product(models.Model):
     quantity = models.IntegerField()
     price = models.IntegerField()
     onSale = models.BooleanField()
-    copies_sold = models.IntegerField(default=0)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.SET_NULL, null=True)
     release_date = models.DateTimeField()
     product_display_image = models.CharField(max_length=999, null=True)
