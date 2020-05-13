@@ -123,10 +123,10 @@ def overview(request, shipping_id, payment_id):
             items = CartItems.objects.filter(cartID=cart.id)
             for item in items:
                 total_price += item.total_price
-                item = Product.objects.filter(id=item.productID.id).first()
-                item.copies_sold += item.quantity
-                item.quantity -= item.quantity
-                item.save()
+                product = Product.objects.filter(id=item.productID.id).first()
+                product.copies_sold += item.quantity
+                product.quantity -= item.quantity
+                product.save()
 
             Cart.objects.create(profileID=profile, check_out=False)
             cart.check_out = True
