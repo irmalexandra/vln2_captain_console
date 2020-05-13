@@ -59,12 +59,9 @@ $(".quantity").focusout(function (e) {
         }
     })
 
-}).click(function (e) {
+}).change(function (e) {
     let quantity = e.currentTarget.value
     let id = e.currentTarget.id
-
-
-
     document.getElementById("price-" + id).innerHTML = parseInt(quantity) * parseInt(PRODUCTS[id]["price"])
     update_total()
 })

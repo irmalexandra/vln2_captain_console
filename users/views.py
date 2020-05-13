@@ -27,7 +27,6 @@ def index(request):
 def user_login(request):
     username = request.GET.get('username')
     password = request.GET.get('pwd')
-
     user = authenticate(username=username, password=password)
     if user is not None:
         login(request, user)
@@ -40,16 +39,16 @@ def register(request):
     form = RegisterForm(request.POST)
 
     if form.is_valid():
-        user = User.objects.filter(username=request.user.username).first()
-        current_profile = Profile.objects.filter(user=request.user).first()
-        if current_profile == None:
-            current_profile = Profile(user_id=user.id)
-            current_profile.save()
-        form.save()
+        instance = form.save()
         username = request.POST.get('username')
-        password = request.POST.get('password')
+        password = request.POST.get('password1')
         user = authenticate(username=username, password=password)
         login(request, user)
+        current_profile = Profile.objects.filter(user=request.user).first()
+
+        if current_profile == None:
+            current_profile = Profile(user_id=instance.id)
+            current_profile.save()
         return HttpResponse('loggedin')
     else:
         return JsonResponse(form.errors)
