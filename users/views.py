@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from users.models import Profile, SearchHistory
-from carts.models import ShippingInformation, PaymentInformation, CartItems
+from carts.models import ShippingInformation, PaymentInformation, Cart
 from carts.views import get_order_history
 from users.forms.update_profile_form import ProfileForm, UserForm
 from users.forms.register_form import RegisterForm
@@ -42,7 +42,7 @@ def register(request):
     if form.is_valid():
         form.save()
         username = request.POST.get('username')
-        password = request.POST.get('password1')
+        password = request.POST.get('password')
         user = authenticate(username=username, password=password)
         login(request, user)
         return HttpResponse('loggedin')
@@ -95,6 +95,7 @@ def profile(request):
         'searches': searches,
         'order_history': order_list
     })
+
 
 
 @login_required

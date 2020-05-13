@@ -118,8 +118,8 @@
                                                         <p>{{ value.datetime.date }}</p>
                                                     </div>
                                                     <div class="col-4">
-                                                        <small>Total</small>
-                                                        <p>Placeholder</p>
+                                                        <small>Total order price</small>
+                                                        <p>{{ value.total_price }}</p>
                                                     </div>
                                                      <div class="col-4">
                                                         <small>Order # {{ value.id }}</small>
@@ -135,7 +135,18 @@
                                                     <div class="collapse " id="order-details-{{ item.cartID_id }}">
                                                     {% endwith %}
                                                         {% for item in value %}
-                                                            {{ item.productID }}
+                                                            <div class="col-4">
+                                                                {{ item.productID.name }}
+                                                            </div>
+                                                            <div class="col-4">
+                                                                {{ item.price }}
+                                                            </div>
+                                                            <div class="col-4">
+                                                                {{ item.quantity }}
+                                                            </div>
+                                                            <div class="col-4">
+                                                                {{ item.total_price }}
+                                                            </div>
                                                         {% endfor %}
                                                     </div>
                                                 {% endif %}
