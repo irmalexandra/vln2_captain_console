@@ -118,6 +118,14 @@ a {
   color: #aaabb8;
 }
 
+.order-details {
+  color: #212529 !important;
+  text-decoration: underline;
+}
+.order-details:hover {
+  color: #0645AD !important;
+}
+
 hr.light {
   border-top: 1px solid #aaabb8;
   width: 75%;
@@ -132,6 +140,10 @@ hr.light {
 .navbar a:hover {
   color: #2e9CCA !important;
   text-shadow: 1px 1px 10px #000000;
+}
+
+.order-info {
+  padding: 0px 16px 0px !important;
 }
 
 .dropdown-menu a:hover {

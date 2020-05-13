@@ -110,55 +110,58 @@
                             {% if order_history %}
                                 <div class="list-group col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     {% for order_dict in order_history %}
+                                        <div class="card">
                                         {% for key, value in order_dict.items %}
                                             <div class="row">
                                                 {% if key == 'order' %}
-                                                    <div class="col-4">
+                                                    <div class="col-4 order-info">
                                                         <small>Order placed</small>
                                                         <p>{{ value.datetime.date }}</p>
                                                     </div>
-                                                    <div class="col-4">
+                                                    <div class="col-4 order-info">
                                                         <small>Total order price</small>
                                                         <p>{{ value.total_price }}</p>
                                                     </div>
-                                                     <div class="col-4">
+                                                     <div class="col-4 order-info">
                                                         <small>Order # {{ value.id }}</small>
                                                         <p>
-                                                            <a class="fun collapsed" href="#" data-toggle="collapse"
-                                                              style="color: #212529"
+                                                            <a class="fun collapsed order-details" href="#" data-toggle="collapse"
+
                                                               data-target="#order-details-{{ value.cartID_id }}"
                                                               aria-expanded="false">Order details</a>
                                                         </p>
                                                     </div>
                                                 {% elif key == 'cart_items' %}
                                                     {% with value.all|first as item %}
-                                                    <div class="container-fluid collapse justify-content-center text-center" id="order-details-{{ item.cartID_id }}">
+                                                    <div class="container-fluid collapse justify-content-center text-center item-list" id="order-details-{{ item.cartID_id }}">
                                                     {% endwith %}
                                                         {% for item in value %}
-                                                            <div class="row">
-                                                            <div class="col-3">
-                                                                <small>Name</small>
-                                                                <p>{{ item.productID.name }}</p>
-                                                            </div>
-                                                            <div class="col-3">
-                                                                <small>Price</small>
-                                                                <p>{{ item.price }}</p>
-                                                            </div>
-                                                            <div class="col-3">
-                                                                <small>Quantity</small>
-                                                                <p>{{ item.quantity }}</p>
-                                                            </div>
-                                                            <div class="col-3">
-                                                                <small>Total Price</small>
-                                                                <p>{{ item.total_price }}</p>
-                                                            </div>
-                                                            </div>
                                                             <hr class="light">
+                                                            <div class="row">
+                                                                <div class="col-3 order-info">
+                                                                    <small>Name</small>
+                                                                    <p><a href="/games/{{ item.productID_id }}" class="order-details">{{ item.productID.name }}</a></p>
+                                                                </div>
+                                                                <div class="col-3 order-info">
+                                                                    <small>Price</small>
+                                                                    <p>{{ item.price }}</p>
+                                                                </div>
+                                                                <div class="col-3 order-info">
+                                                                    <small>Quantity</small>
+                                                                    <p>{{ item.quantity }}</p>
+                                                                </div>
+                                                                <div class="col-3 order-info">
+                                                                    <small>Total Price</small>
+                                                                    <p>{{ item.total_price }}</p>
+                                                                </div>
+                                                            </div>
                                                         {% endfor %}
                                                     </div>
                                                 {% endif %}
                                             </div>
+
                                         {% endfor %}
+                                        </div>
                                         <hr class="light">
                                     {% endfor %}
                                 </div>
@@ -166,6 +169,7 @@
                                 <div class="container-fluid justify-content-center text-center">
                                     <h4 class="float-left">There are no orders tied to this account</h4>
                                 </div>
+
                             {% endif %}
                         </div>
                     </div>

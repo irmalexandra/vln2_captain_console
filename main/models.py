@@ -30,7 +30,9 @@ class Product(models.Model):
     release_date = models.DateTimeField()
     product_display_image = models.CharField(max_length=999, null=True)
     extra_images = models.ManyToManyField(ExtraImages)
-    discount = models.FloatField(default=0, max_length=3)
+    discount = models.IntegerField(default=0, null=True)
+    discount_price = models.IntegerField(default=False, null=True)
+
     url = "product"
 
     def __str__(self):
@@ -38,6 +40,14 @@ class Product(models.Model):
 
     def get_url(self):
         return self.url
+
+    def save(self, *args, **kwargs):
+        if self.on_sale:
+            self.discount_price = int(float(self.price) * (1.0-(self.discount/100)))
+        else:
+            self.discount_price = None
+            self.discount = None
+        super(Product, self).save(*args, **kwargs)
 
 
 
