@@ -54,7 +54,6 @@ def input_shipping_info(request):
                         info.address_1 == request.POST['address_1'] and \
                         info.country == request.POST['country']:
                     the_id = info.id
-                    print("DUPE")
                     break
 
             if the_id == None:  # <----- if NOT duplicate
@@ -93,11 +92,9 @@ def input_payment_info(request, shipping_id):
                         info.cvv == request.POST['cvv']:
                     dupe = True
                     payment_instance = PaymentInformation.objects.filter(id=info.id).first()
-                    print("DUPE")
                     break
 
             if dupe == None:  # <----- if NOT duplicate
-                print("not dupe")
                 payment_instance = payment_form.save()
             return redirect('overview', shipping_id=shipping_id, payment_id=payment_instance.id)
 
@@ -126,7 +123,6 @@ def overview(request, shipping_id, payment_id):
             cart = Cart.objects.filter(profileID=profile, check_out=False).first()
             items = CartItems.objects.filter(cartID=cart.id)
             for item in items:
-                print(item.productID)
                 total_price += item.total_price
                 item = Product.objects.filter(id=item.productID.id).first()
                 item.copies_sold += item.quantity
