@@ -93,7 +93,7 @@ def profile(request):
         'payment_info_dict': complete_payment_dict,
         'shipping_info_dict': complete_shipping_dict,
         'searches': searches,
-        'orders': order_list
+        'order_history': order_list
     })
 
 

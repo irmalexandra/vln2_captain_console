@@ -208,17 +208,16 @@ def cart_add(request):
 
 def get_order_history(request):
 
-    user_id = request.user.id
+    profile_id = request.user.profile.id
     order_history_list = []
-    carts = Cart.objects.filter(userID=user_id, check_out=True)
+    carts = Cart.objects.filter(userID=profile_id, check_out=True)
     for cart in carts:
-        order_history_list.append(Order.objects.filter(cartID=cart.id).first())
+        order_dict = {'order': (Order.objects.filter(cartID=cart.id).first()), 'cart': cart,
+                      'cart_items': CartItems.objects.filter(cartID=cart.id)}
+        order_history_list.append(order_dict)
 
     return order_history_list
 
-
-def get_cartitems_list(request, cart_id):
-    pass
 
 def remove_product(request):
     if request.is_ajax():

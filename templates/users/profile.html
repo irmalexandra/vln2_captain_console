@@ -80,19 +80,20 @@
             </div>
             <hr class="light float-left">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-                <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 card">
-                    <a id="search-button" class="fun btn btn-outline-secondary collapsed" href="#" data-toggle="collapse"
-                       data-target="#searches" aria-expanded="false">View recent searches</a>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 card">
+                    <a id="search-button" class="fun btn btn-outline-secondary collapsed mb-2" href="#"
+                       data-toggle="collapse" data-target="#searches" aria-expanded="false">View recent searches</a>
                     <div class="collapse" id="searches">
                         <div class="row text-center">
                             {% if searches %}
-                                <ul class="list-group col-xl-4 col-lg-6 col-md-7 col-sm-8 col-xs-9 search-results">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 search-results">
                                     {% for search in searches %}
-                                        <li class="list-group-item list-group-item-primary"><a class="search-result"
-                                                                                               href="#">{{ search.search }}</a>
-                                        </li>
+                                        <div class="padding text-center">
+                                            <a class="search-result" href="#">{{ search.search }}</a>
+                                        </div>
+                                        <hr class="light">
                                     {% endfor %}
-                                </ul>
+                                </div>
                             {% else %}
                                 <div class="container-fluid justify-content-center text-center">
                                     <h4 class="float-left">There are no search entries tied to this account</h4>
@@ -101,19 +102,48 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 card">
-                    <a id="search-button" class="fun btn btn-outline-secondary collapsed" href="#" data-toggle="collapse"
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 card">
+                    <a class="fun btn btn-outline-secondary collapsed" href="#" data-toggle="collapse"
                        data-target="#order-history" aria-expanded="false">View order history</a>
                     <div class="collapse " id="order-history">
                         <div class="row text-center">
                             {% if order_history %}
-                                <ul class="list-group col-xl-4 col-lg-6 col-md-7 col-sm-8 col-xs-9 search-results">
-                                    {% for order in order_history %}
-                                        <li class="list-group-item list-group-item-primary">
-                                            <a class="search-result" href="#">{{ order }}</a>
-                                        </li>
+                                <div class="list-group col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    {% for order_dict in order_history %}
+                                        {% for key, value in order_dict.items %}
+                                            <div class="row">
+                                                {% if key == 'order' %}
+                                                    <div class="col-4">
+                                                        <small>Order placed</small>
+                                                        <p>{{ value.datetime.date }}</p>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <small>Total</small>
+                                                        <p>Placeholder</p>
+                                                    </div>
+                                                     <div class="col-4">
+                                                        <small>Order # {{ value.id }}</small>
+                                                        <p>
+                                                            <a class="fun collapsed" href="#" data-toggle="collapse"
+                                                              style="color: #212529"
+                                                              data-target="#order-details-{{ value.cartID_id }}"
+                                                              aria-expanded="false">Order details</a>
+                                                        </p>
+                                                    </div>
+                                                {% elif key == 'cart_items' %}
+                                                    {% with value.all|first as item %}
+                                                    <div class="collapse " id="order-details-{{ item.cartID_id }}">
+                                                    {% endwith %}
+                                                        {% for item in value %}
+                                                            {{ item.productID }}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        {% endfor %}
+                                        <hr class="light">
                                     {% endfor %}
-                                </ul>
+                                </div>
                             {% else %}
                                 <div class="container-fluid justify-content-center text-center">
                                     <h4 class="float-left">There are no orders tied to this account</h4>
@@ -125,7 +155,6 @@
             </div>
         </div>
     </div>
-
     <br>
     <script src="{% static 'js/use_search_result.js' %}"></script>
 {% endblock %}
