@@ -23,6 +23,7 @@ def update_cart_items(request):
             user_cart = Cart.objects.filter(profileID=profile, check_out=False).first()
             user_cart_items = CartItems.objects.filter(cartID=user_cart.id, productID=item_id).first()
             user_cart_items.quantity = item_quantity
+            user_cart_items.total_price = user_cart_items.price * user_cart_items.quantity
             user_cart_items.save()
 
         else:
@@ -115,6 +116,7 @@ def input_payment_info(request, shipping_id):
 
 def overview(request, shipping_id, payment_id):
     context = get_cart_info(request)
+    total_price = 0
     if request.method == 'POST':
         shipping_instance = ShippingInformation.objects.filter(id=shipping_id).first()
         payment_instance = PaymentInformation.objects.filter(id=payment_id).first()
@@ -124,6 +126,7 @@ def overview(request, shipping_id, payment_id):
             items = CartItems.objects.filter(cartID=cart.id)
             for item in items:
                 print(item.productID)
+                total_price += item.total_price
                 item = Product.objects.filter(id=item.productID.id).first()
                 item.copies_sold += item.quantity
                 item.quantity -= item.quantity
@@ -135,9 +138,11 @@ def overview(request, shipping_id, payment_id):
         else:
             cart = Cart.objects.create(profileID=None, check_out=True)
             for item in request.session['cart']:
+                total_price += item.total_price
                 product = Product.objects.filter(id=int(item['id'])).first()
                 product.quantity -= int(item['quantity'])
                 product.copies_sold += int(item['quantity'])
+
                 product.save()
                 CartItems.objects.create(productID=item['id'],
                                          quantity=item['quantity'],
@@ -148,7 +153,8 @@ def overview(request, shipping_id, payment_id):
         order = Order.objects.create(
             shipping_information_id=shipping_instance,
             payment_information_id=payment_instance,
-            cartID=cart
+            cartID=cart,
+            total_price=total_price
         )
 
         cart.save()

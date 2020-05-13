@@ -71,6 +71,7 @@ class Order(models.Model):
     datetime = models.DateTimeField(default=now)
     shipping_information_id = models.ForeignKey(ShippingInformation, on_delete=models.PROTECT)
     payment_information_id = models.ForeignKey(PaymentInformation, on_delete=models.PROTECT)
+    total_price = models.IntegerField(default=0, null=True)
 
 
 class OrderHistory(models.Model):

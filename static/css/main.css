@@ -4,6 +4,12 @@
   min-height: 750px;
 }
 
+#the-count {
+  float: right;
+  padding: 0.1rem 0 0 0;
+  font-size: 0.875rem;
+}
+
 .add-to-cart-alert{
   min-width: 90%;
   position: absolute;

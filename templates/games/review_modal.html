@@ -8,8 +8,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form class="form" method="POST">
-      <div class="modal-body">
+        <div class="modal-body">
             {% csrf_token %}
             {% for field in review_form %}
                 <div class="container">
@@ -19,16 +18,17 @@
                     <div class="fieldBox">
                         {{ field }}
                     </div>
-
                 </div>
-             {% endfor %}
-
-      </div>
-      <div class="modal-footer">
-          <button type="button" class="btn btn-primary" id="review-button">Submit</button>
-      </div>
-      </form>
-    </div>
+            {% endfor %}
+            <div id="the-count">
+                <span id="current">0</span>
+                <span id="maximum">/ 999</span>
+            </div>
+            <div class="modal-footer">
+            </div>
+                <button type="button" class="btn btn-primary" id="review-button">Submit</button>
+            </div>
+        </div>
   </div>
 </div>
 {% endif %}

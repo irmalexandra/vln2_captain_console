@@ -132,21 +132,28 @@
                                                     </div>
                                                 {% elif key == 'cart_items' %}
                                                     {% with value.all|first as item %}
-                                                    <div class="collapse " id="order-details-{{ item.cartID_id }}">
+                                                    <div class="container-fluid collapse justify-content-center text-center" id="order-details-{{ item.cartID_id }}">
                                                     {% endwith %}
                                                         {% for item in value %}
-                                                            <div class="col-4">
-                                                                {{ item.productID.name }}
+                                                            <div class="row">
+                                                            <div class="col-3">
+                                                                <small>Name</small>
+                                                                <p>{{ item.productID.name }}</p>
                                                             </div>
-                                                            <div class="col-4">
-                                                                {{ item.price }}
+                                                            <div class="col-3">
+                                                                <small>Price</small>
+                                                                <p>{{ item.price }}</p>
                                                             </div>
-                                                            <div class="col-4">
-                                                                {{ item.quantity }}
+                                                            <div class="col-3">
+                                                                <small>Quantity</small>
+                                                                <p>{{ item.quantity }}</p>
                                                             </div>
-                                                            <div class="col-4">
-                                                                {{ item.total_price }}
+                                                            <div class="col-3">
+                                                                <small>Total Price</small>
+                                                                <p>{{ item.total_price }}</p>
                                                             </div>
+                                                            </div>
+                                                            <hr class="light">
                                                         {% endfor %}
                                                     </div>
                                                 {% endif %}
