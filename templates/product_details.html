@@ -41,8 +41,12 @@
                 {% elif product.console_id %}
                 <h3>This title currently has no review rating</h3>
             {% endif %}
+            {% if product.on_sale %}
+                <h2><span id="on-sale-tag">{{ product.discount }}% Discount! </span><span id="old-price">{{ product.price }}</span> / <span id="new-price">{{ product.discount_price }}</span></h2>
+                {% else %}
+                <h2>{{ product.price }} kr.</h2>
+            {% endif %}
 
-          <h2>{{ product.price }} kr.</h2>
             <div id="status-{{ product.id }}" class="alert alert-primary add-to-cart-alert-details text-center" role="alert" style="width: fit-content"></div>
           <button class="btn btn-outline-secondary add_to_cart_button" id="{{ product.id }}" >Add to Cart</button>
           {% if user.is_authenticated and product.console_id %}
