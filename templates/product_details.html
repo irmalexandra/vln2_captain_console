@@ -42,7 +42,7 @@
                 <h3>This title currently has no review rating</h3>
             {% endif %}
             {% if product.on_sale %}
-                <h2><span id="on-sale-tag">{{ product.discount }}% Discount! </span><span id="old-price">{{ product.price }}</span> / <span id="new-price">{{ product.discount_price }}</span></h2>
+                <h2><span class="on-sale-tag">{{ product.discount }}% Discount! </span><span id="old-price">{{ product.price }}</span> / <span id="new-price">{{ product.discount_price }}</span></h2>
                 {% else %}
                 <h2>{{ product.price }} kr.</h2>
             {% endif %}
