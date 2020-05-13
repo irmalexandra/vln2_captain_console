@@ -73,4 +73,4 @@ def get_console_latest_releases(request):
 
 
 def get_console_offers(request):
-    return Console.objects.filter(onSale=True)
+    return Console.objects.filter(on_sale=True)

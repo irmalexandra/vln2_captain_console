@@ -50,7 +50,6 @@ class Product(models.Model):
         super(Product, self).save(*args, **kwargs)
 
 
-
 class ProductImages(models.Model):
     url = models.CharField(max_length=999)
     productID = models.ForeignKey(Product, on_delete=models.CASCADE) #<--- If Product gets deleted, all images get deleted beloning to the product id

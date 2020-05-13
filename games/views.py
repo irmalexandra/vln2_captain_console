@@ -148,7 +148,7 @@ def get_game_by_id(request, id):
 
 
 def get_game_offers(request):
-    return Game.objects.filter(onSale=True)
+    return Game.objects.filter(on_sale=True)
 
 
 @login_required

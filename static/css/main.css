@@ -1,5 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
+#on-sale-tag {
+  font-weight: bold;
+  color: #FF0000;
+}
+
+#old-price {
+  text-decoration: line-through;
+  color: #FF0000;
+}
+
+#new-price {
+  font-weight: bold;
+}
+
 .game-container {
   min-height: 750px;
 }
