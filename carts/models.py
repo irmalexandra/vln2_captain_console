@@ -1,4 +1,3 @@
-
 from django.db import models
 from main.models import Product
 from users.models import Cart

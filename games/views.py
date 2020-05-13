@@ -1,12 +1,11 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 import datetime
 from consoles.models import Console
 from games.models import Game, Genre
 from main.views import add_recently_viewed
-from users.models import Profile, Review, GameReview
+from users.models import Profile, Review
 
 # Create your views here.
 SORT_DICT = {

@@ -15,7 +15,7 @@ INFO_KEY_DICT = {'username': '', 'email': '', 'first_name': '', 'last_name': '',
                  'address_2': '', 'city': '', 'postcode': '', 'country': '', 'profile_image': ''}
 LABEL_DICT = {'username': 'Username', 'email': 'Email', 'first_name': 'First name', 'last_name': 'Last name',
               'address_1': 'Address 1', 'address_2': 'Address 2', 'city': 'City', 'postcode': 'Postcode',
-              'country': 'Country','profile_image': 'Profile image', 'card_number': 'Card number',
+              'country': 'Country', 'profile_image': 'Profile image', 'card_number': 'Card number',
               'expiration_date': 'Expiration date', 'cvv': 'CVV/CVC'}
 EXCLUDED_FIELDS_TPL = ('_state', 'id')
 

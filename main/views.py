@@ -1,12 +1,11 @@
 import datetime
 from itertools import chain
 
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render
 
 # Create your views here.
 from consoles.models import Console
 from games.models import Game
-from main.models import Product
 from users.models import Profile, SearchHistory, RecentlyViewedGames, RecentlyViewedConsoles
 
 
