@@ -30,7 +30,7 @@ class Product(models.Model):
     release_date = models.DateTimeField()
     product_display_image = models.CharField(max_length=999, null=True)
     extra_images = models.ManyToManyField(ExtraImages)
-
+    discount = models.FloatField(default=0, max_length=3)
     url = "product"
 
     def __str__(self):
