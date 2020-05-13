@@ -222,7 +222,7 @@ def get_order_history(request):
     carts = Cart.objects.filter(profileID=profile_id, check_out=True)
     if carts:
         for cart in carts:
-            order_dict = {'order': Order.objects.filter(cartID=cart.id).first(), 'cart': cart,
+            order_dict = {'order': Order.objects.filter(cartID=cart.id).first(),
                           'cart_items': CartItems.objects.filter(cartID=cart.id)}
             order_history_list.append(order_dict)
 
