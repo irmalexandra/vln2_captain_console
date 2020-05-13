@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from carts.forms.payment_form import PaymentForm
 from carts.forms.shipping_form import ShippingForm
 from main.models import Product
-from carts.models import Cart, CartItems, PaymentInformation, ShippingInformation, Order
-from users.models import Profile
+from carts.models import Cart, CartItems
+from users.models import Profile, PaymentInformation, ShippingInformation, Order
 
 
 def index(request):
