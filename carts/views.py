@@ -30,6 +30,7 @@ def update_cart_items(request):
             for x in range(len(request.session['cart'])):
                 if request.session['cart'][x]['id'] == item_id:
                     request.session['cart'][x]['quantity'] = item_quantity
+                    request.session['cart'][x]['total_price'] = int(request.session['cart'][x]['price']) * item_quantity
 
         request.session.save()
         return HttpResponse("success")
@@ -138,16 +139,16 @@ def overview(request, shipping_id, payment_id):
         else:
             cart = Cart.objects.create(profileID=None, check_out=True)
             for item in request.session['cart']:
-                total_price += item.total_price
+                total_price += int(item['total_price'])
                 product = Product.objects.filter(id=int(item['id'])).first()
                 product.quantity -= int(item['quantity'])
                 product.copies_sold += int(item['quantity'])
-
                 product.save()
-                CartItems.objects.create(productID=item['id'],
+                CartItems.objects.create(productID=Product.objects.filter(id=item['id']).first(),
                                          quantity=item['quantity'],
                                          price=item['price'],
-                                         cartID=cart)
+                                         cartID=cart,
+                                         total_price=int(item['total_price']))
             request.session['cart'] = []
 
         order = Order.objects.create(
@@ -202,6 +203,7 @@ def cart_add(request):
             for x in range(len(request.session['cart'])):
                 if request.session['cart'][x]['id'] == product.id:
                     request.session['cart'][x]['quantity'] += 1
+                    request.session['cart'][x]['total_price'] += request.session['cart'][x]['price']
                     returned_quantity = request.session['cart'][x]['quantity']
                     duplicate = True
 
@@ -211,7 +213,8 @@ def cart_add(request):
                     'price': product.price,
                     'img': product.product_display_image,
                     'quantity': 1,
-                    'id': product.id
+                    'id': product.id,
+                    'total_price': product.price
                 })
             request.session.save()
         return HttpResponse(returned_quantity)
@@ -268,6 +271,7 @@ def get_cart_info(request):
         img = ""
         price = 0
         id = 0
+        total_price = 0
 
     models = []
     price_sum = 0
@@ -285,6 +289,7 @@ def get_cart_info(request):
                 price_sum += product.price * product.quantity
                 model.img = item.product_display_image
                 model.name = item.name
+                model.total_price = product.price * product.quantity
                 models.append(model)
 
     else:
@@ -297,6 +302,7 @@ def get_cart_info(request):
                 model.img = product['img']
                 model.name = product['name']
                 model.id = product['id']
+                model.total_price = int(product['quantity']) * int(product['price'])
                 models.append(model)
 
     context = {

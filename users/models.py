@@ -61,7 +61,7 @@ class GameReview(models.Model):
 
 
 class Cart(models.Model):
-    profileID = models.ForeignKey(Profile, on_delete=models.PROTECT)
+    profileID = models.ForeignKey(Profile, on_delete=models.PROTECT, null=True)
     check_out = models.BooleanField()
     date_created = models.DateTimeField(default=now)
 
