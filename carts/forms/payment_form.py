@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from carts.models import PaymentInformation
+from users.models import PaymentInformation
 from creditcards.forms import CardNumberField, CardExpiryField, SecurityCodeField
 
 class PaymentForm(ModelForm):

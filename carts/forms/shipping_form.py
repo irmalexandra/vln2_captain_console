@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from carts.models import ShippingInformation
+from users.models import ShippingInformation
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
 

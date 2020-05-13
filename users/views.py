@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from users.models import Profile, SearchHistory
-from carts.models import ShippingInformation, PaymentInformation, Cart
+from users.models import ShippingInformation, PaymentInformation
 from carts.views import get_order_history
 from users.forms.update_profile_form import ProfileForm, UserForm
 from users.forms.register_form import RegisterForm
