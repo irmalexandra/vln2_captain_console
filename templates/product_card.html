@@ -13,10 +13,9 @@
     </h4>
       <div id="status-{{ product.id }}" class="alert alert-primary add-to-cart-alert" role="alert" style="width: fit-content"></div>
     <p class="product-description text-left">{{ product.description }}</p>
-    {% if product.onSale %}
-        <p>price {{ product.price }}</p>
-        <p>discount = {{ product.discount }}</p>
-        <p>{% product.price*product.discount %} kr.</p>
+    {% if product.on_sale %}
+        <p><span id="on-sale-tag">{{ product.discount }}% Discount! </span><span id="old-price">{{ product.price }}</span> / <span id="new-price">{{ product.discount_price }}</span></p>
+
     {% else %}
         <p>{{ product.price }} kr.</p>
     {% endif %}
