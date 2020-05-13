@@ -51,6 +51,7 @@
                             <tr>
                                 <th scope="col">name</th>
                                 <th scope="col">Quantity</th>
+                                <th scope="col"></th>
                                 <th scope="col">price</th>
                             </tr>
                             </thead>
@@ -66,6 +67,11 @@
                                             <h4>{{ product.quantity }}</h4>
                                         </th>
                                         <th>
+                                            {% if product.discount %}
+                                                <h4 class="on-sale-tag">{{ product.discount }}% discount</h4>
+                                            {% endif %}
+                                        </th>
+                                        <th>
                                             <h4>{{ product.price }}</h4>
                                         </th>
                                     </tr>
@@ -73,6 +79,8 @@
                             </form>
                             <tr>
                                 <th scope="row">
+                                </th>
+                                <th>
                                 </th>
                                 <th>
                                 </th>

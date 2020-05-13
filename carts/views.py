@@ -38,7 +38,6 @@ def update_cart_items(request):
 
 def input_shipping_info(request):
     context = get_cart_info(request)
-
     if request.method == "POST":
         shipping_form = ShippingForm(data=request.POST)
         if shipping_form.is_valid():
@@ -186,11 +185,15 @@ def cart_add(request):
                 first_item.total_price = first_item.quantity * first_item.price
                 first_item.save()
             else:
+                if product.on_sale:
+                    price = product.discount_price
+                else:
+                    price = product.price
                 CartItems.objects.create(productID=product,
                                          quantity=1,
                                          cartID=user_cart,
-                                         price=product.price,
-                                         total_price=product.price*1)
+                                         price=price,
+                                         total_price=price*1)
 
         else:
             duplicate = False
@@ -204,13 +207,19 @@ def cart_add(request):
                     duplicate = True
 
             if not duplicate:
+                if product.on_sale:
+                    price = product.discount_price
+                else:
+                    price = product.price
+
                 request.session['cart'].append({
                     'name': product.name,
-                    'price': product.price,
+                    'price': price,
                     'img': product.product_display_image,
                     'quantity': 1,
                     'id': product.id,
-                    'total_price': product.price
+                    'total_price': price,
+                    'discount': product.discount
                 })
             request.session.save()
         return HttpResponse(returned_quantity)
@@ -268,6 +277,7 @@ def get_cart_info(request):
         price = 0
         id = 0
         total_price = 0
+        discount = 0
 
     models = []
     price_sum = 0
@@ -279,13 +289,13 @@ def get_cart_info(request):
             for product in cart:
                 model = Model()
                 model.quantity = product.quantity
-
                 model.price = product.price * product.quantity
                 model.id = product.productID
                 item = Product.objects.filter(id=product.productID.id).first()
                 price_sum += product.price * product.quantity
                 model.img = item.product_display_image
                 model.name = item.name
+                model.discount = product.productID.discount
                 model.total_price = product.price * product.quantity
                 models.append(model)
 
@@ -299,6 +309,7 @@ def get_cart_info(request):
                 model.img = product['img']
                 model.name = product['name']
                 model.id = product['id']
+                model.discount = product['discount']
                 model.total_price = int(product['quantity']) * int(product['price'])
                 models.append(model)
 
