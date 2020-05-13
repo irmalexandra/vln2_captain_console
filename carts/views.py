@@ -19,8 +19,8 @@ def update_cart_items(request):
 
         if request.user.is_authenticated:
 
-            user_id = Profile.objects.filter(user=request.user).first().id
-            user_cart = Cart.objects.filter(userID=user_id, check_out=False).first()
+            profile = Profile.objects.filter(user=request.user).first()
+            user_cart = Cart.objects.filter(profileID=profile, check_out=False).first()
             user_cart_items = CartItems.objects.filter(cartID=user_cart.id, productID=item_id).first()
             user_cart_items.quantity = item_quantity
             user_cart_items.save()
@@ -119,22 +119,21 @@ def overview(request, shipping_id, payment_id):
         shipping_instance = ShippingInformation.objects.filter(id=shipping_id).first()
         payment_instance = PaymentInformation.objects.filter(id=payment_id).first()
         if request.user.is_authenticated:
-            user_id = Profile.objects.filter(user=request.user).first().id
-            cart = Cart.objects.filter(userID=user_id, check_out=False).first()
+            profile = Profile.objects.filter(user=request.user).first()
+            cart = Cart.objects.filter(profileID=profile, check_out=False).first()
             items = CartItems.objects.filter(cartID=cart.id)
             for item in items:
                 print(item.productID)
-                item = Product.objects.filter(id=item.productID).first()
+                item = Product.objects.filter(id=item.productID.id).first()
                 item.copies_sold += item.quantity
                 item.quantity -= item.quantity
                 item.save()
 
-
-            Cart.objects.create(userID=user_id, check_out=False)
+            Cart.objects.create(profileID=profile, check_out=False)
             cart.check_out = True
 
         else:
-            cart = Cart.objects.create(userID=None, check_out=True)
+            cart = Cart.objects.create(profileID=None, check_out=True)
             for item in request.session['cart']:
                 product = Product.objects.filter(id=int(item['id'])).first()
                 product.quantity -= int(item['quantity'])
@@ -172,18 +171,23 @@ def cart_add(request):
         product = Product.objects.filter(id=product_id).first()
 
         if request.user.is_authenticated:
-            user_id = Profile.objects.filter(user=request.user).first().id
-            user_cart = Cart.objects.filter(userID=user_id, check_out=False).first()
+            profile = Profile.objects.filter(user=request.user).first()
+            user_cart = Cart.objects.filter(profileID=profile, check_out=False).first()
             if not user_cart:
-                user_cart = Cart.objects.create(userID=user_id, check_out=False)
+                user_cart = Cart.objects.create(profileID=profile, check_out=False)
             cart_items = CartItems.objects.filter(cartID=user_cart.id, productID=product.id)
             if len(cart_items) != 0:
                 first_item = cart_items.first()
                 first_item.quantity += 1
                 returned_quantity = first_item.quantity
+                first_item.total_price = first_item.quantity * first_item.price
                 first_item.save()
             else:
-                CartItems.objects.create(productID=product.id, quantity=1, cartID=user_cart, price=product.price)
+                CartItems.objects.create(productID=product,
+                                         quantity=1,
+                                         cartID=user_cart,
+                                         price=product.price,
+                                         total_price=product.price*product.quantity)
 
         else:
             duplicate = False
@@ -210,21 +214,22 @@ def get_order_history(request):
 
     profile_id = request.user.profile.id
     order_history_list = []
-    carts = Cart.objects.filter(userID=profile_id, check_out=True)
-    for cart in carts:
-        order_dict = {'order': Order.objects.filter(cartID=cart.id).first(), 'cart': cart,
-                      'cart_items': CartItems.objects.filter(cartID=cart.id)}
-        order_history_list.append(order_dict)
+    carts = Cart.objects.filter(profileID=profile_id, check_out=True)
+    if carts:
+        for cart in carts:
+            order_dict = {'order': Order.objects.filter(cartID=cart.id).first(), 'cart': cart,
+                          'cart_items': CartItems.objects.filter(cartID=cart.id)}
+            order_history_list.append(order_dict)
 
-    return order_history_list
+        return order_history_list
 
 
 def remove_product(request):
     if request.is_ajax():
         product_id = int(request.POST.get("id"))
         if request.user.is_authenticated:
-            user_id = Profile.objects.filter(user=request.user).first().id
-            user_cart_id = Cart.objects.filter(userID=user_id).first().id
+            profile = Profile.objects.filter(user=request.user).first()
+            user_cart_id = Cart.objects.filter(profileID=profile).first().id
             product = CartItems.objects.filter(cartID=user_cart_id, productID=product_id).first()
             product.delete()
         else:
@@ -240,8 +245,8 @@ def remove_product(request):
 def clear_cart(request):
     if request.is_ajax():
         if request.user.is_authenticated:
-            user_id = Profile.objects.filter(user=request.user).first().id
-            user_cart = Cart.objects.filter(userID=user_id).first()
+            profile = Profile.objects.filter(user=request.user).first()
+            user_cart = Cart.objects.filter(profileID=profile).first()
             user_cart.delete()
         else:
             request.session.clear()
@@ -261,8 +266,8 @@ def get_cart_info(request):
     models = []
     price_sum = 0
     if request.user.is_authenticated:
-        user_id = Profile.objects.filter(user=request.user).first().id
-        user_cart = Cart.objects.filter(userID=user_id, check_out=False).first()
+        profile = Profile.objects.filter(user=request.user).first()
+        user_cart = Cart.objects.filter(profileID=profile, check_out=False).first()
         if user_cart:
             cart = CartItems.objects.filter(cartID=user_cart.id)
             for product in cart:
@@ -270,7 +275,7 @@ def get_cart_info(request):
                 model.quantity = product.quantity
                 model.price = product.price * product.quantity
                 model.id = product.productID
-                item = Product.objects.filter(id=product.productID).first()
+                item = Product.objects.filter(id=product.productID.id).first()
                 price_sum += product.price * product.quantity
                 model.img = item.product_display_image
                 model.name = item.name
