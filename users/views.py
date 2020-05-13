@@ -40,6 +40,11 @@ def register(request):
     form = RegisterForm(request.POST)
 
     if form.is_valid():
+        user = User.objects.filter(username=request.user.username).first()
+        current_profile = Profile.objects.filter(user=request.user).first()
+        if current_profile == None:
+            current_profile = Profile(user_id=user.id)
+            current_profile.save()
         form.save()
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -54,9 +59,6 @@ def register(request):
 def profile(request):
     user = User.objects.filter(username=request.user.username).first()
     current_profile = Profile.objects.filter(user=request.user).first()
-    if current_profile == None:
-        current_profile = Profile(user_id=user.id)
-        current_profile.save()
     profile_dict = current_profile.__dict__
     user_dict = user.__dict__
 
