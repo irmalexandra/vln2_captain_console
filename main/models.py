@@ -24,7 +24,7 @@ class Product(models.Model):
     description = models.TextField(blank=True)
     quantity = models.IntegerField()
     price = models.IntegerField()
-    onSale = models.BooleanField()
+    on_sale = models.BooleanField()
     copies_sold = models.IntegerField(default=0)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.SET_NULL, null=True)
     release_date = models.DateTimeField()

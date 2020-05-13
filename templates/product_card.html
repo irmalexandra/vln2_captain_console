@@ -13,7 +13,13 @@
     </h4>
       <div id="status-{{ product.id }}" class="alert alert-primary add-to-cart-alert" role="alert" style="width: fit-content"></div>
     <p class="product-description text-left">{{ product.description }}</p>
-    <p>{{ product.price }} kr.</p>
+    {% if product.onSale %}
+        <p>price {{ product.price }}</p>
+        <p>discount = {{ product.discount }}</p>
+        <p>{% product.price*product.discount %} kr.</p>
+    {% else %}
+        <p>{{ product.price }} kr.</p>
+    {% endif %}
     <button class="btn btn-outline-secondary add_to_cart_button" id="{{ product.id }}" >Add to Cart</button>
   </div>
 </div>
