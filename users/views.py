@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from users.models import Profile, SearchHistory
-from carts.models import ShippingInformation, PaymentInformation, Cart
+from users.models import ShippingInformation, PaymentInformation
 from carts.views import get_order_history
 from users.forms.update_profile_form import ProfileForm, UserForm
 from users.forms.register_form import RegisterForm
@@ -40,6 +40,11 @@ def register(request):
     form = RegisterForm(request.POST)
 
     if form.is_valid():
+        user = User.objects.filter(username=request.user.username).first()
+        current_profile = Profile.objects.filter(user=request.user).first()
+        if current_profile == None:
+            current_profile = Profile(user_id=user.id)
+            current_profile.save()
         form.save()
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -54,9 +59,6 @@ def register(request):
 def profile(request):
     user = User.objects.filter(username=request.user.username).first()
     current_profile = Profile.objects.filter(user=request.user).first()
-    if current_profile == None:
-        current_profile = Profile(user_id=user.id)
-        current_profile.save()
     profile_dict = current_profile.__dict__
     user_dict = user.__dict__
 
