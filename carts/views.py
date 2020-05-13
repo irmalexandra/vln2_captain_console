@@ -194,7 +194,7 @@ def cart_add(request):
                                          quantity=1,
                                          cartID=user_cart,
                                          price=product.price,
-                                         total_price=product.price*product.quantity)
+                                         total_price=product.price*1)
 
         else:
             duplicate = False
