@@ -1,9 +1,6 @@
 import datetime
 from itertools import chain
-
 from django.shortcuts import render
-
-# Create your views here.
 from consoles.models import Console
 from games.models import Game
 from users.models import Profile, SearchHistory, RecentlyViewedGames, RecentlyViewedConsoles
@@ -11,9 +8,9 @@ from users.models import Profile, SearchHistory, RecentlyViewedGames, RecentlyVi
 
 def index(request):
     """
-
-    :param request:
-    :return:
+    Returns a dictionary of set queries
+    @param request:
+    @return context:
     """
     top_sellers = get_game_by_copies_sold()
     releases = get_game_latest_releases()
@@ -26,6 +23,11 @@ def index(request):
 
 
 def search(request):
+    """
+    Pushes new search instances to the database tied to a profileID
+    @param request:
+    @return context:
+    """
     search_string = request.GET.get('search_field')
     if request.user.is_authenticated:
         profile = Profile.objects.filter(user=request.user).first()

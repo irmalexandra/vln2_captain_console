@@ -19,12 +19,13 @@ LABEL_DICT = {'username': 'Username', 'email': 'Email', 'first_name': 'First nam
               'expiration_date': 'Expiration date', 'cvv': 'CVV/CVC'}
 EXCLUDED_FIELDS_TPL = ('_state', 'id')
 
-def index(request):
-    context = {"users": "active"}
-    return render(request, "users/index.html", context)
-
 
 def user_login(request):
+    """
+    Authenticates a login request and returns a string depending on whether authentication was successful
+    @param request:
+    @return string:
+    """
     username = request.GET.get('username')
     password = request.GET.get('pwd')
     user = authenticate(username=username, password=password)
@@ -36,6 +37,12 @@ def user_login(request):
 
 
 def register(request):
+    """
+    Creates a registration form from a POST request
+    @param request:
+    @return string:
+    @return json object:
+    """
     form = RegisterForm(request.POST)
 
     if form.is_valid():
@@ -56,6 +63,12 @@ def register(request):
 
 @login_required
 def profile(request):
+    """
+    pulls various information tied to the current user from the database and returns it as
+    various dicts, lists and queries
+    @param request:
+    @return context:
+    """
     user = User.objects.filter(username=request.user.username).first()
     current_profile = Profile.objects.filter(user=request.user).first()
     profile_dict = current_profile.__dict__
@@ -67,7 +80,8 @@ def profile(request):
         elif key in user_dict:
             INFO_KEY_DICT[key] = user_dict[key]
 
-    complete_info_dict = dict((LABEL_DICT[key], value) for (key, value) in INFO_KEY_DICT.items())
+    complete_info_dict = dict((LABEL_DICT[key], value) for (key, value) in INFO_KEY_DICT.items()) #creates a merged
+    # dictionary using the values from LABEL_DICT as keys and the values from INFO_KEY_DICT as values
     searches = SearchHistory.objects.filter(profileID=current_profile.id).order_by('-id').all()
     order_list = get_order_history(request)
 
@@ -98,9 +112,13 @@ def profile(request):
     })
 
 
-
 @login_required
 def update_profile(request):
+    """
+    Sends forms based on user and profile information from the database
+    @param request:
+    @return context:
+    """
     current_profile = Profile.objects.filter(user=request.user).first()
 
     if request.method == 'POST':
@@ -120,6 +138,11 @@ def update_profile(request):
 
 @login_required
 def update_payment_info(request):
+    """
+    Sends a form based on user payment information from the database
+    @param request:
+    @return context:
+    """
     current_profile = Profile.objects.filter(user=request.user).first()
     user_payment_info = current_profile.payment_information_id
 
@@ -141,9 +164,14 @@ def update_payment_info(request):
         'payment_form': payment_form
     })
 
+
 @login_required
 def update_shipping_info(request):
-
+    """
+    Sends a form based on user shipping information from the database
+    @param request:
+    @return context:
+    """
     current_profile = Profile.objects.filter(user=request.user).first()
     user_shipping_info = current_profile.shipping_information_id
 
@@ -164,4 +192,3 @@ def update_shipping_info(request):
     return render(request, 'users/update_shipping_info.html', {
         'shipping_form': shipping_form
     })
-
