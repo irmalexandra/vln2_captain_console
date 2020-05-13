@@ -279,6 +279,7 @@ def get_cart_info(request):
             for product in cart:
                 model = Model()
                 model.quantity = product.quantity
+
                 model.price = product.price * product.quantity
                 model.id = product.productID
                 item = Product.objects.filter(id=product.productID.id).first()

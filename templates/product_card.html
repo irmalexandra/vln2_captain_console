@@ -16,7 +16,6 @@
     {% if product.onSale %}
         <p>price {{ product.price }}</p>
         <p>discount = {{ product.discount }}</p>
-        <p>{% product.price*product.discount %} kr.</p>
     {% else %}
         <p>{{ product.price }} kr.</p>
     {% endif %}
