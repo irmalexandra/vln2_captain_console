@@ -69,7 +69,6 @@ def game_default_view(request):
     Calls the filter_sorter with the default values
     and resets the session, turning off all filtering and sorting
     :param request: WSGIRequest
-    :param id: int
     :return filter_sorter:HttpResponse
     """
     request.session.pop('genre', None)
