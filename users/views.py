@@ -39,9 +39,9 @@ def user_login(request):
 def register(request):
     """
     Creates a registration form from a POST request
-    @param request:
-    @return string:
-    @return json object:
+    @param request: WSGI request
+    @return string: HttpResponse
+    @return json object: JsonResponse
     """
     form = RegisterForm(request.POST)
 
@@ -96,7 +96,7 @@ def profile(request):
     user_payment_dict = user_payment_info.__dict__
     user_shipping_dict = user_shipping_info.__dict__
 
-    for key in EXCLUDED_FIELDS_TPL:
+    for key in EXCLUDED_FIELDS_TPL:  # strips unwanted fields from the dictionaries
         del user_payment_dict[key]
         del user_shipping_dict[key]
 
@@ -117,7 +117,7 @@ def update_profile(request):
     """
     Sends forms based on user and profile information from the database
     @param request: WSGI request
-    @return render: Http
+    @return render: HttpResponse
     """
     current_profile = Profile.objects.filter(user=request.user).first()
 
@@ -140,8 +140,8 @@ def update_profile(request):
 def update_payment_info(request):
     """
     Sends a form based on user payment information from the database
-    @param request:
-    @return context:
+    @param request: WSGI request
+    @return render: HttpRespone
     """
     current_profile = Profile.objects.filter(user=request.user).first()
     user_payment_info = current_profile.payment_information_id
@@ -169,8 +169,8 @@ def update_payment_info(request):
 def update_shipping_info(request):
     """
     Sends a form based on user shipping information from the database
-    @param request:
-    @return context:
+    @param request: WSGI Request
+    @return render: HttpResponse
     """
     current_profile = Profile.objects.filter(user=request.user).first()
     user_shipping_info = current_profile.shipping_information_id
