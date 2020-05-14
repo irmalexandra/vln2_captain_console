@@ -80,7 +80,7 @@ def profile(request):
         elif key in user_dict:
             INFO_KEY_DICT[key] = user_dict[key]
 
-    complete_info_dict = dict((LABEL_DICT[key], value) for (key, value) in INFO_KEY_DICT.items()) #creates a merged
+    complete_info_dict = dict((LABEL_DICT[key], value) for (key, value) in INFO_KEY_DICT.items())  # creates a merged
     # dictionary using the values from LABEL_DICT as keys and the values from INFO_KEY_DICT as values
     searches = SearchHistory.objects.filter(profileID=current_profile.id).order_by('-id').all()
     order_list = get_order_history(request)

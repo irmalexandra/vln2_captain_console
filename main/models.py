@@ -39,6 +39,10 @@ class Product(models.Model):
         return self.name
 
     def get_url(self):
+        """
+
+        :return:
+        """
         return self.url
 
     def save(self, *args, **kwargs):
