@@ -41,7 +41,15 @@ def search(request):
 
 
 def get_recently_viewed(request):
+    """
+    Returns a list of all recently viewed products.
+    :param request: WSGIRequest
+    :return: List
+    """
     products = []
+    # Checks to see if the user is authenticated, If the user is authenticated,
+    # we pull all recently viewed products from the DB
+    # If not. We check the request.session for the recent_viewed key.
     if request.user.is_authenticated:
         recent_games = RecentlyViewedGames.objects.filter(profileID_id=request.user.profile.id).order_by('-date')
         recent_consoles = RecentlyViewedConsoles.objects.filter(profileID_id=request.user.profile.id).order_by('-date')
@@ -55,6 +63,8 @@ def get_recently_viewed(request):
         if 'recent_viewed' in request.session:
             for id in request.session['recent_viewed']:
                 product = Game.objects.filter(id=id).first()
+                # check to determine if the id belongs to a game or a console.
+                # And adds it to the product list accordingly
                 if product:
                     products.append(product)
                 else:
@@ -66,9 +76,17 @@ def get_recently_viewed(request):
 
 
 def add_recently_viewed(request, id, game=True):
+    """
+    Adds a product to recently viewed.
+    :param request: WSGIRequest
+    :param id: int
+    :param game: Bool
+    """
+    # Adds the product to either the DB or the Request.session based on if he's authenticated or not
     if request.user.is_authenticated:
         if game:
             recent = RecentlyViewedGames.objects.filter(gameID=id, profileID_id=request.user.profile.id).first()
+            # Check to see if the user has viewed this game before, and updates the time he viewed it last if so.
             if recent is None:
                 RecentlyViewedGames.objects.create(gameID=Game.objects.filter(id=id).first(),
                                                    profileID_id=request.user.profile.id)
@@ -78,6 +96,7 @@ def add_recently_viewed(request, id, game=True):
         else:
             recent = RecentlyViewedConsoles.objects.filter(consoleID=id,
                                                            profileID_id=request.user.profile.id).first()
+            # Check to see if the user has viewed this console before, and updates the time he viewed it last if so.
             if recent is None:
                 RecentlyViewedConsoles.objects.create(consoleID=Console.objects.filter(id=id).first(),
                                                       profileID_id=request.user.profile.id)
@@ -85,26 +104,38 @@ def add_recently_viewed(request, id, game=True):
                 recent.date = datetime.datetime.now()
                 recent.save()
     else:
+        # Stores all the recently viewed product ID's in the request.session. For a anonymous user
+
+        # check to see if the key is present in the dict
         if 'recent_viewed' not in request.session:
             request.session['recent_viewed'] = []
+        # check to determine if the user has viewed this product before. And update the time he viewed it if true
         if id in request.session['recent_viewed']:
             index1 = request.session['recent_viewed'].index(id)
             request.session['recent_viewed'].insert(0, request.session['recent_viewed'][index1])
             request.session['recent_viewed'].pop(index1 + 1)
         else:
+            # check to make sure we dont store to many id's in the
+            # session since the recently viewed section only displays 4 products.
             if len(request.session['recent_viewed']) >= 4:
                 request.session['recent_viewed'].pop()
             request.session['recent_viewed'].insert(0, id)
         request.session.save()
 
 
-
-
 def get_game_by_copies_sold():
+    """
+    Returns all a queryset of all games sorted by -copies_sold
+    :return: Queryset
+    """
     games = Game.objects.all().order_by('-copies_sold')
     return games
 
 
 def get_game_latest_releases():
+    """
+    Returns a queryset of all games sorted by -release_date
+    :return: Queryset
+    """
     games = Game.objects.all().order_by('-release_date')
     return games

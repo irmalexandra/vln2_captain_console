@@ -5,6 +5,7 @@ from django.db import models
 
 
 class Manufacturer(models.Model):
+    """ A model class to represent Manufacturers from DB """
     name = models.CharField(max_length=255)
 
     def __str__(self):
@@ -12,6 +13,7 @@ class Manufacturer(models.Model):
 
 
 class ExtraImages(models.Model):
+    """ A model class to store extra images for a product """
     name = models.CharField(max_length=50, null=True)
     url = models.CharField(max_length=999, null=True)
 
@@ -20,6 +22,7 @@ class ExtraImages(models.Model):
 
 
 class Product(models.Model):
+    """ A model class to represent Product from DB this a parent class for Games and Consoles """
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     quantity = models.IntegerField()
@@ -39,8 +42,13 @@ class Product(models.Model):
         return self.name
 
     def get_url(self):
+        """
+
+        :return:
+        """
         return self.url
 
+    # We overload the Save function for products. So we can calculate the discounted price on the fly
     def save(self, *args, **kwargs):
         if self.on_sale:
             self.discount_price = int(float(self.price) * (1.0-(self.discount/100)))
@@ -51,5 +59,6 @@ class Product(models.Model):
 
 
 class ProductImages(models.Model):
+    """ Class stores the main display image for products """
     url = models.CharField(max_length=999)
     productID = models.ForeignKey(Product, on_delete=models.CASCADE) #<--- If Product gets deleted, all images get deleted beloning to the product id

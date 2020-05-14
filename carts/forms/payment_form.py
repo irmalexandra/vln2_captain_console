@@ -4,6 +4,7 @@ from users.models import PaymentInformation
 from creditcards.forms import CardNumberField, CardExpiryField, SecurityCodeField
 
 class PaymentForm(ModelForm):
+    """ The payment information form """
     first_name = forms.CharField(max_length=30, required=True, label='First Name')
     last_name = forms.CharField(max_length=30, required=True, label='Last Name')
     card_number = CardNumberField(required=True, label='Card Number')

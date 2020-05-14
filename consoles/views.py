@@ -24,15 +24,35 @@ CONSOLE_SORT_LABELS = {
 
 
 def console_sort_view(request, id):
+    """
+    Calls the sorter with the sort id
+    :param request: WSGIRequest
+    :param id: int
+    :return sorter:HttpResponse
+    """
     return sorter(request, id)
 
 
 def console_default_view(request):
+    """
+    Calls the sorter with the default values
+    and resets the session, turning off all filtering and sorting
+    :param request: WSGIRequest
+    :param id: int
+    :return sorter:HttpResponse
+    """
     request.session.pop('console_sort', None)
     return sorter(request)
 
 
 def sorter(request, sort=None):
+    """
+    Sets the context for the Render based on optional parameters. Sorts the
+    console queryset before adding it to the context
+    :param request: WSGIRequest
+    :param sort: int
+    :return Render:HttpResponse
+    """
     context = {"consoles_tab": "active",
                'console_sort_dict': CONSOLE_SORT_LABELS}
 
@@ -54,20 +74,21 @@ def sorter(request, sort=None):
 
 
 def get_console_by_id(request, id):
+    """
+    Returns the details page for a console based on id.
+    :param request: WSGIRequest
+    :param id: int
+    :return Render:HttpResponse
+    """
     add_recently_viewed(request, id, False)
     context = {'product': get_object_or_404(Console, pk=id)}
     return render(request, 'product_details.html', context)
 
 
-def get_console_by_copies_sold(request):
-    consoles = Console.objects.all().order_by('-copies_sold')
-    return consoles
-
-
-def get_console_latest_releases(request):
-    consoles = Console.objects.all().order_by('-release_date')
-    return consoles
-
-
 def get_console_offers(request):
+    """
+    Returns a query set of all games where on_sale is True
+    :param request: WSGIRequest
+    :return: Queryset
+    """
     return Console.objects.filter(on_sale=True)

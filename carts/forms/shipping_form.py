@@ -6,6 +6,7 @@ from django_countries.widgets import CountrySelectWidget
 
 
 class ShippingForm(ModelForm):
+    """ The shipping information form """
     first_name = forms.CharField(max_length=30, label='First Name')
     last_name = forms.CharField(max_length=30, label='Last Name')
     address_1 = forms.CharField(max_length=255, label='Address 1')
