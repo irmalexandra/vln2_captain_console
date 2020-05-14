@@ -13,8 +13,14 @@ def index(request):
 
 
 def update_cart_items(request):
+    """
+    Updates the quantity of the item corresponding to the id given through the AJAX request
+
+    :param request: WSGIRequest
+    :return: Http response
+    """
     if request.is_ajax():
-        item_id = int(request.POST.get('id'))
+        item_id = int(request.POST.get('id'))  # ID of the product
         item_quantity = int(request.POST.get('quantity'))
 
         if request.user.is_authenticated:
@@ -37,6 +43,17 @@ def update_cart_items(request):
 
 
 def input_shipping_info(request):
+    """
+    handles the shipping information html.
+    Auto fills shipping info based on if the user is signed in or not
+    creates a shipping info class instance from a posted form
+    and pushes it into the DB, then redirects to payment info page
+
+    :param request: WSGIRequest
+    :return: Render http response
+    :return: Redirect http response
+    """
+    shipping_form = None
     context = get_cart_info(request)
     if request.method == "POST":
         shipping_form = ShippingForm(data=request.POST)
@@ -61,20 +78,34 @@ def input_shipping_info(request):
 
             return redirect('payment_info', the_id)
 
-    if request.user.is_authenticated:
-        profile = Profile.objects.filter(user=request.user).first()
-        if profile.shipping_information_id:
-            shipping_info = ShippingInformation.objects.filter(id=profile.shipping_information_id.id).first()
+    if shipping_form:
+        context['shipping_info_form'] = shipping_form
+    else:
+        if request.user.is_authenticated:
+            profile = Profile.objects.filter(user=request.user).first()
+            if profile.shipping_information_id:
+                shipping_info = ShippingInformation.objects.filter(id=profile.shipping_information_id.id).first()
+            else:
+                shipping_info = ShippingInformation()
         else:
             shipping_info = ShippingInformation()
-    else:
-        shipping_info = ShippingInformation()
 
-    context['shipping_info_form'] = ShippingForm(instance=shipping_info)
+        context['shipping_info_form'] = ShippingForm(instance=shipping_info)
     return render(request, 'carts/shipping_info.html', context)
 
 
 def input_payment_info(request, shipping_id):
+    """
+    handles the payment information html.
+    Auto fills payment info based on if the user is signed in or not
+    creates a payment info class instance from a posted form
+    and pushes it into the DB, then redirects to overview info page
+
+    :param request: WSGIRequest
+    :return: Render http response
+    :return: Redirect http response
+    """
+    payment_form = None
     if request.method == "POST":
         payment_form = PaymentForm(data=request.POST)
         if payment_form.is_valid():
@@ -97,21 +128,36 @@ def input_payment_info(request, shipping_id):
                 payment_instance = payment_form.save()
             return redirect('overview', shipping_id=shipping_id, payment_id=payment_instance.id)
 
-    if request.user.is_authenticated:
-        profile = Profile.objects.filter(user=request.user).first()
-        if profile.payment_information_id:
-            payment_info = PaymentInformation.objects.filter(id=profile.payment_information_id.id).first()
+    context = get_cart_info(request)
+    if payment_form:
+        context['payment_info_form'] = payment_form
+    else:
+        if request.user.is_authenticated:
+            profile = Profile.objects.filter(user=request.user).first()
+            if profile.payment_information_id:
+                payment_info = PaymentInformation.objects.filter(id=profile.payment_information_id.id).first()
+            else:
+                payment_info = PaymentInformation()
         else:
             payment_info = PaymentInformation()
-    else:
-        payment_info = PaymentInformation()
+        context['payment_info_form'] = PaymentForm(instance=payment_info)
 
-    context = get_cart_info(request)
-    context['payment_info_form'] = PaymentForm(instance=payment_info)
     return render(request, 'carts/payment_info.html', context)
 
 
 def overview(request, shipping_id, payment_id):
+    """
+    handles the shipping information html.
+    Auto fills shipping info based on if the user is signed in or not
+    creates a shipping info class instance from a posted form
+    and pushes it into the DB, then redirects to payment info page
+
+    :param request: WSGIRequest
+    :param shipping_id: int
+    :param request: WSGIRequest
+    :return: Render http response
+    :return: Redirect http response
+    """
     context = get_cart_info(request)
     total_price = 0
     if request.method == 'POST':
