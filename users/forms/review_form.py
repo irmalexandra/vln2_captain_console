@@ -5,6 +5,7 @@ from users.models import Review
 
 
 class ReviewForm(ModelForm):
+    """ The Review form """
     CHOICES = [(True, 'Yes'),
                (False, 'No')]
 

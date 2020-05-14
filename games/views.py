@@ -81,7 +81,7 @@ def game_default_view(request):
 def filter_sorter(request, genre_id=None, console_id=None, sort=None):
     """
     Sets the context for the Render based on optional parameters. Sorts and filters
-    the game query set before adding it to the context
+    the game queryset before adding it to the context
     :param request: WSGIRequest
     :param genre_id: int, str
     :param console_id: int, str
