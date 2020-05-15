@@ -139,3 +139,43 @@ def get_game_latest_releases():
     """
     games = Game.objects.all().order_by('-release_date')
     return games
+
+
+def page_not_found(request, exception=None):
+    """
+    Default 404 error handling
+    :param request: WSGIRequest
+    :param exception:
+    :return:
+    """
+    return render(request, '404.html')
+
+
+def internal_server_error(request, exception=None):
+    """
+    Default 500 error handling
+    :param request: WSGIRequest
+    :param exception:
+    :return:
+    """
+    return render(request, '500.html')
+
+
+def bad_request(request, exception=None):
+    """
+    Default 400 error handling
+    :param request: WSGIRequest
+    :param exception:
+    :return:
+    """
+    return render(request, '400.html')
+
+
+def permission_denied(request, exception=None):
+    """
+    Default 403 error handling
+    :param request: WSGIReqeust
+    :param exception:
+    :return:
+    """
+    return render(request, '403.html')
