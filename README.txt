@@ -11,6 +11,9 @@ Required Packages
     - sqlparse
 
 DEBUG is set to False
+If you run manage.py runserver while DEBUG is False then the static files dont load
+You have to run manage.py runserver --insecure for all the static files to load
+Or set DEBUG to True
 
 
 - Ríkharður Friðgeirsson
