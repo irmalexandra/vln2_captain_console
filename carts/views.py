@@ -322,7 +322,7 @@ def get_order_history(request):
 def remove_product(request):
     """
     Removes a product from the users cart
-
+    via Ajax request
     :param request: WSGIRequest
     :return: Http response
     """
@@ -334,6 +334,7 @@ def remove_product(request):
             product = CartItems.objects.filter(cartID=user_cart_id, productID=product_id).first()
             product.delete()
         else:
+            # Anonymous handling
             for x in range(len(request.session['cart'])):
                 if request.session['cart'][x]['id'] == product_id:
                     request.session['cart'].pop(x)
@@ -344,12 +345,18 @@ def remove_product(request):
 
 
 def clear_cart(request):
+    """
+    Clears a the users cart via an Ajax request
+    :param request: WSGIRequest
+    :return: Http response
+    """
     if request.is_ajax():
         if request.user.is_authenticated:
             profile = Profile.objects.filter(user=request.user).first()
             user_cart = Cart.objects.filter(profileID=profile).first()
             user_cart.delete()
         else:
+            # Anonymous handling
             request.session.clear()
             request.session.save()
 
@@ -357,7 +364,13 @@ def clear_cart(request):
 
 
 def get_cart_info(request):
+    """
+    Gets the users cart info and returns it for html use
+    :param request: WSGIRequest
+    :return: dict
+    """
     class Model:
+        # the form of which is needed for the products
         name = ""
         quantity = 0
         img = ""
@@ -387,6 +400,7 @@ def get_cart_info(request):
                 models.append(model)
 
     else:
+        # Anonymous handling
         if "cart" in request.session.keys():
             for product in request.session['cart']:
                 model = Model()
