@@ -3,7 +3,7 @@ $(".alert").hide()
 $(document).ready(function () {
     $(".add_to_cart_button").click(function (e) {
         e.preventDefault()
-        let status 
+        let status
         if(window.location.href == "http://127.0.0.1:8000/"){
             let position = e.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].innerText
             if(position == "Top Sellers"){
@@ -14,7 +14,7 @@ $(document).ready(function () {
             }
             else{
                 status = document.getElementById("alert-div-below")
-            } 
+            }
         }
         else{
             status = document.getElementById("status-"+e.target.id)
@@ -30,6 +30,11 @@ $(document).ready(function () {
         }).done(function (data) {
 
             if (data) {
+                if(window.location.href == "http://127.0.0.1:8000/"){
+                    if(status.childNodes.length > 0){
+                        status.removeChild(status.childNodes[0])
+                    }
+                }
                 status.style.display = "block"
                 if(data == "1"){
                     message.innerText = 'Added to cart'
