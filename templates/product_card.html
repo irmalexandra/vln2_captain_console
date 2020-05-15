@@ -11,7 +11,7 @@
       <small><b>{{ product.console_id}}</b></small>
       {% endif %}
     </h4>
-      <div id="status-{{ product.id }}" class="alert alert-primary add-to-cart-alert" role="alert" style="width: fit-content"></div>
+      <div id="status-{{ product.id }}" class="alert alert-primary add-to-cart-alert" role="alert"></div>
     <p class="product-description text-left">{{ product.description }}</p>
     {% if product.on_sale %}
         <p><span class="on-sale-tag">{{ product.discount }}% Discount! </span><span id="old-price">{{ product.price }}</span> / <span id="new-price">{{ product.discount_price }}</span></p>

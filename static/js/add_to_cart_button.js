@@ -1,11 +1,24 @@
 const csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value
-console.log("hello from add to cart")
 $(".alert").hide()
 $(document).ready(function () {
     $(".add_to_cart_button").click(function (e) {
         e.preventDefault()
-        console.log(Date.now() + 2000)
-        let status = document.getElementById("status-"+e.target.id)
+        let status 
+        if(window.location.href == "http://127.0.0.1:8000/"){
+            let position = e.target.parentNode.parentNode.parentNode.parentNode.childNodes[1].innerText
+            if(position == "Top Sellers"){
+                status = document.getElementById("alert-div-above")
+            }
+            else if(position == "Latest Releases"){
+                status = document.getElementById("alert-div-middle")
+            }
+            else{
+                status = document.getElementById("alert-div-below")
+            } 
+        }
+        else{
+            status = document.getElementById("status-"+e.target.id)
+        }
         message = document.createElement('p')
         message.className = "alert-link"
         $.ajax({
