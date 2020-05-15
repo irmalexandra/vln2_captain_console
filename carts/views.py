@@ -8,7 +8,13 @@ from users.models import Profile, PaymentInformation, ShippingInformation, Order
 
 
 def index(request):
-    context = get_cart_info(request)
+    """
+    handles the main cart path.
+    sends all required info to the html
+    :param request: WSGIRequest
+    :return: Render http response
+    """
+    context = get_cart_info(request) # Gets the dicts to be used by the html to display the cart via django
     return render(request, 'carts/index.html', context)
 
 
@@ -55,15 +61,14 @@ def input_shipping_info(request, old_id = None):
     """
     shipping_form = None
     context = get_cart_info(request)
-    if old_id:
+    if old_id:  # If an already saved form is to be used
         shipping_info = ShippingInformation.objects.filter(id=old_id).first()
         shipping_form = ShippingForm(instance=shipping_info)
 
-    if request.method == "POST":
+    if request.method == "POST":  # if the form is submitted
         shipping_form = ShippingForm(data=request.POST)
         if shipping_form.is_valid():
-
-            the_id = None
+            the_id = None  # also handles duplicate
             all_shipping_info = ShippingInformation.objects.all()
             for info in all_shipping_info:
                 if info.last_name == request.POST['last_name'] and \
@@ -73,18 +78,18 @@ def input_shipping_info(request, old_id = None):
                         info.address_2 == request.POST['address_2'] and \
                         info.address_1 == request.POST['address_1'] and \
                         info.country == request.POST['country']:
-                    the_id = info.id
+                    the_id = info.id  # An id was found, thus info is a duplicate
                     break
 
             if the_id == None:  # <----- if NOT duplicate
                 form_instance = shipping_form.save()
                 the_id = form_instance.id
-
             return redirect('payment_info', the_id)
 
-    if shipping_form:
+    if shipping_form:  # If the shipping form did not make it through validation
         context['shipping_info_form'] = shipping_form
     else:
+        # gets the shipping info from the account if it has any
         if request.user.is_authenticated:
             profile = Profile.objects.filter(user=request.user).first()
             if profile.shipping_information_id:
@@ -92,6 +97,7 @@ def input_shipping_info(request, old_id = None):
             else:
                 shipping_info = ShippingInformation()
         else:
+            # Anonymous user handling
             shipping_info = ShippingInformation()
 
         context['shipping_info_form'] = ShippingForm(instance=shipping_info)
@@ -110,19 +116,16 @@ def input_payment_info(request, shipping_id, old_id = None):
     :return: Redirect http response
     """
 
-
-
     payment_form = None
 
-    if old_id:
+    if old_id:  # If an already saved form is to be used
         payment_info = PaymentInformation.objects.filter(id=old_id).first()
         payment_form = PaymentForm(instance=payment_info)
 
-    if request.method == "POST":
+    if request.method == "POST":  # if the form is submitted
         payment_form = PaymentForm(data=request.POST)
         if payment_form.is_valid():
-            shipping_instance = ShippingInformation.objects.filter(id=shipping_id).first()
-            dupe = None
+            dupe = None  # duplicate flag
             all_payment_info = PaymentInformation.objects.all()
             for info in all_payment_info:
                 expiration_date = str(info.expiration_date)
@@ -132,7 +135,7 @@ def input_payment_info(request, shipping_id, old_id = None):
                         int(info.card_number) == int(request.POST['card_number']) and \
                         expiration_fixed == request.POST['expiration_date'] and \
                         info.cvv == request.POST['cvv']:
-                    dupe = True
+                    dupe = True  # Duplicate found
                     payment_instance = PaymentInformation.objects.filter(id=info.id).first()
                     break
 
@@ -140,10 +143,11 @@ def input_payment_info(request, shipping_id, old_id = None):
                 payment_instance = payment_form.save()
             return redirect('overview', shipping_id=shipping_id, payment_id=payment_instance.id)
 
-    context = get_cart_info(request)
-    if payment_form:
+    context = get_cart_info(request)  # Gets the dicts to be used by the html to display the cart via django
+    if payment_form:  # If the payment form did not make it through validation
         context['payment_info_form'] = payment_form
     else:
+        # gets the payment info from the account if it has any
         if request.user.is_authenticated:
             profile = Profile.objects.filter(user=request.user).first()
             if profile.payment_information_id:
@@ -151,6 +155,7 @@ def input_payment_info(request, shipping_id, old_id = None):
             else:
                 payment_info = PaymentInformation()
         else:
+            # Anonymous user handling
             payment_info = PaymentInformation()
         context['payment_info_form'] = PaymentForm(instance=payment_info)
 
@@ -170,9 +175,11 @@ def overview(request, shipping_id, payment_id):
     :return: Render http response
     :return: Redirect http response
     """
-    context = get_cart_info(request)
+    context = get_cart_info(request)  # Gets the dicts to be used by the html to display the cart via django
     total_price = 0
+
     if request.method == 'POST':
+        #  redirects to overview path, pushes all gathered info into corresponding DB tables
         shipping_instance = ShippingInformation.objects.filter(id=shipping_id).first()
         payment_instance = PaymentInformation.objects.filter(id=payment_id).first()
         if request.user.is_authenticated:
@@ -190,6 +197,7 @@ def overview(request, shipping_id, payment_id):
             cart.check_out = True
 
         else:
+            #  Anonymous handling
             cart = Cart.objects.create(profileID=None, check_out=True)
             for item in request.session['cart']:
                 total_price += int(item['total_price'])
@@ -215,6 +223,7 @@ def overview(request, shipping_id, payment_id):
         order.save()
         context['order_complete'] = True
 
+    # info gathered over the process
     payment_info = PaymentInformation.objects.filter(id=payment_id).first()
     shipping_info = ShippingInformation.objects.filter(id=shipping_id).first()
 
@@ -225,8 +234,14 @@ def overview(request, shipping_id, payment_id):
 
 
 def cart_add(request):
+    """
+    Adds a product into the cart via an ajax request.
+
+    :param request: WSGIRequest
+    :return: Http response
+    """
     if request.is_ajax():
-        returned_quantity = 1
+        returned_quantity = 1  # a response that tells javaScript how many of the product are in the cart
         product_id = int(request.POST.get('id'))
         product = Product.objects.filter(id=product_id).first()
 
@@ -237,12 +252,14 @@ def cart_add(request):
                 user_cart = Cart.objects.create(profileID=profile, check_out=False)
             cart_items = CartItems.objects.filter(cartID=user_cart.id, productID=product.id)
             if len(cart_items) != 0:
-                first_item = cart_items.first()
+                # If the product is already in the cart
+                first_item = cart_items.first()  # the duplicate product in the cart
                 first_item.quantity += 1
                 returned_quantity = first_item.quantity
                 first_item.total_price = first_item.quantity * first_item.price
                 first_item.save()
             else:
+                # If the product is not in the cart
                 if product.on_sale:
                     price = product.discount_price
                 else:
@@ -254,7 +271,8 @@ def cart_add(request):
                                          total_price=price*1)
 
         else:
-            duplicate = False
+            #  Anonymous handling
+            duplicate = False  # duplicate flag
             if 'cart' not in request.session.keys():
                 request.session['cart'] = []
             for x in range(len(request.session['cart'])):
@@ -282,11 +300,16 @@ def cart_add(request):
             request.session.save()
         return HttpResponse(returned_quantity)
 
-def get_order_history(request):
 
+def get_order_history(request):
+    """
+    Returns a list of the current users order history
+    :param request: WSGIRequest
+    :return: list
+    """
     profile_id = request.user.profile.id
     order_history_list = []
-    carts = Cart.objects.filter(profileID=profile_id, check_out=True)
+    carts = Cart.objects.filter(profileID=profile_id, check_out=True)  # all checked out carts, as in orders
     if carts:
         for cart in carts:
             order_dict = {'order': Order.objects.filter(cartID=cart.id).first(),
@@ -297,6 +320,12 @@ def get_order_history(request):
 
 
 def remove_product(request):
+    """
+    Removes a product from the users cart
+
+    :param request: WSGIRequest
+    :return: Http response
+    """
     if request.is_ajax():
         product_id = int(request.POST.get("id"))
         if request.user.is_authenticated:

@@ -42,28 +42,32 @@ $(".quantity").focusout(function (e) {
     if(quantity<1){
         e.currentTarget.value = 1
     }
-
-    $.ajax({
-        headers:{ "X-CSRFToken": csrf_token } ,
-        type:'POST',
-        async:false,
-        url: '/update_cart_items',
-        data: {
-            id: id,
-            quantity: quantity,
-        }
-    }).done(function (data) {
-        if (data === "success") {
-
-            console.log("Cart Updated")
-        }
-    })
-
+    else{
+        $.ajax({
+            headers:{ "X-CSRFToken": csrf_token } ,
+            type:'POST',
+            async:false,
+            url: '/update_cart_items',
+            data: {
+                id: id,
+                quantity: quantity,
+            }
+        }).done(function (data) {
+            if (data === "success") {
+                document.getElementById("price-" + id).innerHTML = parseInt(quantity) * parseInt(PRODUCTS[id]["price"])
+                update_total()
+                console.log("Cart Updated")
+            }
+        })
+    }
 }).change(function (e) {
     let quantity = e.currentTarget.value
     let id = e.currentTarget.id
-    document.getElementById("price-" + id).innerHTML = parseInt(quantity) * parseInt(PRODUCTS[id]["price"])
-    update_total()
+    if(quantity >= 1){
+        document.getElementById("price-" + id).innerHTML = parseInt(quantity) * parseInt(PRODUCTS[id]["price"])
+        update_total()
+    }
+
 })
 
 $(".remove-button").click(function (e) {
