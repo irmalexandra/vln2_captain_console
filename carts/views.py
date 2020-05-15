@@ -42,7 +42,7 @@ def update_cart_items(request):
         return HttpResponse("success")
 
 
-def input_shipping_info(request):
+def input_shipping_info(request, old_id = None):
     """
     handles the shipping information html.
     Auto fills shipping info based on if the user is signed in or not
@@ -55,6 +55,10 @@ def input_shipping_info(request):
     """
     shipping_form = None
     context = get_cart_info(request)
+    if old_id:
+        shipping_info = ShippingInformation.objects.filter(id=old_id).first()
+        shipping_form = ShippingForm(instance=shipping_info)
+
     if request.method == "POST":
         shipping_form = ShippingForm(data=request.POST)
         if shipping_form.is_valid():
@@ -94,7 +98,7 @@ def input_shipping_info(request):
     return render(request, 'carts/shipping_info.html', context)
 
 
-def input_payment_info(request, shipping_id):
+def input_payment_info(request, shipping_id, old_id = None):
     """
     handles the payment information html.
     Auto fills payment info based on if the user is signed in or not
@@ -105,7 +109,15 @@ def input_payment_info(request, shipping_id):
     :return: Render http response
     :return: Redirect http response
     """
+
+
+
     payment_form = None
+
+    if old_id:
+        payment_info = PaymentInformation.objects.filter(id=old_id).first()
+        payment_form = PaymentForm(instance=payment_info)
+
     if request.method == "POST":
         payment_form = PaymentForm(data=request.POST)
         if payment_form.is_valid():
