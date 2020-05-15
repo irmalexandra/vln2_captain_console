@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import handler404, handler500
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,3 +27,6 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('', include('carts.urls')),
 ]
+
+handler404 = 'main.views.bad_request'
+handler500 = 'main.views.internal_server_error'
