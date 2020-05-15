@@ -20,3 +20,6 @@ Or set DEBUG to True
 - Emil Örn Kristjánsson
 - Loki Alexander Hopkins
 - Margrét Guðmundsdóttir
+
+
+https://github.com/lokialex/Captain_Console_43
